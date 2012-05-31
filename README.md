@@ -18,7 +18,17 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Add this to your ApplicationController:
+
+    rescue_from ApiClient::Exceptions::NotFound, :with => :not_found
+
+    def not_found
+       #Specify your own behavior here
+    end
+
+Then, on your action, just put into it:
+
+    @user = ApiClient.get("http://api.example.com/user/3")
 
 ## Contributing
 
