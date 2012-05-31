@@ -22,4 +22,26 @@ describe ApiClient do
       end
     end
   end
+
+  describe "#post" do
+    context "when response code is 404" do
+      before :each do
+        FakeWeb.register_uri(:post, "http://api.example.com/user/5", :status => "404")
+      end
+
+      it "should return a NotFound exception" do
+        lambda { ApiClient.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::NotFound)
+      end
+    end
+
+    context "when response code is not 404" do
+      before :each do
+        FakeWeb.register_uri(:post, "http://api.example.com/user/5", :status => "201", :body => "User#3333")
+      end
+
+      it "should return the response body" do
+        ApiClient.post('http://api.example.com/user/5', {}).should == "User#3333"
+      end
+    end
+  end
 end
