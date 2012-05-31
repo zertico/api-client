@@ -2,7 +2,7 @@
 require File.expand_path('../lib/api_client/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.name        = "api_client"
+  gem.name        = "api-client"
   gem.version     = ApiClient::VERSION
   gem.authors     = %q{Paulo Henrique Lopes Ribeiro}
   gem.email       = %q{plribeiro3000@gmail.com}

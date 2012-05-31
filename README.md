@@ -6,7 +6,7 @@ Client to make Api calls
 
 Add this line to your application's Gemfile:
 
-    gem 'api_client'
+    gem 'api-client'
 
 And then execute:
 
@@ -14,7 +14,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install api_client
+    $ gem install api-client
 
 ## Usage
 
