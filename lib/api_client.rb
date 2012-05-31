@@ -6,13 +6,21 @@ module ApiClient
 
   def self.get(url = '')
     response = Net::HTTP.get_response(URI.parse(url))
-    raise ApiClient::Exceptions::NotFound if response.code == '404'
+    raise_exception(response.code)
     response.body
   end
 
   def self.post(url = '', args = {})
     response = Net::HTTP.post_form(URI.parse(url), args)
-    raise ApiClient::Exceptions::NotFound if response.code == '404'
+    raise_exception(response.code)
     response.body
+  end
+
+  def self.raise_exception(code)
+    case code
+      when '401' then raise ApiClient::Exceptions::Unauthorized
+      when '403' then raise ApiClient::Exceptions::Forbidden
+      when '404' then raise ApiClient::Exceptions::NotFound
+    end
   end
 end
