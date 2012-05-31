@@ -15,5 +15,6 @@ Gem::Specification.new do |gem|
   gem.require_paths = %w(lib)
 
   gem.add_development_dependency "rake"
+  gem.add_development_dependency "fakeweb"
   gem.add_development_dependency "rspec", "2.9.0"
 end
