@@ -26,6 +26,10 @@ Add this to your ApplicationController:
        #Specify your own behavior here
     end
 
+You can define a more generic rescue that will work for any error:
+
+    rescue_from ApiClient::Exceptions::Generic, :with => :generic_error
+
 Then, on your action, just put into it:
 
     @user = ApiClient.get("http://api.example.com/user/3")
