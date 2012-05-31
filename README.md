@@ -1,6 +1,6 @@
 # ApiClient [![Build Status](https://secure.travis-ci.org/plribeiro3000/api_client.png)](http://travis-ci.org/plribeiro3000/api_client)
 
-TODO: Write a gem description
+Client to make Api calls
 
 ## Installation
 

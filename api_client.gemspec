@@ -7,7 +7,7 @@ Gem::Specification.new do |gem|
   gem.authors     = %q{Paulo Henrique Lopes Ribeiro}
   gem.email       = %q{plribeiro3000@gmail.com}
   gem.homepage    = ""
-  gem.summary     = %q{Api Client to make Api calls}
+  gem.summary     = %q{Client to make Api calls}
 
   gem.files         = `git ls-files`.split("\n")
   gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
