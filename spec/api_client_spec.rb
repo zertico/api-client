@@ -32,6 +32,36 @@ describe ApiClient do
       end
     end
 
+    context "when response code is 500" do
+      before :each do
+        FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "500")
+      end
+
+      it "should return a InternalServerError exception" do
+        lambda { ApiClient.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::InternalServerError)
+      end
+    end
+
+    context "when response code is 502" do
+      before :each do
+        FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "502")
+      end
+
+      it "should return a BadGateway exception" do
+        lambda { ApiClient.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::BadGateway)
+      end
+    end
+
+    context "when response code is 503" do
+      before :each do
+        FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "503")
+      end
+
+      it "should return a ServiceUnavailable exception" do
+        lambda { ApiClient.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::ServiceUnavailable)
+      end
+    end
+
     context "when response code is 2xx" do
       before :each do
         FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "201", :body => "User#3333")
@@ -71,6 +101,36 @@ describe ApiClient do
 
       it "should return a NotFound exception" do
         lambda { ApiClient.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::NotFound)
+      end
+    end
+
+    context "when response code is 500" do
+      before :each do
+        FakeWeb.register_uri(:post, "http://api.example.com/user/5", :status => "500")
+      end
+
+      it "should return a InternalServerError exception" do
+        lambda { ApiClient.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::InternalServerError)
+      end
+    end
+
+    context "when response code is 502" do
+      before :each do
+        FakeWeb.register_uri(:post, "http://api.example.com/user/5", :status => "502")
+      end
+
+      it "should return a BadGateway exception" do
+        lambda { ApiClient.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::BadGateway)
+      end
+    end
+
+    context "when response code is 503" do
+      before :each do
+        FakeWeb.register_uri(:post, "http://api.example.com/user/5", :status => "503")
+      end
+
+      it "should return a ServiceUnavailable exception" do
+        lambda { ApiClient.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::ServiceUnavailable)
       end
     end
 

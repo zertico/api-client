@@ -21,6 +21,9 @@ module ApiClient
       when '401' then raise ApiClient::Exceptions::Unauthorized
       when '403' then raise ApiClient::Exceptions::Forbidden
       when '404' then raise ApiClient::Exceptions::NotFound
+      when '500' then raise ApiClient::Exceptions::InternalServerError
+      when '502' then raise ApiClient::Exceptions::BadGateway
+      when '503' then raise ApiClient::Exceptions::ServiceUnavailable
     end
   end
 end
