@@ -5,13 +5,21 @@ module ApiClient
   autoload :Exceptions, 'api-client/exceptions'
 
   def self.get(url = '')
-    response = Net::HTTP.get_response(URI.parse(url))
+    begin
+      response = Net::HTTP.get_response(URI.parse(url))
+    rescue Errno::ECONNREFUSED
+      raise ApiClient::Exceptions::ConnectionRefused
+    end
     raise_exception(response.code)
     response.body
   end
 
   def self.post(url = '', args = {})
-    response = Net::HTTP.post_form(URI.parse(url), args)
+    begin
+      response = Net::HTTP.post_form(URI.parse(url), args)
+    rescue Errno::ECONNREFUSED
+      raise ApiClient::Exceptions::ConnectionRefused
+    end
     raise_exception(response.code)
     response.body
   end

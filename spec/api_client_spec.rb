@@ -2,6 +2,16 @@ require 'spec_helper'
 
 describe ApiClient do
   describe "#get" do
+    context "when connection is refused" do
+      before :each do
+        Net::HTTP.stub(:get_response).and_raise(Errno::ECONNREFUSED)
+      end
+
+      it "should return a ConnectionRefused exception" do
+        lambda { ApiClient.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::ConnectionRefused)
+      end
+    end
+
     context "when response code is 401" do
       before :each do
         FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "401")
@@ -74,6 +84,16 @@ describe ApiClient do
   end
 
   describe "#post" do
+    context "when connection is refused" do
+      before :each do
+        Net::HTTP.stub(:post_form).and_raise(Errno::ECONNREFUSED)
+      end
+
+      it "should return a ConnectionRefused exception" do
+        lambda { ApiClient.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::ConnectionRefused)
+      end
+    end
+
     context "when response code is 401" do
       before :each do
         FakeWeb.register_uri(:post, "http://api.example.com/user/5", :status => "401")
