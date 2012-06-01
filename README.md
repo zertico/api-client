@@ -1,4 +1,4 @@
-# ApiClient [![Build Status](https://secure.travis-ci.org/plribeiro3000/api_client.png)](http://travis-ci.org/plribeiro3000/api_client)
+# ApiClient [![Build Status](https://secure.travis-ci.org/plribeiro3000/api-client.png)](http://travis-ci.org/plribeiro3000/api-client)
 
 Client to make Api calls
 
