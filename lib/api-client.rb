@@ -1,8 +1,8 @@
-require "api_client/version"
+require "api-client/version"
 require "net/http"
 
 module ApiClient
-  autoload :Exceptions, 'api_client/exceptions'
+  autoload :Exceptions, 'api-client/exceptions'
 
   def self.get(url = '')
     response = Net::HTTP.get_response(URI.parse(url))

@@ -1,4 +1,4 @@
 require "rspec"
 require "fakeweb"
 
-require File.dirname(__FILE__) + "/../lib/api_client"
+require File.dirname(__FILE__) + "/../lib/api-client"
