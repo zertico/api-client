@@ -7,4 +7,5 @@ module ApiClient::Exceptions
   autoload :BadGateway, 'api-client/exceptions/bad_gateway'
   autoload :ServiceUnavailable, 'api-client/exceptions/service_unavailable'
   autoload :ConnectionRefused, 'api-client/exceptions/connection_refused'
+  autoload :BadRequest, 'api-client/exceptions/bad_request'
 end
