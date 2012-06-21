@@ -26,7 +26,6 @@ module ApiClient
 
   def self.raise_exception(code)
     case code
-      when '400' then raise ApiClient::Exceptions::BadRequest
       when '401' then raise ApiClient::Exceptions::Unauthorized
       when '403' then raise ApiClient::Exceptions::Forbidden
       when '404' then raise ApiClient::Exceptions::NotFound
