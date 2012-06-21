@@ -32,7 +32,7 @@ You can define a more generic rescue that will work for any error:
 
 Then, on your action, just put into it:
 
-    @user = ApiClient.get("http://api.example.com/user/3")
+    @user = ApiClient::Base.get("http://api.example.com/user/3")
 
 ## Contributing
 

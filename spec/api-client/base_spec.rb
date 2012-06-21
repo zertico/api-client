@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ApiClient do
+describe ApiClient::Base do
   describe "#get" do
     context "when connection is refused" do
       before :each do
@@ -8,7 +8,7 @@ describe ApiClient do
       end
 
       it "should return a ConnectionRefused exception" do
-        lambda { ApiClient.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::ConnectionRefused)
+        lambda { ApiClient::Base.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::ConnectionRefused)
       end
     end
 
@@ -18,7 +18,7 @@ describe ApiClient do
       end
 
       it "should return a Unauthorized exception" do
-        lambda { ApiClient.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::Unauthorized)
+        lambda { ApiClient::Base.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::Unauthorized)
       end
     end
 
@@ -28,7 +28,7 @@ describe ApiClient do
       end
 
       it "should return a Forbidden exception" do
-        lambda { ApiClient.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::Forbidden)
+        lambda { ApiClient::Base.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::Forbidden)
       end
     end
 
@@ -38,7 +38,7 @@ describe ApiClient do
       end
 
       it "should return a NotFound exception" do
-        lambda { ApiClient.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::NotFound)
+        lambda { ApiClient::Base.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::NotFound)
       end
     end
 
@@ -48,7 +48,7 @@ describe ApiClient do
       end
 
       it "should return a InternalServerError exception" do
-        lambda { ApiClient.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::InternalServerError)
+        lambda { ApiClient::Base.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::InternalServerError)
       end
     end
 
@@ -58,7 +58,7 @@ describe ApiClient do
       end
 
       it "should return a BadGateway exception" do
-        lambda { ApiClient.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::BadGateway)
+        lambda { ApiClient::Base.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::BadGateway)
       end
     end
 
@@ -68,7 +68,7 @@ describe ApiClient do
       end
 
       it "should return a ServiceUnavailable exception" do
-        lambda { ApiClient.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::ServiceUnavailable)
+        lambda { ApiClient::Base.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::ServiceUnavailable)
       end
     end
 
@@ -78,7 +78,7 @@ describe ApiClient do
       end
 
       it "should return the response body" do
-        ApiClient.get('http://api.example.com/user/5').should == "User#3333"
+        ApiClient::Base.get('http://api.example.com/user/5').should == "User#3333"
       end
     end
   end
@@ -90,7 +90,7 @@ describe ApiClient do
       end
 
       it "should return a ConnectionRefused exception" do
-        lambda { ApiClient.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::ConnectionRefused)
+        lambda { ApiClient::Base.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::ConnectionRefused)
       end
     end
 
@@ -100,7 +100,7 @@ describe ApiClient do
       end
 
       it "should return a Unauthorized exception" do
-        lambda { ApiClient.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::Unauthorized)
+        lambda { ApiClient::Base.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::Unauthorized)
       end
     end
 
@@ -110,7 +110,7 @@ describe ApiClient do
       end
 
       it "should return a Forbidden exception" do
-        lambda { ApiClient.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::Forbidden)
+        lambda { ApiClient::Base.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::Forbidden)
       end
     end
 
@@ -120,7 +120,7 @@ describe ApiClient do
       end
 
       it "should return a NotFound exception" do
-        lambda { ApiClient.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::NotFound)
+        lambda { ApiClient::Base.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::NotFound)
       end
     end
 
@@ -130,7 +130,7 @@ describe ApiClient do
       end
 
       it "should return a InternalServerError exception" do
-        lambda { ApiClient.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::InternalServerError)
+        lambda { ApiClient::Base.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::InternalServerError)
       end
     end
 
@@ -140,7 +140,7 @@ describe ApiClient do
       end
 
       it "should return a BadGateway exception" do
-        lambda { ApiClient.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::BadGateway)
+        lambda { ApiClient::Base.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::BadGateway)
       end
     end
 
@@ -150,7 +150,7 @@ describe ApiClient do
       end
 
       it "should return a ServiceUnavailable exception" do
-        lambda { ApiClient.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::ServiceUnavailable)
+        lambda { ApiClient::Base.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::ServiceUnavailable)
       end
     end
 
@@ -160,7 +160,7 @@ describe ApiClient do
       end
 
       it "should return the response body" do
-        ApiClient.post('http://api.example.com/user/5', {}).should == "User#3333"
+        ApiClient::Base.post('http://api.example.com/user/5', {}).should == "User#3333"
       end
     end
   end
