@@ -41,6 +41,7 @@ Then, on your action, just put into it:
 ## TODO
    * Add Support to Typhoeus and Faraday
    * Proper Treatment for validation errors
+   * Add more Response Handlers
 
 ## Contributing
 
