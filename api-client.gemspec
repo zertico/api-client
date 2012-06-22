@@ -19,4 +19,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rspec", "2.9.0"
 
   gem.add_runtime_dependency "activemodel"
+  gem.add_runtime_dependency "json_pure"
 end
