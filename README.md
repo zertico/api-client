@@ -30,9 +30,17 @@ You can define a more generic rescue that will work for any error:
 
     rescue_from ApiClient::Exceptions::Generic, :with => :generic_error
 
+On Your model, extend ApiClient::Base
+
+    def User < Apiclient::Base
+
 Then, on your action, just put into it:
 
-    @user = ApiClient::Base.get("http://api.example.com/user/3")
+    @user = User.get("http://api.example.com/user/3")
+
+## TODO
+   Add Support to Typhoeus and Faraday
+   Proper Treatment for validation errors
 
 ## Contributing
 

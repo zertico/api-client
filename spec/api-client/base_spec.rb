@@ -1,167 +1,25 @@
 require 'spec_helper'
 
 describe ApiClient::Base do
-  describe "#get" do
-    context "when connection is refused" do
+  describe "#initialize" do
+    context "with a hash {:a => 'a', :b => 'b'}" do
       before :each do
-        Net::HTTP.stub(:get_response).and_raise(Errno::ECONNREFUSED)
+        @user = User.new({:a => "a", :b => "b"})
       end
 
-      it "should return a ConnectionRefused exception" do
-        lambda { ApiClient::Base.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::ConnectionRefused)
-      end
-    end
-
-    context "when response code is 401" do
-      before :each do
-        FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "401")
+      it "should set #a" do
+        @user.a.should == "a"
       end
 
-      it "should return a Unauthorized exception" do
-        lambda { ApiClient::Base.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::Unauthorized)
-      end
-    end
-
-    context "when response code is 403" do
-      before :each do
-        FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "403")
-      end
-
-      it "should return a Forbidden exception" do
-        lambda { ApiClient::Base.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::Forbidden)
-      end
-    end
-
-    context "when response code is 404" do
-      before :each do
-        FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "404")
-      end
-
-      it "should return a NotFound exception" do
-        lambda { ApiClient::Base.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::NotFound)
-      end
-    end
-
-    context "when response code is 500" do
-      before :each do
-        FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "500")
-      end
-
-      it "should return a InternalServerError exception" do
-        lambda { ApiClient::Base.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::InternalServerError)
-      end
-    end
-
-    context "when response code is 502" do
-      before :each do
-        FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "502")
-      end
-
-      it "should return a BadGateway exception" do
-        lambda { ApiClient::Base.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::BadGateway)
-      end
-    end
-
-    context "when response code is 503" do
-      before :each do
-        FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "503")
-      end
-
-      it "should return a ServiceUnavailable exception" do
-        lambda { ApiClient::Base.get('http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::ServiceUnavailable)
-      end
-    end
-
-    context "when response code is 2xx" do
-      before :each do
-        FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "201", :body => "User#3333")
-      end
-
-      it "should return the response body" do
-        ApiClient::Base.get('http://api.example.com/user/5').should == "User#3333"
+      it "should set #b" do
+        @user.b.should == "b"
       end
     end
   end
 
-  describe "#post" do
-    context "when connection is refused" do
-      before :each do
-        Net::HTTP.stub(:post_form).and_raise(Errno::ECONNREFUSED)
-      end
-
-      it "should return a ConnectionRefused exception" do
-        lambda { ApiClient::Base.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::ConnectionRefused)
-      end
-    end
-
-    context "when response code is 401" do
-      before :each do
-        FakeWeb.register_uri(:post, "http://api.example.com/user/5", :status => "401")
-      end
-
-      it "should return a Unauthorized exception" do
-        lambda { ApiClient::Base.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::Unauthorized)
-      end
-    end
-
-    context "when response code is 403" do
-      before :each do
-        FakeWeb.register_uri(:post, "http://api.example.com/user/5", :status => "403")
-      end
-
-      it "should return a Forbidden exception" do
-        lambda { ApiClient::Base.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::Forbidden)
-      end
-    end
-
-    context "when response code is 404" do
-      before :each do
-        FakeWeb.register_uri(:post, "http://api.example.com/user/5", :status => "404")
-      end
-
-      it "should return a NotFound exception" do
-        lambda { ApiClient::Base.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::NotFound)
-      end
-    end
-
-    context "when response code is 500" do
-      before :each do
-        FakeWeb.register_uri(:post, "http://api.example.com/user/5", :status => "500")
-      end
-
-      it "should return a InternalServerError exception" do
-        lambda { ApiClient::Base.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::InternalServerError)
-      end
-    end
-
-    context "when response code is 502" do
-      before :each do
-        FakeWeb.register_uri(:post, "http://api.example.com/user/5", :status => "502")
-      end
-
-      it "should return a BadGateway exception" do
-        lambda { ApiClient::Base.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::BadGateway)
-      end
-    end
-
-    context "when response code is 503" do
-      before :each do
-        FakeWeb.register_uri(:post, "http://api.example.com/user/5", :status => "503")
-      end
-
-      it "should return a ServiceUnavailable exception" do
-        lambda { ApiClient::Base.post('http://api.example.com/user/5', {}) }.should raise_error(ApiClient::Exceptions::ServiceUnavailable)
-      end
-    end
-
-    context "when response code is 2xx" do
-      before :each do
-        FakeWeb.register_uri(:post, "http://api.example.com/user/5", :status => "201", :body => "User#3333")
-      end
-
-      it "should return the response body" do
-        ApiClient::Base.post('http://api.example.com/user/5', {}).should == "User#3333"
-      end
+  describe "#persisted?" do
+    it "should return false" do
+      User.new.should_not be_persisted
     end
   end
 end
