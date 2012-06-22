@@ -39,8 +39,8 @@ Then, on your action, just put into it:
     @user = User.get("http://api.example.com/user/3")
 
 ## TODO
-   Add Support to Typhoeus and Faraday
-   Proper Treatment for validation errors
+   * Add Support to Typhoeus and Faraday
+   * Proper Treatment for validation errors
 
 ## Contributing
 
