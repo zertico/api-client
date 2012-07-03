@@ -80,8 +80,19 @@ describe ApiClient::Base do
         User.stub(:new).and_return(user)
       end
 
-      it "should return a object intialized with the response" do
+      it "should return a object initialized with the response" do
         User.post('http://api.example.com/user/5', {}).should == user
+      end
+    end
+
+    context "with a specified port" do
+      before :each do
+        FakeWeb.register_uri(:post, "http://api.example.com:3001/user/5", :status => "201", :body => '{"a": "a", "b": "b"}')
+        User.stub(:new).and_return(user)
+      end
+
+      it "should return a object initialized with the response" do
+        User.post('http://api.example.com:3001/user/5', {}).should == user
       end
     end
   end

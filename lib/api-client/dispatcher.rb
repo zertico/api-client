@@ -7,7 +7,7 @@ module ApiClient::Dispatcher
 
   def _post(url = '', args = {})
     uri = URI(url)
-    http = Net::HTTP.new(uri.host)
+    http = Net::HTTP.new(uri.host, uri.port)
     http.post(uri.path, args.to_json, { 'Content-Type' => 'application/json' })
   end
 end
