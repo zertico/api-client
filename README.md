@@ -32,7 +32,7 @@ You can define a more generic rescue that will work for any error:
 
 On Your model, extend ApiClient::Base
 
-    def User < Apiclient::Base
+    class User < ApiClient::Base
 
 Then, on your action, just put into it:
 
