@@ -1,7 +1,12 @@
+require "active_model"
+
 class ApiClient::Base
   include ActiveModel::Validations
   include ActiveModel::Conversion
   extend ActiveModel::Naming
+
+  extend ApiClient::Parser
+  extend ApiClient::Dispatcher
 
   def initialize(attributes = {})
     attributes.each do |name, value|
@@ -14,23 +19,23 @@ class ApiClient::Base
   end
 
   def self.get(url = '')
-    call do Net::HTTP.get_response(URI.parse(url)) end
+    dispatch { _get(url) }
   end
 
   def self.post(url = '', args = {})
-    call do Net::HTTP.post_form(URI.parse(url), args) end
+    dispatch { _post(url, args) }
   end
 
   protected
 
-  def self.call
+  def self.dispatch
     begin
-      response = yield
+      code, body = _response(yield)
     rescue Errno::ECONNREFUSED
       raise ApiClient::Exceptions::ConnectionRefused
     end
-    raise_exception(response.code)
-    new(JSON.parse(response.body))
+    raise_exception(code)
+    new(body)
   end
 
   def self.raise_exception(code)
@@ -41,6 +46,7 @@ class ApiClient::Base
       when '500' then raise ApiClient::Exceptions::InternalServerError
       when '502' then raise ApiClient::Exceptions::BadGateway
       when '503' then raise ApiClient::Exceptions::ServiceUnavailable
+      else return
     end
   end
 end

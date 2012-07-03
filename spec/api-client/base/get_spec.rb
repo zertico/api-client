@@ -6,7 +6,7 @@ describe ApiClient::Base do
   describe "#get" do
     context "when connection is refused" do
       before :each do
-        Net::HTTP.stub(:get_response).and_raise(Errno::ECONNREFUSED)
+        FakeWeb.register_uri(:get, "http://api.example.com/user/5", :exception => Errno::ECONNREFUSED)
       end
 
       it "should return a ConnectionRefused exception" do
