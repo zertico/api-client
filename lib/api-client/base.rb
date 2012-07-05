@@ -26,6 +26,18 @@ class ApiClient::Base
     dispatch { _post(url, args, header) }
   end
 
+  def self.put(url = '', args = {}, header = {})
+    dispatch { _put(url, args, header) }
+  end
+
+  def self.patch(url = '', args = {}, header = {})
+    dispatch { _patch(url, args, header) }
+  end
+
+  def self.delete(url = '', header = {})
+    dispatch { _delete(url, header) }
+  end
+
   protected
 
   def self.dispatch

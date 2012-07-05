@@ -11,6 +11,21 @@ module ApiClient::Dispatcher
     @http.post(@uri.path, args.to_json, { 'Content-Type' => 'application/json' }.merge(header))
   end
 
+  def _put(url, args, header)
+    initialize_connection(url)
+    @http.put(@uri.path, args.to_json, { 'Content-Type' => 'application/json' }.merge(header))
+  end
+
+  def _patch(url, args, header)
+    initialize_connection(url)
+    @http.patch(@uri.path, args.to_json, { 'Content-Type' => 'application/json' }.merge(header))
+  end
+
+  def _delete(url, header)
+    initialize_connection(url)
+    @http.delete(@uri.path, header)
+  end
+
   protected
 
   def initialize_connection(url = '')
