@@ -18,12 +18,12 @@ class ApiClient::Base
     false
   end
 
-  def self.get(url = '')
-    dispatch { _get(url) }
+  def self.get(url = '', header = {})
+    dispatch { _get(url, header) }
   end
 
-  def self.post(url = '', args = {})
-    dispatch { _post(url, args) }
+  def self.post(url = '', args = {}, header = {})
+    dispatch { _post(url, args, header) }
   end
 
   protected

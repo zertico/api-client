@@ -7,7 +7,7 @@ describe ApiClient::Dispatcher do
     end
 
     it "should return the response code and body" do
-      ApiClient::Base._get("http://api.example.com/user/5").should be_a(Net::HTTPOK)
+      ApiClient::Base._get("http://api.example.com/user/5", {}).should be_a(Net::HTTPOK)
     end
   end
 
@@ -17,7 +17,7 @@ describe ApiClient::Dispatcher do
     end
 
     it "should return the response code and body" do
-      ApiClient::Base._post("http://api.example.com/user/5", {}).should be_a(Net::HTTPCreated)
+      ApiClient::Base._post("http://api.example.com/user/5", {}, {}).should be_a(Net::HTTPCreated)
     end
   end
 end

@@ -7,7 +7,7 @@ describe ApiClient::Parser do
         FakeWeb.register_uri(:post, "http://api.example.com/user/5",
                              :body => { :a => :b }.to_json,
                              :status => "201")
-        @response = ApiClient::Base._post('http://api.example.com/user/5', {})
+        @response = ApiClient::Base._post('http://api.example.com/user/5', {}, {})
       end
 
       it "should return the response code and the body parsed" do
@@ -20,7 +20,7 @@ describe ApiClient::Parser do
         FakeWeb.register_uri(:post, "http://api.example.com/user/5",
                              :body => "wrong",
                              :status => "201")
-        @response = ApiClient::Base._post('http://api.example.com/user/5', {})
+        @response = ApiClient::Base._post('http://api.example.com/user/5', {}, {})
       end
 
       it "should return the response code and a nil body" do
