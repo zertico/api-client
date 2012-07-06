@@ -1,0 +1,53 @@
+# CHANGELOG
+
+## v1.2.0
+
+* methods put, patch and delete added.
+* changed post method to send as json by default, but left option to override it.
+* header params added to methods.
+
+## v1.1.1
+
+* fix for post when uri has a non default port (80).
+
+## v1.1.0
+
+* changed post method to always send as json.
+
+## v1.0.0
+
+* handler for response code 400 removed.
+* Refactoring of usage.
+
+## v0.6.0
+
+* handler for response code 400 added.
+
+## v0.5.0
+
+* handler for connection refused added.
+
+## v0.4.1
+
+* rename gem name to fix require issues.
+
+## v0.4.0
+
+* handlers for response code 500, 502 and 503 added.
+
+## v0.3.0
+
+* handler for response code 401 added.
+
+## v0.2.0
+
+* post method added
+
+## v0.1.0
+
+* generic exception added.
+
+## v0.0.1
+
+* get method added.
+* handler for response code 404 added.
