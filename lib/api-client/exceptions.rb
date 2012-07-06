@@ -1,3 +1,4 @@
+# Namespace for the ApiClient Exceptions.
 module ApiClient::Exceptions
   autoload :Generic, 'api-client/exceptions/generic'
   autoload :NotFound, 'api-client/exceptions/not_found'
