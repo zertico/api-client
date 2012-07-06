@@ -7,9 +7,11 @@ module ApiClient::Parser
   def _response(response)
     begin
       body = JSON.parse(response.body)
+      root_node =  name.split('::').last.downcase
+      object = body.key?(root_node) ? body[root_node] : body
     rescue JSON::ParserError
-      body = nil
+      object = nil
     end
-    return response.code, body
+    return response.code, object
   end
 end

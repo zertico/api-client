@@ -118,12 +118,12 @@ class ApiClient::Base
 
   def self.dispatch
     begin
-      code, body = _response(yield)
+      code, object = _response(yield)
     rescue Errno::ECONNREFUSED
       raise ApiClient::Exceptions::ConnectionRefused
     end
     raise_exception(code)
-    new(body)
+    new(object)
   end
 
   def self.raise_exception(code)
