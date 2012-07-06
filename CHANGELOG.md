@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.3.0
+
+* functionality to read args with a root node added.
+
 ## v1.2.0
 
 * methods put, patch and delete added.
