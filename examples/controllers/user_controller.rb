@@ -1,4 +1,4 @@
-class UserController < ActionController::Base
+class UserController < ApplicationController
   # It will works with respond_with.
   # Your action should looks like any other one: A model with a method call. =D
   def index
