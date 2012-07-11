@@ -14,7 +14,10 @@ class ApiClient::Base
   extend ApiClient::Parser
   extend ApiClient::Dispatcher
 
-  # Initialize an object based on a hash of a attributes.
+  # @params [Hash] Hash of errors.
+  attr_writer :errors
+
+  # Initialize an object based on a hash of attributes.
   #
   # @param [Hash] attributes object attributes.
   # @return [Base] the object initialized.
@@ -26,9 +29,16 @@ class ApiClient::Base
 
   # Return if a object is persisted on the database or not.
   #
-  # @return [False] it will always return false.
+  # @return [False] always return false.
   def persisted?
     false
+  end
+
+  # Return the an array of errors if existent, otherwise instantiate a new ApiClient::Errors object with self.
+  #
+  # @return [ApiClient::Errors] the validation errors.
+  def errors
+    @errors ||= ApiClient::Errors.new(self)
   end
 
   # Make a get request and returns a new instance with te response attributes.

@@ -22,4 +22,26 @@ describe ApiClient::Base do
       User.new.should_not be_persisted
     end
   end
+
+  describe "#errors" do
+    context "when @errors is not nil" do
+      before :each do
+        @user = User.new(:errors => {:a => :bc})
+      end
+
+      it "should return the errors" do
+        @user.errors.should == {:a => :bc}
+      end
+    end
+
+    context "when @errors is nil" do
+      before :each do
+        @user = User.new
+      end
+
+      it "should instantiate a new instance of ApiClient::Errors" do
+        @user.errors.should be_an_instance_of(ApiClient::Errors)
+      end
+    end
+  end
 end

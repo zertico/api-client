@@ -6,4 +6,7 @@ require File.dirname(__FILE__) + "/../lib/api-client"
 
 class User < ApiClient::Base
   attr_accessor :a, :b
+
+  validates_presence_of :a
+  validates_inclusion_of :a, :in => %w(a A)
 end
