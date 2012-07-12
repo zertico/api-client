@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v1.4.1
+
+* ActiveModel compatibility for errors added. make all error keys symbolic.
+
+## v1.4.0
+
+* functionality to validate on client side using ApiClient::Base added
+
 ## v1.3.0
 
 * functionality to read args with a root node added.
