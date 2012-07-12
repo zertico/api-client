@@ -14,9 +14,6 @@ class ApiClient::Base
   extend ApiClient::Parser
   extend ApiClient::Dispatcher
 
-  # @params [Hash] Hash of errors.
-  attr_writer :errors
-
   # Initialize an object based on a hash of attributes.
   #
   # @param [Hash] attributes object attributes.
@@ -39,6 +36,10 @@ class ApiClient::Base
   # @return [ApiClient::Errors] the validation errors.
   def errors
     @errors ||= ApiClient::Errors.new(self)
+  end
+
+  def errors=(errors = {})
+    @errors = Hash[errors.map{|(key,value)| [key.to_sym,value]}]
   end
 
   # Make a get request and returns a new instance with te response attributes.

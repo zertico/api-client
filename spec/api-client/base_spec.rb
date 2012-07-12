@@ -44,4 +44,14 @@ describe ApiClient::Base do
       end
     end
   end
+
+  describe "#errors=" do
+    before :each do
+      @user = User.new(:errors => { "a" => "message", "b" => "message" })
+    end
+
+    it "should set @errors with symbolic keys" do
+      @user.errors.should == { :a => "message", :b => "message" }
+    end
+  end
 end
