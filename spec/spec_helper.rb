@@ -10,3 +10,9 @@ class User < ApiClient::Base
   validates_presence_of :a
   validates_inclusion_of :a, :in => %w(a A)
 end
+
+class Admin < ApiClient::Base
+  self.remote_object = "user"
+
+  attr_accessor :a, :b
+end

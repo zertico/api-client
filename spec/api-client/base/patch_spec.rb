@@ -75,24 +75,59 @@ describe ApiClient::Base do
     end
 
     context "when response code is 2xx" do
-      before :each do
-        FakeWeb.register_uri(:patch, "http://api.example.com/user/5", :status => "201", :body => '{"a": "a", "b": "b"}')
-        User.stub(:new).and_return(user)
+      context "without any specifications" do
+        before :each do
+          FakeWeb.register_uri(:patch, "http://api.example.com/user/5", :status => "201", :body => '{"a": "a", "b": "b"}')
+          User.stub(:new).and_return(user)
+        end
+
+        it "should return a object initialized with the response" do
+          User.patch('http://api.example.com/user/5', {}).should == user
+        end
       end
 
-      it "should return a object initialized with the response" do
-        User.patch('http://api.example.com/user/5', {}).should == user
-      end
-    end
+      context "with a specified port" do
+        before :each do
+          FakeWeb.register_uri(:patch, "http://api.example.com:3001/user/5", :status => "201", :body => '{"a": "a", "b": "b"}')
+          User.stub(:new).and_return(user)
+        end
 
-    context "with a specified port" do
-      before :each do
-        FakeWeb.register_uri(:patch, "http://api.example.com:3001/user/5", :status => "201", :body => '{"a": "a", "b": "b"}')
-        User.stub(:new).and_return(user)
+        it "should return a object initialized with the response" do
+          User.patch('http://api.example.com:3001/user/5', {}).should == user
+        end
       end
 
-      it "should return a object initialized with the response" do
-        User.patch('http://api.example.com:3001/user/5', {}).should == user
+      context "with a specified remote object name" do
+        before :each do
+          FakeWeb.register_uri(:patch, "http://api.example.com/user/5", :status => "201", :body => '{"user": {"a": "a", "b": "b"} }')
+          Admin.stub(:new).and_return(user)
+        end
+
+        it "should return a object initialized with the response" do
+          Admin.patch('http://api.example.com/user/5', {}).should == user
+        end
+      end
+
+      context "with a collection" do
+        before :each do
+          FakeWeb.register_uri(:patch, "http://api.example.com/user/5", :status => "201", :body => '{"users": [ {"a": "a", "b": "b"}, {"a": "a", "b": "b"} ] }')
+          User.stub(:new).and_return(user)
+        end
+
+        it "should return a collection of objects initialized with the response" do
+          User.patch('http://api.example.com/user/5', {}).should == [ user, user ]
+        end
+      end
+
+      context "with a collection and a specified remote object name" do
+        before :each do
+          FakeWeb.register_uri(:patch, "http://api.example.com/user/5", :status => "201", :body => '{"users": [ {"a": "a", "b": "b"}, {"a": "a", "b": "b"} ] }')
+          Admin.stub(:new).and_return(user)
+        end
+
+        it "should return a collection of objects initialized with the response" do
+          Admin.patch('http://api.example.com/user/5', {}).should == [ user, user ]
+        end
       end
     end
   end

@@ -6,12 +6,26 @@ module ApiClient::Parser
   # @return [Array] the code and the body parsed.
   def _response(response)
     begin
-      body = JSON.parse(response.body)
-      root_node =  name.split('::').last.downcase
-      object = body.key?(root_node) ? body[root_node] : body
+      object = JSON.parse(response.body)
+      object = object[remote_object] if object.key?(remote_object)
+      object = object[remote_object.pluralize] if object.key?(remote_object.pluralize)
     rescue JSON::ParserError
       object = nil
     end
     return response.code, object
+  end
+
+  # Return the Remote Object Name.
+  #
+  # @return [String] a string with the remote object class name.
+  def remote_object
+    @remote_object.blank? ? self.to_s.split('::').last.downcase : @remote_object
+  end
+
+  # Set a custom remote object name instead of the virtual class name.
+  #
+  # @param [String] remote_object name.
+  def remote_object=(remote_object)
+    @remote_object = remote_object
   end
 end

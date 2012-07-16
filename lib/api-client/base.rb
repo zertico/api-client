@@ -31,13 +31,16 @@ class ApiClient::Base
     false
   end
 
-  # Return the an array of errors if existent, otherwise instantiate a new ApiClient::Errors object with self.
+  # Return the hash of errors if existent, otherwise instantiate a new ApiClient::Errors object with self.
   #
   # @return [ApiClient::Errors] the validation errors.
   def errors
     @errors ||= ApiClient::Errors.new(self)
   end
 
+  # Set the hash of errors, making keys symbolic.
+  #
+  # @param [Hash] errors of the object..
   def errors=(errors = {})
     @errors = Hash[errors.map{|(key,value)| [key.to_sym,value]}]
   end
@@ -134,6 +137,7 @@ class ApiClient::Base
       raise ApiClient::Exceptions::ConnectionRefused
     end
     raise_exception(code)
+    return object.map { |a| new(a) } if object.instance_of?(Array)
     new(object)
   end
 

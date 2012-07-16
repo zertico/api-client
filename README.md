@@ -1,6 +1,6 @@
 # ApiClient [![Build Status](https://secure.travis-ci.org/plribeiro3000/api-client.png)](http://travis-ci.org/plribeiro3000/api-client)
 
-Client to make Api calls inside Rails easily. The master only supports ruby-1.9.3.
+Client to make Api calls easily. The master only supports ruby-1.9.3.
 For older versions, check branch retro-compatibility.
 
 ## Installation
@@ -17,7 +17,7 @@ Or install it yourself as:
 
     $ gem install api-client
 
-## Usage
+## Basic Usage
 
 Add this to your ApplicationController:
 
@@ -38,6 +38,15 @@ On Your model, extend ApiClient::Base
 Then, on your action, just put into it:
 
     @user = User.get("http://api.example.com/user/3")
+
+## Advanced Usage
+
+ApiClient can read api responses with root nodes based on the name of the virtual class.
+In Some cases, that is not the required behavior. To Redefine it, use remote_object method:
+
+    class Admin < ApiClient::Base
+       self.remote_object = "user"
+    end
 
 ## TODO
    * Add Support to Typhoeus and Faraday
