@@ -7,9 +7,9 @@ module ApiClient::Dispatcher
   # @param [String] url of the api request.
   # @param [Hash] header attributes of the request.
   # @return [HTTP] the response object.
-  def _get(url, header)
+  def self.get(url, header = {})
     initialize_connection(url)
-    @http.get(@uri.path, header)
+    call { @http.get(@uri.path, header) }
   end
 
   # Make a post request and returns it.
@@ -18,9 +18,9 @@ module ApiClient::Dispatcher
   # @param [Hash] args attributes of object.
   # @param [Hash] header attributes of the request.
   # @return [HTTP] the response object.
-  def _post(url, args, header)
+  def self.post(url, args, header = {})
     initialize_connection(url)
-    @http.post(@uri.path, args.to_json, { 'Content-Type' => 'application/json' }.merge(header))
+    call { @http.post(@uri.path, args.to_json, { 'Content-Type' => 'application/json' }.merge(header)) }
   end
 
   # Make a put request and returns it.
@@ -29,9 +29,9 @@ module ApiClient::Dispatcher
   # @param [Hash] args attributes of object.
   # @param [Hash] header attributes of the request.
   # @return [HTTP] the response object.
-  def _put(url, args, header)
+  def self.put(url, args, header = {})
     initialize_connection(url)
-    @http.put(@uri.path, args.to_json, { 'Content-Type' => 'application/json' }.merge(header))
+    call { @http.put(@uri.path, args.to_json, { 'Content-Type' => 'application/json' }.merge(header)) }
   end
 
   # Make a patch request and returns it.
@@ -40,9 +40,9 @@ module ApiClient::Dispatcher
   # @param [Hash] args attributes of object.
   # @param [Hash] header attributes of the request.
   # @return [HTTP] the response object.
-  def _patch(url, args, header)
+  def self.patch(url, args, header = {})
     initialize_connection(url)
-    @http.patch(@uri.path, args.to_json, { 'Content-Type' => 'application/json' }.merge(header))
+    call { @http.patch(@uri.path, args.to_json, { 'Content-Type' => 'application/json' }.merge(header)) }
   end
 
   # Make a delete request and returns it.
@@ -50,15 +50,23 @@ module ApiClient::Dispatcher
   # @param [String] url of the api request.
   # @param [Hash] header attributes of the request.
   # @return [HTTP] the response object.
-  def _delete(url, header)
+  def self.delete(url, header = {})
     initialize_connection(url)
-    @http.delete(@uri.path, header)
+    call { @http.delete(@uri.path, header) }
   end
 
   protected
 
-  def initialize_connection(url = '')
+  def self.initialize_connection(url = '')
     @uri = URI(url)
     @http = Net::HTTP.new(@uri.host, @uri.port)
+  end
+
+  def self.call
+    begin
+      yield
+    rescue Errno::ECONNREFUSED
+      raise ApiClient::Exceptions::ConnectionRefused
+    end
   end
 end

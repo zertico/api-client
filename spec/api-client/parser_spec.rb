@@ -1,18 +1,22 @@
 require 'spec_helper'
 
 describe ApiClient::Parser do
-  describe "#_response" do
+  describe "#response" do
+    before :each do
+      @remote_object = ApiClient::Base.remote_object
+    end
+
     context "with a valid json response" do
       context "without a root node" do
         before :each do
           FakeWeb.register_uri(:post, "http://api.example.com/user/5",
                                :body => { :a => :b }.to_json,
                                :status => "201")
-          @response = ApiClient::Base._post('http://api.example.com/user/5', {}, {})
+          @response = ApiClient::Dispatcher.post('http://api.example.com/user/5', {}, {})
         end
 
         it "should return the response code and the body parsed" do
-          ApiClient::Base._response(@response).should == ['201', { "a" => "b" }]
+          ApiClient::Parser.response(@response, @remote_object).should == { "a" => "b" }
         end
       end
 
@@ -21,11 +25,11 @@ describe ApiClient::Parser do
           FakeWeb.register_uri(:post, "http://api.example.com/user/5",
                                :body => { :base => { :a => :b } }.to_json,
                                :status => "201")
-          @response = ApiClient::Base._post('http://api.example.com/user/5', {}, {})
+          @response = ApiClient::Dispatcher.post('http://api.example.com/user/5', {}, {})
         end
 
         it "should return the response code and the body parsed" do
-          ApiClient::Base._response(@response).should == ['201', { "a" => "b" }]
+          ApiClient::Parser.response(@response, @remote_object).should == { "a" => "b" }
         end
       end
     end
@@ -35,32 +39,80 @@ describe ApiClient::Parser do
         FakeWeb.register_uri(:post, "http://api.example.com/user/5",
                              :body => "wrong",
                              :status => "201")
-        @response = ApiClient::Base._post('http://api.example.com/user/5', {}, {})
+        @response = ApiClient::Dispatcher.post('http://api.example.com/user/5', {}, {})
       end
 
-      it "should return the response code and a nil body" do
-        ApiClient::Base._response(@response).should == ['201', nil]
-      end
-    end
-  end
-
-  describe "#remote_object" do
-    context "on a class without remote object specification" do
-      it "should return the class name" do
-        User.remote_object.should == "user"
+      it "should return the response code and an empty hash" do
+        ApiClient::Parser.response(@response, @remote_object).should == {}
       end
     end
 
-    context "on a class with remote object specification" do
-      it "should return the class name" do
-        Admin.remote_object.should == "user"
-      end
-    end
-  end
+    context "with a response code of" do
+      context "401" do
+        before :each do
+          FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "401")
+          @response = ApiClient::Dispatcher.get('http://api.example.com/user/5')
+        end
 
-  describe "#remote_object=" do
-    it "should set the remote object name" do
-      Admin.remote_object.should == "user"
+        it "should return a Unauthorized exception" do
+          lambda { ApiClient::Parser.response(@response, @remote_object) }.should raise_error(ApiClient::Exceptions::Unauthorized)
+        end
+      end
+
+      context "403" do
+        before :each do
+          FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "403")
+          @response = ApiClient::Dispatcher.get('http://api.example.com/user/5')
+        end
+
+        it "should return a Forbidden exception" do
+          lambda { ApiClient::Parser.response(@response, @remote_object) }.should raise_error(ApiClient::Exceptions::Forbidden)
+        end
+      end
+
+      context "404" do
+        before :each do
+          FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "404")
+          @response = ApiClient::Dispatcher.get('http://api.example.com/user/5')
+        end
+
+        it "should return a NotFound exception" do
+          lambda { ApiClient::Parser.response(@response, @remote_object) }.should raise_error(ApiClient::Exceptions::NotFound)
+        end
+      end
+
+      context "500" do
+        before :each do
+          FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "500")
+          @response = ApiClient::Dispatcher.get('http://api.example.com/user/5')
+        end
+
+        it "should return a InternalServerError exception" do
+          lambda { ApiClient::Parser.response(@response, @remote_object) }.should raise_error(ApiClient::Exceptions::InternalServerError)
+        end
+      end
+
+      context "502" do
+        before :each do
+          FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "502")
+          @response = ApiClient::Dispatcher.get('http://api.example.com/user/5')
+        end
+
+        it "should return a BadGateway exception" do
+          lambda { ApiClient::Parser.response(@response, @remote_object) }.should raise_error(ApiClient::Exceptions::BadGateway)
+        end
+      end
+
+      context "503" do
+        before :each do
+          FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "503")
+          @response = ApiClient::Dispatcher.get('http://api.example.com/user/5')
+        end
+
+        it "should return a ServiceUnavailable exception" do
+          lambda { ApiClient::Parser.response(@response, @remote_object) }.should raise_error(ApiClient::Exceptions::ServiceUnavailable)
+        end
+      end
     end
   end
 end

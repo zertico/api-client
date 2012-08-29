@@ -7,7 +7,7 @@ describe ApiClient::Errors do
       @user.valid?
     end
 
-    it "should set #a" do
+    it "should set a unique message for each attribute" do
       @user.errors.unique_messages.should == { :a => "can't be blank and is not included in the list" }
     end
   end

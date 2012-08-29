@@ -6,150 +6,63 @@ require "active_model"
 #    attr_accessor :color, :name, :year
 #  end
 # This class will handle Rails form as well as it works with respond_with.
-class ApiClient::Base
-  include ActiveModel::Validations
-  include ActiveModel::Conversion
-  extend ActiveModel::Naming
+module ApiClient
+  class Base
+    include ActiveModel::Validations
+    include ActiveModel::Conversion
+    extend ActiveModel::Naming
 
-  extend ApiClient::Parser
-  extend ApiClient::Dispatcher
-
-  # Initialize an object based on a hash of attributes.
-  #
-  # @param [Hash] attributes object attributes.
-  # @return [Base] the object initialized.
-  def initialize(attributes = {})
-    attributes.each do |name, value|
-      send("#{name}=", value)
+    # Initialize an object based on a hash of attributes.
+    #
+    # @param [Hash] attributes object attributes.
+    # @return [Base] the object initialized.
+    def initialize(attributes = {})
+      attributes.each do |name, value|
+        send("#{name}=", value)
+      end
     end
-  end
 
-  # Return if a object is persisted on the database or not.
-  #
-  # @return [False] always return false.
-  def persisted?
-    false
-  end
-
-  # Return the hash of errors if existent, otherwise instantiate a new ApiClient::Errors object with self.
-  #
-  # @return [ApiClient::Errors] the validation errors.
-  def errors
-    @errors ||= ApiClient::Errors.new(self)
-  end
-
-  # Set the hash of errors, making keys symbolic.
-  #
-  # @param [Hash] errors of the object..
-  def errors=(errors = {})
-    @errors = Hash[errors.map{|(key,value)| [key.to_sym,value]}]
-  end
-
-  # Make a get request and returns a new instance with te response attributes.
-  #
-  # @param [String] url of the api request.
-  # @param [Hash] header attributes of the request.
-  # @return [Base] a new object initialized with the response.
-  # @raise [ApiClient::Exceptions::ConnectionRefused] The request was refused by the api.
-  # @raise [ApiClient::Exceptions::Unauthorized] The request requires user authentication.
-  # @raise [ApiClient::Exceptions::Forbidden] The request was refused.
-  # @raise [ApiClient::Exceptions::NotFound] The request uri has not be found.
-  # @raise [ApiClient::Exceptions::InternalServerError] The request was not fulfilled by the api.
-  # @raise [ApiClient::Exceptions::BadGateway] The request was not fulfilled by the api.
-  # @raise [ApiClient::Exceptions::ServiceUnavailable] The api was unable to handle the request.
-  def self.get(url = '', header = {})
-    dispatch { _get(url, header) }
-  end
-
-  # Make a post request and returns a new instance with te response attributes.
-  #
-  # @param [String] url of the api request.
-  # @param [Hash] args attributes of object.
-  # @param [Hash] header attributes of the request.
-  # @return [Base] a new object initialized with the response.
-  # @raise [ApiClient::Exceptions::ConnectionRefused] The request was refused by the api.
-  # @raise [ApiClient::Exceptions::Unauthorized] The request requires user authentication.
-  # @raise [ApiClient::Exceptions::Forbidden] The request was refused.
-  # @raise [ApiClient::Exceptions::NotFound] The request uri has not be found.
-  # @raise [ApiClient::Exceptions::InternalServerError] The request was not fulfilled by the api.
-  # @raise [ApiClient::Exceptions::BadGateway] The request was not fulfilled by the api.
-  # @raise [ApiClient::Exceptions::ServiceUnavailable] The api was unable to handle the request.
-  def self.post(url = '', args = {}, header = {})
-    dispatch { _post(url, args, header) }
-  end
-
-  # Make a put request and returns a new instance with te response attributes.
-  #
-  # @param [String] url of the api request.
-  # @param [Hash] args attributes of object.
-  # @param [Hash] header attributes of the request.
-  # @return [Base] a new object initialized with the response.
-  # @raise [ApiClient::Exceptions::ConnectionRefused] The request was refused by the api.
-  # @raise [ApiClient::Exceptions::Unauthorized] The request requires user authentication.
-  # @raise [ApiClient::Exceptions::Forbidden] The request was refused.
-  # @raise [ApiClient::Exceptions::NotFound] The request uri has not be found.
-  # @raise [ApiClient::Exceptions::InternalServerError] The request was not fulfilled by the api.
-  # @raise [ApiClient::Exceptions::BadGateway] The request was not fulfilled by the api.
-  # @raise [ApiClient::Exceptions::ServiceUnavailable] The api was unable to handle the request.
-  def self.put(url = '', args = {}, header = {})
-    dispatch { _put(url, args, header) }
-  end
-
-  # Make a patch request and returns a new instance with te response attributes.
-  #
-  # @param [String] url of the api request.
-  # @param [Hash] args attributes of object.
-  # @param [Hash] header attributes of the request.
-  # @return [Base] a new object initialized with the response.
-  # @raise [ApiClient::Exceptions::ConnectionRefused] The request was refused by the api.
-  # @raise [ApiClient::Exceptions::Unauthorized] The request requires user authentication.
-  # @raise [ApiClient::Exceptions::Forbidden] The request was refused.
-  # @raise [ApiClient::Exceptions::NotFound] The request uri has not be found.
-  # @raise [ApiClient::Exceptions::InternalServerError] The request was not fulfilled by the api.
-  # @raise [ApiClient::Exceptions::BadGateway] The request was not fulfilled by the api.
-  # @raise [ApiClient::Exceptions::ServiceUnavailable] The api was unable to handle the request.
-  def self.patch(url = '', args = {}, header = {})
-    dispatch { _patch(url, args, header) }
-  end
-
-  # Make a delete request and returns a new instance with te response attributes.
-  #
-  # @param [String] url of the api request.
-  # @param [Hash] header attributes of the request.
-  # @return [Base] a new object initialized with the response.
-  # @raise [ApiClient::Exceptions::ConnectionRefused] The request was refused by the api.
-  # @raise [ApiClient::Exceptions::Unauthorized] The request requires user authentication.
-  # @raise [ApiClient::Exceptions::Forbidden] The request was refused.
-  # @raise [ApiClient::Exceptions::NotFound] The request uri has not be found.
-  # @raise [ApiClient::Exceptions::InternalServerError] The request was not fulfilled by the api.
-  # @raise [ApiClient::Exceptions::BadGateway] The request was not fulfilled by the api.
-  # @raise [ApiClient::Exceptions::ServiceUnavailable] The api was unable to handle the request.
-  def self.delete(url = '', header = {})
-    dispatch { _delete(url, header) }
-  end
-
-  protected
-
-  def self.dispatch
-    begin
-      code, object = _response(yield)
-    rescue Errno::ECONNREFUSED
-      raise ApiClient::Exceptions::ConnectionRefused
+    # Return the Remote Object Name.
+    #
+    # @return [String] a string with the remote object class name.
+    def self.remote_object
+      @remote_object.blank? ? self.to_s.split('::').last.downcase : @remote_object
     end
-    raise_exception(code)
-    return object.map { |a| new(a) } if object.instance_of?(Array)
-    new(object)
-  end
 
-  def self.raise_exception(code)
-    case code
-      when '401' then raise ApiClient::Exceptions::Unauthorized
-      when '403' then raise ApiClient::Exceptions::Forbidden
-      when '404' then raise ApiClient::Exceptions::NotFound
-      when '500' then raise ApiClient::Exceptions::InternalServerError
-      when '502' then raise ApiClient::Exceptions::BadGateway
-      when '503' then raise ApiClient::Exceptions::ServiceUnavailable
-      else return
+    # Set a custom remote object name instead of the virtual class name.
+    #
+    # @param [String] remote_object name.
+    def self.remote_object=(remote_object)
+      @remote_object = remote_object
+    end
+
+    # Return if a object is persisted on the database or not.
+    #
+    # @return [False] always return false.
+    def persisted?
+      false
+    end
+
+    # Return the hash of errors if existent, otherwise instantiate a new ApiClient::Errors object with self.
+    #
+    # @return [ApiClient::Errors] the validation errors.
+    def errors
+      @errors ||= Errors.new(self)
+    end
+
+    # Set the hash of errors, making keys symbolic.
+    #
+    # @param [Hash] errors of the object..
+    def errors=(errors = {})
+      @errors = Hash[errors.map{|(key,value)| [key.to_sym,value]}]
+    end
+
+    protected
+
+    def self.method_missing(method, *args)
+      json_object = Parser.response(Dispatcher.send(method, *args), remote_object)
+      return json_object.map { |a| new(a) } if json_object.instance_of?(Array)
+      new(json_object)
     end
   end
 end

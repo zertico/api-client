@@ -4,28 +4,29 @@ module ApiClient::Parser
   #
   # @param [HTTP] response HTTP object for the request.
   # @return [Array] the code and the body parsed.
-  def _response(response)
+  def self.response(response, remote_object)
     begin
       object = JSON.parse(response.body)
       object = object[remote_object] if object.key?(remote_object)
       object = object[remote_object.pluralize] if object.key?(remote_object.pluralize)
     rescue JSON::ParserError
-      object = nil
+      object = {}
     end
-    return response.code, object
+    raise_exception(response.code)
+    object
   end
 
-  # Return the Remote Object Name.
-  #
-  # @return [String] a string with the remote object class name.
-  def remote_object
-    @remote_object.blank? ? self.to_s.split('::').last.downcase : @remote_object
-  end
+  protected
 
-  # Set a custom remote object name instead of the virtual class name.
-  #
-  # @param [String] remote_object name.
-  def remote_object=(remote_object)
-    @remote_object = remote_object
+  def self.raise_exception(code)
+    case code
+      when '401' then raise ApiClient::Exceptions::Unauthorized
+      when '403' then raise ApiClient::Exceptions::Forbidden
+      when '404' then raise ApiClient::Exceptions::NotFound
+      when '500' then raise ApiClient::Exceptions::InternalServerError
+      when '502' then raise ApiClient::Exceptions::BadGateway
+      when '503' then raise ApiClient::Exceptions::ServiceUnavailable
+      else return
+    end
   end
 end

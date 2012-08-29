@@ -17,6 +17,26 @@ describe ApiClient::Base do
     end
   end
 
+  describe "#remote_object" do
+    context "on a class without remote object specification" do
+      it "should return the class name" do
+        User.remote_object.should == "user"
+      end
+    end
+
+    context "on a class with remote object specification" do
+      it "should return the class name" do
+        Admin.remote_object.should == "user"
+      end
+    end
+  end
+
+  describe "#remote_object=" do
+    it "should set the remote object name" do
+      Admin.remote_object.should == "user"
+    end
+  end
+
   describe "#persisted?" do
     it "should return false" do
       User.new.should_not be_persisted
