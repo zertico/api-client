@@ -21,32 +21,42 @@ Or install it yourself as:
 
 Add this to your ApplicationController:
 
-    rescue_from ApiClient::Exceptions::NotFound, :with => :not_found
+```ruby
+rescue_from ApiClient::Exceptions::NotFound, :with => :not_found
 
-    def not_found
-       #Specify your own behavior here
-    end
+def not_found
+    #Specify your own behavior here
+end
+```
 
 You can define a more generic rescue that will work for any error:
 
-    rescue_from ApiClient::Exceptions::Generic, :with => :generic_error
+```ruby
+rescue_from ApiClient::Exceptions::Generic, :with => :generic_error
+```
 
 On Your model, extend ApiClient::Base
 
-    class User < ApiClient::Base
+```ruby
+class User < ApiClient::Base
+```
 
 Then, on your action, just put into it:
 
-    @user = User.get("http://api.example.com/user/3")
+```ruby
+@user = User.get("http://api.example.com/user/3")
+```
 
 ## Advanced Usage
 
 ApiClient can read api responses with root nodes based on the name of the virtual class.
 In Some cases, that is not the required behavior. To Redefine it, use remote_object method:
 
-    class Admin < ApiClient::Base
-       self.remote_object = "user"
-    end
+```ruby
+class Admin < ApiClient::Base
+    self.remote_object = "user"
+end
+```
 
 ## TODO
    * Add Support to Typhoeus and Faraday
