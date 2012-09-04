@@ -1,9 +1,12 @@
 # CHANGELOG
 
+## v1.5.2
+
+* Fixed return from #add_errors.
+
 ## v1.5.1
 
 * Fixed Error Setter for erros from an external API.
-
 
 ## v1.5.0
 
