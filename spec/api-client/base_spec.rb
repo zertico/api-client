@@ -50,7 +50,7 @@ describe ApiClient::Base do
       end
 
       it "should return the errors" do
-        @user.errors.should == {:a => :bc}
+        @user.errors.messages.should == {:a => :bc}
       end
     end
 
@@ -71,7 +71,7 @@ describe ApiClient::Base do
     end
 
     it "should set @errors with symbolic keys" do
-      @user.errors.should == { :a => "message", :b => "message" }
+      @user.errors.messages.should == { :a => "message", :b => "message" }
     end
   end
 end

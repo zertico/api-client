@@ -54,7 +54,8 @@ module ApiClient
     #
     # @param [Hash] errors of the object..
     def errors=(errors = {})
-      @errors = Errors.new(self).add_errors(Hash[errors.map{|(key,value)| [key.to_sym,value]}])
+      @errors = Errors.new(self)
+      @errors.add_errors(Hash[errors.map{|(key,value)| [key.to_sym,value]}])
     end
 
     protected
