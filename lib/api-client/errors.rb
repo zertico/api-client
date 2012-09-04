@@ -9,7 +9,6 @@ class ApiClient::Errors < ActiveModel::Errors
     errors.each do |key, value|
       self.set(key, value)
     end
-    self
   end
 
   # Create a hash of attributes with unique validation error messages.
