@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v1.5.1
+
+* Fixed Error Setter for erros from an external API.
+
+
 ## v1.5.0
 
 * Handler of arrays as response.
