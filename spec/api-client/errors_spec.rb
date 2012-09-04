@@ -1,6 +1,16 @@
 require 'spec_helper'
 
 describe ApiClient::Errors do
+  describe "#add_errors" do
+    before :each do
+      @errors = ApiClient::Errors.new(self).add_errors({:a => 'b'})
+    end
+
+    it "should initialize a new object" do
+      @errors[:a].should == 'b'
+    end
+  end
+
   describe "#unique_messages" do
     before :each do
       @user = User.new

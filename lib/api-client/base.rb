@@ -1,12 +1,12 @@
 require "active_model"
 
-# ApiClient::Base provides a way to make easy api requests as well as making possible to use it inside rails.
-# A possible implementation:
-#  class Car < ApiClient::Base
-#    attr_accessor :color, :name, :year
-#  end
-# This class will handle Rails form as well as it works with respond_with.
 module ApiClient
+  # ApiClient::Base provides a way to make easy api requests as well as making possible to use it inside rails.
+  # A possible implementation:
+  #  class Car < ApiClient::Base
+  #    attr_accessor :color, :name, :year
+  #  end
+  # This class will handle Rails form as well as it works with respond_with.
   class Base
     include ActiveModel::Validations
     include ActiveModel::Conversion
@@ -54,12 +54,13 @@ module ApiClient
     #
     # @param [Hash] errors of the object..
     def errors=(errors = {})
-      @errors = Hash[errors.map{|(key,value)| [key.to_sym,value]}]
+      @errors = Errors.new(self).add_errors(Hash[errors.map{|(key,value)| [key.to_sym,value]}])
     end
 
     protected
 
     def self.method_missing(method, *args)
+      return super unless Dispatcher.respond_to?(method)
       json_object = Parser.response(Dispatcher.send(method, *args), remote_object)
       return json_object.map { |a| new(a) } if json_object.instance_of?(Array)
       new(json_object)
