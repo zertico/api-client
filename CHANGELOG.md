@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.5.3
+
+* Improving #unique_messages method to work with #to_sentence from ActiveSupport.
+
 ## v1.5.2
 
 * Fixed return from #add_errors.

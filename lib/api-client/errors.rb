@@ -11,15 +11,34 @@ class ApiClient::Errors < ActiveModel::Errors
     end
   end
 
-  # Create a hash of attributes with unique validation error messages.
+  # Returns a unique message for each array of error messages in a hash.
   #
-  # Example:
-  #    user.errors.unique_messages   #=> { :name => [ can't be empty and is invalid ]}
+  #   class Person
+  #     validates_presence_of :name, :address, :email
+  #     validates_length_of :name, in: 5..30
+  #   end
   #
-  # @return [Hash] The hash of attributes with a unique error message.
+  #   person = Person.create(address: '123 First St.')
+  #   person.errors.unique_messages
+  #   # => { :name => "is too short (minimum is 5 characters) and can't be blank", :address => nil, :email => "can't be blank" }
   def unique_messages
     errors = {}
-    to_hash.each do |attribute, messages| errors[attribute] = messages.join(" and ") end
+    map { |attribute, messages| errors[attribute] = unique_message(attribute) }
     errors
+  end
+
+  # Returns a unique message for a given attribute.
+  #
+  #   class Person
+  #     validates_presence_of :name, :address, :email
+  #     validates_length_of :name, in: 5..30
+  #   end
+  #
+  #   person = Person.create(address: '123 First St.')
+  #   person.errors.unique_message(:name) # => "is too short (minimum is 5 characters) and can't be blank"
+  #   person.errors.unique_message(:address) # => nil
+  def unique_message(attribute)
+    return '' if messages[attribute].blank?
+    messages[attribute].to_sentence
   end
 end
