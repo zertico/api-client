@@ -6,8 +6,8 @@ class ApiClient::Errors < ActiveModel::Errors
   #
   # @return [ApiClient::Errors] The Error object.
   def add_errors(errors = {})
-    errors.each do |key, value|
-      self.set(key, value)
+    errors.each_pair do |key, value|
+      add(key, value)
     end
   end
 
@@ -39,6 +39,6 @@ class ApiClient::Errors < ActiveModel::Errors
   #   person.errors.unique_message(:address) # => nil
   def unique_message(attribute)
     return '' if messages[attribute].blank?
-    messages[attribute].to_sentence
+    [messages[attribute]].flatten.to_sentence
   end
 end

@@ -53,9 +53,9 @@ module ApiClient
     # Set the hash of errors, making keys symbolic.
     #
     # @param [Hash] errors of the object..
-    def errors=(errors = {})
+    def errors=(errs = {})
       @errors = Errors.new(self)
-      @errors.add_errors(Hash[errors.map{|(key,value)| [key.to_sym,value]}])
+      @errors.add_errors(Hash[errs.map{|(key,value)| [key.to_sym,value]}])
     end
 
     protected

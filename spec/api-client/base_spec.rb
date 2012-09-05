@@ -46,11 +46,11 @@ describe ApiClient::Base do
   describe "#errors" do
     context "when @errors is not nil" do
       before :each do
-        @user = User.new(:errors => {:a => :bc})
+        @user = User.new(:errors => {:a => :invalid})
       end
 
       it "should return the errors" do
-        @user.errors.messages.should == {:a => :bc}
+        @user.errors.messages.should == {:a => ['is invalid']}
       end
     end
 
@@ -70,8 +70,8 @@ describe ApiClient::Base do
       @user = User.new(:errors => { "a" => "message", "b" => "message" })
     end
 
-    it "should set @errors with symbolic keys" do
-      @user.errors.messages.should == { :a => "message", :b => "message" }
+    it "should set @errors with symbolic keys and messages as an array" do
+      @user.errors.messages.should == { :a => %w(message), :b => %w(message) }
     end
   end
 end
