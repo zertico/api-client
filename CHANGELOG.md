@@ -1,16 +1,8 @@
 # CHANGELOG
 
-## v1.5.3
+## v1.5.1 to v1.5.4
 
-* Improving #unique_messages method to work with #to_sentence from ActiveSupport.
-
-## v1.5.2
-
-* Fixed return from #add_errors.
-
-## v1.5.1
-
-* Fixed Error Setter for erros from an external API.
+* Fixed Bug with errors from external API and self.
 
 ## v1.5.0
 
