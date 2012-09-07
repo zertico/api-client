@@ -1,5 +1,5 @@
 source :rubygems
 
-gem 'typhoeus'
+gem 'typhoeus', '>= 0.5.0.pre'
 
 gemspec :path => '../'
