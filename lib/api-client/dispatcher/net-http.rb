@@ -10,7 +10,7 @@ module ApiClient::Dispatcher::NetHttp
   # @return [HTTP] the response object.
   def self.get(url, header = {})
     initialize_connection(url)
-    call { @http.get(@uri.path, {}, { 'Content-Type' => 'application/json' }.merge(header)) }
+    call { @http.get(@uri.path, { 'Content-Type' => 'application/json' }.merge(header)) }
   end
 
   # Make a post request and returns it.
