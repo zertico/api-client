@@ -61,7 +61,6 @@ module ApiClient
     protected
 
     def self.method_missing(method, *args)
-      return super unless Dispatcher.respond_to?(method)
       json_object = Parser.response(Dispatcher.send(method, *args), remote_object)
       return json_object.map { |a| new(a) } if json_object.instance_of?(Array)
       new(json_object)
