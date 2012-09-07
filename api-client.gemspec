@@ -10,12 +10,12 @@ Gem::Specification.new do |gem|
   gem.summary     = %q{Client to make Api calls}
 
   gem.files         = `git ls-files`.split("\n")
-  gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  gem.test_files    = `git ls-files -- {test,spec,features, gemfiles}/*`.split("\n")
   gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   gem.require_paths = %w(lib)
 
   gem.add_development_dependency "rake"
-  gem.add_development_dependency "fakeweb"
+  gem.add_development_dependency "webmock", "1.8.9"
   gem.add_development_dependency "rspec"
   gem.add_development_dependency "yard"
 

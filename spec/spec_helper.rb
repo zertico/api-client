@@ -1,5 +1,5 @@
 require "rspec"
-require "fakeweb"
+require 'webmock/rspec'
 require "json"
 
 require File.dirname(__FILE__) + "/../lib/api-client"

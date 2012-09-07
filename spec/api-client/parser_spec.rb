@@ -9,9 +9,7 @@ describe ApiClient::Parser do
     context "with a valid json response" do
       context "without a root node" do
         before :each do
-          FakeWeb.register_uri(:post, "http://api.example.com/user/5",
-                               :body => { :a => :b }.to_json,
-                               :status => "201")
+          stub_request(:post, "http://api.example.com/user/5").to_return(:body => { :a => :b }.to_json, :status => "201")
           @response = ApiClient::Dispatcher.post('http://api.example.com/user/5', {}, {})
         end
 
@@ -22,9 +20,7 @@ describe ApiClient::Parser do
 
       context "with a root node" do
         before :each do
-          FakeWeb.register_uri(:post, "http://api.example.com/user/5",
-                               :body => { :base => { :a => :b } }.to_json,
-                               :status => "201")
+          stub_request(:post, "http://api.example.com/user/5").to_return(:body => {:base => { :a => :b } }.to_json, :status => "201")
           @response = ApiClient::Dispatcher.post('http://api.example.com/user/5', {}, {})
         end
 
@@ -36,9 +32,7 @@ describe ApiClient::Parser do
 
     context "with a invalid json response" do
       before :each do
-        FakeWeb.register_uri(:post, "http://api.example.com/user/5",
-                             :body => "wrong",
-                             :status => "201")
+        stub_request(:post, "http://api.example.com/user/5").to_return(:body => "wrong", :status => "201")
         @response = ApiClient::Dispatcher.post('http://api.example.com/user/5', {}, {})
       end
 
@@ -50,7 +44,7 @@ describe ApiClient::Parser do
     context "with a response code of" do
       context "401" do
         before :each do
-          FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "401")
+          stub_request(:get, "http://api.example.com/user/5").to_return(:status => 401)
           @response = ApiClient::Dispatcher.get('http://api.example.com/user/5')
         end
 
@@ -61,7 +55,7 @@ describe ApiClient::Parser do
 
       context "403" do
         before :each do
-          FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "403")
+          stub_request(:get, "http://api.example.com/user/5").to_return(:status => 403)
           @response = ApiClient::Dispatcher.get('http://api.example.com/user/5')
         end
 
@@ -72,7 +66,7 @@ describe ApiClient::Parser do
 
       context "404" do
         before :each do
-          FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "404")
+          stub_request(:get, "http://api.example.com/user/5").to_return(:status => 404)
           @response = ApiClient::Dispatcher.get('http://api.example.com/user/5')
         end
 
@@ -83,7 +77,7 @@ describe ApiClient::Parser do
 
       context "500" do
         before :each do
-          FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "500")
+          stub_request(:get, "http://api.example.com/user/5").to_return(:status => 500)
           @response = ApiClient::Dispatcher.get('http://api.example.com/user/5')
         end
 
@@ -94,7 +88,7 @@ describe ApiClient::Parser do
 
       context "502" do
         before :each do
-          FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "502")
+          stub_request(:get, "http://api.example.com/user/5").to_return(:status => 502)
           @response = ApiClient::Dispatcher.get('http://api.example.com/user/5')
         end
 
@@ -105,7 +99,7 @@ describe ApiClient::Parser do
 
       context "503" do
         before :each do
-          FakeWeb.register_uri(:get, "http://api.example.com/user/5", :status => "503")
+          stub_request(:get, "http://api.example.com/user/5").to_return(:status => 503)
           @response = ApiClient::Dispatcher.get('http://api.example.com/user/5')
         end
 
