@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = %w(lib)
 
   gem.add_development_dependency "rake"
-  gem.add_development_dependency "webmock", "1.8.9"
+  gem.add_development_dependency "webmock", "1.8.8"
   gem.add_development_dependency "rspec"
   gem.add_development_dependency "yard"
 
