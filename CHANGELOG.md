@@ -4,7 +4,7 @@
 
 * Initial Support for Typhoeus added.
 * Fixed bug with get request and headers.
-* Support for ruby 1.9.2 added.
+* Support for ruby 1.8.7, 1.9.2, jruby and ree added.
 
 ## v1.5.1 to v1.5.4
 
