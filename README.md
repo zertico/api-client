@@ -1,7 +1,6 @@
 # ApiClient [![Build Status](https://secure.travis-ci.org/plribeiro3000/api-client.png)](http://travis-ci.org/plribeiro3000/api-client)
 
-Client to make Api calls easily. The master only supports ruby-1.9.3.
-For older versions, check branch retro-compatibility.
+Client to make Api calls easily. It supports ruby 1.8.7, 1.9.2, 1.9.3, jruby and ree out of the box.
 
 ## Installation
 
