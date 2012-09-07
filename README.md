@@ -59,7 +59,7 @@ end
 ```
 
 ## TODO
-   * Add Support to Typhoeus and Faraday
+   * Add Support to Faraday
    * Add more Response Handlers
 
 ## Contributing

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v1.6.0
+
+* Initial Support for Typhoeus added.
+* Fixed bug with get request and headers.
+* Support for ruby 1.9.2 added.
+
 ## v1.5.1 to v1.5.4
 
 * Fixed Bug with errors from external API and self.
