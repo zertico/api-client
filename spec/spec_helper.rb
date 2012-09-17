@@ -16,3 +16,9 @@ class Admin < ApiClient::Base
 
   attr_accessor :a, :b
 end
+
+class Post < ApiClient::Base
+  self.association({ :writer => "User" })
+
+  attr_accessor :a
+end

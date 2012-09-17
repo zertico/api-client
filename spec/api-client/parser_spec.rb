@@ -2,31 +2,14 @@ require 'spec_helper'
 
 describe ApiClient::Parser do
   describe "#response" do
-    before :each do
-      @remote_object = ApiClient::Base.remote_object
-    end
-
     context "with a valid json response" do
-      context "without a root node" do
-        before :each do
-          stub_request(:post, "http://api.example.com/user/5").to_return(:body => { :a => :b }.to_json, :status => "201")
-          @response = ApiClient::Dispatcher.post('http://api.example.com/user/5', {}, {})
-        end
-
-        it "should return the response code and the body parsed" do
-          ApiClient::Parser.response(@response, @remote_object).should == { "a" => "b" }
-        end
+      before :each do
+        stub_request(:post, "http://api.example.com/user/5").to_return(:body => {:base => { :a => :b } }.to_json, :status => "201")
+        @response = ApiClient::Dispatcher.post('http://api.example.com/user/5', {}, {})
       end
 
-      context "with a root node" do
-        before :each do
-          stub_request(:post, "http://api.example.com/user/5").to_return(:body => {:base => { :a => :b } }.to_json, :status => "201")
-          @response = ApiClient::Dispatcher.post('http://api.example.com/user/5', {}, {})
-        end
-
-        it "should return the response code and the body parsed" do
-          ApiClient::Parser.response(@response, @remote_object).should == { "a" => "b" }
-        end
+      it "should return the response code and the body parsed" do
+        ApiClient::Parser.response(@response).should == { "base" => { "a" => "b" } }
       end
     end
 
@@ -37,7 +20,7 @@ describe ApiClient::Parser do
       end
 
       it "should return the response code and an empty hash" do
-        ApiClient::Parser.response(@response, @remote_object).should == {}
+        ApiClient::Parser.response(@response).should == {}
       end
     end
 
@@ -49,7 +32,7 @@ describe ApiClient::Parser do
         end
 
         it "should return a Unauthorized exception" do
-          lambda { ApiClient::Parser.response(@response, @remote_object) }.should raise_error(ApiClient::Exceptions::Unauthorized)
+          lambda { ApiClient::Parser.response(@response) }.should raise_error(ApiClient::Exceptions::Unauthorized)
         end
       end
 
@@ -60,7 +43,7 @@ describe ApiClient::Parser do
         end
 
         it "should return a Forbidden exception" do
-          lambda { ApiClient::Parser.response(@response, @remote_object) }.should raise_error(ApiClient::Exceptions::Forbidden)
+          lambda { ApiClient::Parser.response(@response) }.should raise_error(ApiClient::Exceptions::Forbidden)
         end
       end
 
@@ -71,7 +54,7 @@ describe ApiClient::Parser do
         end
 
         it "should return a NotFound exception" do
-          lambda { ApiClient::Parser.response(@response, @remote_object) }.should raise_error(ApiClient::Exceptions::NotFound)
+          lambda { ApiClient::Parser.response(@response) }.should raise_error(ApiClient::Exceptions::NotFound)
         end
       end
 
@@ -82,7 +65,7 @@ describe ApiClient::Parser do
         end
 
         it "should return a InternalServerError exception" do
-          lambda { ApiClient::Parser.response(@response, @remote_object) }.should raise_error(ApiClient::Exceptions::InternalServerError)
+          lambda { ApiClient::Parser.response(@response) }.should raise_error(ApiClient::Exceptions::InternalServerError)
         end
       end
 
@@ -93,7 +76,7 @@ describe ApiClient::Parser do
         end
 
         it "should return a BadGateway exception" do
-          lambda { ApiClient::Parser.response(@response, @remote_object) }.should raise_error(ApiClient::Exceptions::BadGateway)
+          lambda { ApiClient::Parser.response(@response) }.should raise_error(ApiClient::Exceptions::BadGateway)
         end
       end
 
@@ -104,7 +87,7 @@ describe ApiClient::Parser do
         end
 
         it "should return a ServiceUnavailable exception" do
-          lambda { ApiClient::Parser.response(@response, @remote_object) }.should raise_error(ApiClient::Exceptions::ServiceUnavailable)
+          lambda { ApiClient::Parser.response(@response) }.should raise_error(ApiClient::Exceptions::ServiceUnavailable)
         end
       end
     end

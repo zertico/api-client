@@ -60,6 +60,7 @@ module ApiClient::Dispatcher::NetHttp
 
   def self.initialize_connection(url = '')
     @uri = URI(url)
+    @uri.path = "/" if @uri.path.blank?
     @http = Net::HTTP.new(@uri.host, @uri.port)
   end
 

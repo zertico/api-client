@@ -4,12 +4,10 @@ module ApiClient::Parser
   #
   # @param [HTTP] response HTTP object for the request.
   # @return [Array] the code and the body parsed.
-  def self.response(response, remote_object)
+  def self.response(response)
     raise_exception(response.code)
     begin
       object = JSON.parse(response.body)
-      object = object[remote_object] if object.key?(remote_object)
-      object = object[remote_object.pluralize] if object.key?(remote_object.pluralize)
     rescue JSON::ParserError, TypeError
       object = {}
     end

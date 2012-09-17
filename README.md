@@ -57,8 +57,17 @@ class Admin < ApiClient::Base
 end
 ```
 
+It can handle associations. It will automatically instantiate an association for you if properly setted like below:
+
+```ruby
+class Person < ApiClient::Base
+    self.associations = { :houses => "House", :cars => "Car" }
+```
+
+This code will create a setter and a getter for houses and cars and initialize the respective class inside the setter.
+
 ## TODO
-   * Add Support to Faraday
+   * Add support for parallel requests
    * Add more Response Handlers
 
 ## Contributing

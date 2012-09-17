@@ -43,6 +43,8 @@ describe ApiClient::Base do
     end
   end
 
+  describe
+
   describe "#errors" do
     context "when @errors is not nil" do
       before :each do
@@ -65,6 +67,20 @@ describe ApiClient::Base do
     end
   end
 
+  describe "#associations" do
+    before :each do
+      @post = Post.new({:a => "a", :writer => {:b => "b"}})
+    end
+
+    it "should instantiate a new instance of the association" do
+      @post.writer.should be_an_instance_of(User)
+    end
+
+    it "should create a setter and a getter for the associations" do
+      @post.writer.b.should == "b"
+    end
+  end
+
   describe "#errors=" do
     before :each do
       @user = User.new(:errors => { "a" => "message", "b" => "message" })
@@ -72,6 +88,20 @@ describe ApiClient::Base do
 
     it "should set @errors with symbolic keys and messages as an array" do
       @user.errors.messages.should == { :a => %w(message), :b => %w(message) }
+    end
+  end
+
+  describe "requests" do
+    before :each do
+      stub_request(:any, "http://api.example.com").to_return(:body => {"a" => "b"}.to_json)
+    end
+
+    it "should return a new instance" do
+      User.get("http://api.example.com").should be_an_instance_of(User)
+    end
+
+    it "should set the response on the instance" do
+      User.get("http://api.example.com").response.should == {"a" => "b"}
     end
   end
 end
