@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.7.0
+
+* Support for Associations added.
+
 ## v1.6.0
 
 * Initial Support for Typhoeus added.
