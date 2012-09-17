@@ -62,6 +62,7 @@ It can handle associations. It will automatically instantiate an association for
 ```ruby
 class Person < ApiClient::Base
     self.associations = { :houses => "House", :cars => "Car" }
+end
 ```
 
 This code will create a setter and a getter for houses and cars and initialize the respective class inside the setter.

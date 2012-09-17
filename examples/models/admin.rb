@@ -1,4 +1,5 @@
-class User < ApiClient::Base
+class Admin < ApiClient::Base
+  self.remote_object = "user"
   self.association = { :groups => "Group" }
 
   # Any of this fields can be called to manage rails form.
