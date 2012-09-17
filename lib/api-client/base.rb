@@ -53,10 +53,11 @@ module ApiClient
       associations.each do |association, class_name|
         class_eval <<-EVAL
           def #{association.to_s}=(attributes = {})
-            @association = #{class_name.constantize}.new(attributes)
+            return @#{class_name.constantize} = attributes.map { |attr| #{class_name.constantize}.new(attr) } if attributes.instance_of?(Array)
+            @#{class_name.constantize} = #{class_name.constantize}.new(attributes)
           end
           def #{association.to_s}
-            @association
+            @#{class_name.constantize}
           end
         EVAL
       end

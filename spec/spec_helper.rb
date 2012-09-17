@@ -22,3 +22,7 @@ class Post < ApiClient::Base
 
   attr_accessor :a
 end
+
+class Group < ApiClient::Base
+  self.associations({ :members => "User", :owner => "Admin" })
+end

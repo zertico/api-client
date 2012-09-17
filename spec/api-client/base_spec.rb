@@ -69,15 +69,15 @@ describe ApiClient::Base do
 
   describe "#associations" do
     before :each do
-      @post = Post.new({:a => "a", :writer => {:b => "b"}})
+      @group = Group.new(:members => [{:a => "a"}], :owner => {:b => "b"})
     end
 
-    it "should instantiate a new instance of the association" do
-      @post.writer.should be_an_instance_of(User)
+    it "should instantiate all members" do
+      @group.members.first.should be_an_instance_of(User)
     end
 
-    it "should create a setter and a getter for the associations" do
-      @post.writer.b.should == "b"
+    it "should instantiate the owner" do
+      @group.owner.should be_an_instance_of(Admin)
     end
   end
 
