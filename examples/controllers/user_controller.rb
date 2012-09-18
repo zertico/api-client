@@ -30,4 +30,9 @@ class UserController < ApplicationController
     @user = User.get("api.example.com/users/#{params[:id]}")
     respond_with(@user)
   end
+
+  def delete
+    @user = User.delete("api.example.com/users/#{params[:id]}")
+    respond_with(@user)
+  end
 end
