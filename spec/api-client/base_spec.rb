@@ -43,7 +43,31 @@ describe ApiClient::Base do
     end
   end
 
-  describe
+  describe "#associations" do
+    before :each do
+      @group = Group.new(:members => [{:a => "a"}], :owner => {:b => "b"})
+    end
+
+    it "should instantiate all members" do
+      @group.members.first.should be_an_instance_of(User)
+    end
+
+    it "should instantiate the owner" do
+      @group.owner.should be_an_instance_of(Admin)
+    end
+  end
+
+  describe "#attributes on the class" do
+    it "should return an array of attributes" do
+      User.attributes.should == [:a, :b]
+    end
+  end
+
+  describe "#attributes on the object" do
+    it "should return a hash with the attributes and currently values" do
+      User.new.attributes.should == {:a => nil, :b => nil}
+    end
+  end
 
   describe "#errors" do
     context "when @errors is not nil" do
@@ -64,20 +88,6 @@ describe ApiClient::Base do
       it "should instantiate a new instance of ApiClient::Errors" do
         @user.errors.should be_an_instance_of(ApiClient::Errors)
       end
-    end
-  end
-
-  describe "#associations" do
-    before :each do
-      @group = Group.new(:members => [{:a => "a"}], :owner => {:b => "b"})
-    end
-
-    it "should instantiate all members" do
-      @group.members.first.should be_an_instance_of(User)
-    end
-
-    it "should instantiate the owner" do
-      @group.owner.should be_an_instance_of(Admin)
     end
   end
 

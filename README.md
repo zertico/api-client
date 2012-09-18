@@ -65,7 +65,7 @@ class Person < ApiClient::Base
 end
 ```
 
-This code will create a setter and a getter for houses and cars and initialize the respective class inside the setter.
+This code will create a setter and a getter for houses and cars and initialize the respective class.
 
 ## TODO
    * Add support for parallel requests

@@ -53,11 +53,11 @@ module ApiClient
       associations.each do |association, class_name|
         class_eval <<-EVAL
           def #{association.to_s}=(attributes = {})
-            return @#{class_name.constantize} = attributes.map { |attr| #{class_name.constantize}.new(attr) } if attributes.instance_of?(Array)
-            @#{class_name.constantize} = #{class_name.constantize}.new(attributes)
+            return @#{association.to_s} = attributes.map { |attr| #{class_name.constantize}.new(attr) } if attributes.instance_of?(Array)
+            @#{association.to_s} = #{class_name.constantize}.new(attributes)
           end
           def #{association.to_s}
-            @#{class_name.constantize}
+            @#{association.to_s}
           end
         EVAL
       end
@@ -66,6 +66,33 @@ module ApiClient
     class << self
       alias_method :association, :associations
     end
+
+    # Overwrite #attr_acessor method to save instance_variable names.
+    #
+    # @param [Array] instance variables.
+    def self.attr_accessor(*vars)
+      @attributes ||= []
+      @attributes.concat vars
+      super
+    end
+
+    # Return an array with all instance variables setted through attr_acessor.
+    #
+    # @return [Array] instance variables.
+    def self.attributes
+      @attributes
+    end
+
+    # Return an array with all instance variables setted through attr_acessor and its currently values.
+    #
+    # @return [Hash] instance variables and its values.
+    def attributes
+      attributes = {}
+      self.class.instance_variable_get("@attributes").map { |attribute| attributes[attribute.to_sym] = self.send("#{attribute}") }
+      attributes
+    end
+
+    alias_method :to_hash, :attributes
 
     # Return the hash of errors if existent, otherwise instantiate a new ApiClient::Errors object with self.
     #
