@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.8.0
+
+* Methods to return attributes of the class added.
+
 ## v1.7.0
 
 * Support for Associations added.
