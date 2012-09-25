@@ -1,6 +1,8 @@
-# ApiClient [![Build Status](https://secure.travis-ci.org/zertico/api-client.png?branch=master)](http://travis-ci.org/zertico/api-client)
+# ApiClient - Client to call Api easily.
 
-Client to make Api calls easily. It supports ruby 1.8.7, 1.9.2, 1.9.3, jruby and ree out of the box.
+[![Build Status](https://secure.travis-ci.org/zertico/api-client.png?branch=master)](http://travis-ci.org/zertico/api-client) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/zertico/api-client)
+
+It supports ruby 1.8.7, 1.9.2, 1.9.3, jruby and ree out of the box.
 
 ## Installation
 
