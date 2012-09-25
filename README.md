@@ -71,6 +71,10 @@ This code will create a setter and a getter for houses and cars and initialize t
    * Add support for parallel requests
    * Add more Response Handlers
 
+## Mantainers
+  [@plribeiro3000](https://github.com/plribeiro3000)
+
+
 ## Contributing
 
 1. Fork it
