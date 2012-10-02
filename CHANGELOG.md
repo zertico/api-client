@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.8.1
+
+* Fixed a Bug when response was an Array.
+
 ## v1.8.0
 
 * Methods to return attributes of the class added.
