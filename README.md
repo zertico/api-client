@@ -7,7 +7,7 @@ It is possible to use Typhoeus or the native Ruby Library Net::Http.
 It works very well with rails, so you can exchange your ActiveRecord based models without any concern and your application will make Api calls transparently.
 It supports ruby 1.8.7, 1.9.2, 1.9.3, jruby and ree out of the box.
 
-## Informations
+## Useful Links
 
 ### Mailing List
 
