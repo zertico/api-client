@@ -14,6 +14,10 @@ describe ApiClient::Base do
       it "should set #b" do
         @user.b.should == "b"
       end
+
+      it "should initialize errors" do
+        @user.errors.should be_an_instance_of(ApiClient::Errors)
+      end
     end
   end
 
@@ -66,28 +70,6 @@ describe ApiClient::Base do
   describe "#attributes on the object" do
     it "should return a hash with the attributes and currently values" do
       User.new.attributes.should == {:a => nil, :b => nil}
-    end
-  end
-
-  describe "#errors" do
-    context "when @errors is not nil" do
-      before :each do
-        @user = User.new(:errors => {:a => :invalid})
-      end
-
-      it "should return the errors" do
-        @user.errors.messages.should == {:a => ['is invalid']}
-      end
-    end
-
-    context "when @errors is nil" do
-      before :each do
-        @user = User.new
-      end
-
-      it "should instantiate a new instance of ApiClient::Errors" do
-        @user.errors.should be_an_instance_of(ApiClient::Errors)
-      end
     end
   end
 

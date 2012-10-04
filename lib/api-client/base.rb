@@ -15,11 +15,15 @@ module ApiClient
     # @return [Hash] the request response.
     attr_accessor :response
 
+    # @return [Hash] the errors object.
+    attr_reader :errors
+
     # Initialize an object based on a hash of attributes.
     #
     # @param [Hash] attributes object attributes.
     # @return [Base] the object initialized.
     def initialize(attributes = {})
+      @errors = Errors.new(self)
       attributes.each do |name, value|
         send("#{name.to_s}=", value)
       end
@@ -94,19 +98,11 @@ module ApiClient
 
     alias_method :to_hash, :attributes
 
-    # Return the hash of errors if existent, otherwise instantiate a new ApiClient::Errors object with self.
-    #
-    # @return [ApiClient::Errors] the validation errors.
-    def errors
-      @errors ||= Errors.new(self)
-    end
-
     # Set the hash of errors, making keys symbolic.
     #
     # @param [Hash] errors of the object.
     def errors=(errs = {})
-      @errors = Errors.new(self)
-      @errors.add_errors(Hash[errs.map{|(key,value)| [key.to_sym,value]}])
+      errors.add_errors(Hash[errs.map{|(key,value)| [key.to_sym,value]}])
     end
 
     protected
