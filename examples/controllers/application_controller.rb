@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
     ApplicationMailer.send_not_found_notice.deliver
   end
 
-  def generic
-    ApplicationMailer.send_generic_error.deliver
+  def generic(exception)
+    ApplicationMailer.send_generic_error(exception).deliver
   end
 end
