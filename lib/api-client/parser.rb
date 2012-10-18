@@ -1,3 +1,5 @@
+require 'json'
+
 # ApiClient::Parser provides a method to parse the request response.
 module ApiClient::Parser
   # Parse the JSON response.
@@ -7,8 +9,8 @@ module ApiClient::Parser
   def self.response(response)
     raise_exception(response.code)
     begin
-      object = JSON.parse(response.body)
-    rescue JSON::ParserError, TypeError
+      object = ::JSON.parse(response.body)
+    rescue ::JSON::ParserError, TypeError
       object = {}
     end
     object
