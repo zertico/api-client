@@ -10,7 +10,7 @@ module ApiClient::Dispatcher::NetHttp
   # @return [HTTP] the response object.
   def self.get(url, header = {})
     initialize_connection(url)
-    call { @http.get(@uri.path, { 'Content-Type' => 'application/json' }.merge(header)) }
+    call { @http.get(@uri.request_uri, { 'Content-Type' => 'application/json' }.merge(header)) }
   end
 
   # Make a post request and returns it.
@@ -21,7 +21,7 @@ module ApiClient::Dispatcher::NetHttp
   # @return [HTTP] the response object.
   def self.post(url, args, header = {})
     initialize_connection(url)
-    call { @http.post(@uri.path, args.to_json, { 'Content-Type' => 'application/json' }.merge(header)) }
+    call { @http.post(@uri.request_uri, args.to_json, { 'Content-Type' => 'application/json' }.merge(header)) }
   end
 
   # Make a put request and returns it.
@@ -32,7 +32,7 @@ module ApiClient::Dispatcher::NetHttp
   # @return [HTTP] the response object.
   def self.put(url, args, header = {})
     initialize_connection(url)
-    call { @http.put(@uri.path, args.to_json, { 'Content-Type' => 'application/json' }.merge(header)) }
+    call { @http.put(@uri.request_uri, args.to_json, { 'Content-Type' => 'application/json' }.merge(header)) }
   end
 
   # Make a patch request and returns it.
@@ -43,7 +43,7 @@ module ApiClient::Dispatcher::NetHttp
   # @return [HTTP] the response object.
   def self.patch(url, args, header = {})
     initialize_connection(url)
-    call { @http.patch(@uri.path, args.to_json, { 'Content-Type' => 'application/json' }.merge(header)) }
+    call { @http.patch(@uri.request_uri, args.to_json, { 'Content-Type' => 'application/json' }.merge(header)) }
   end
 
   # Make a delete request and returns it.
@@ -53,15 +53,14 @@ module ApiClient::Dispatcher::NetHttp
   # @return [HTTP] the response object.
   def self.delete(url, header = {})
     initialize_connection(url)
-    call { @http.delete(@uri.path, header) }
+    call { @http.delete(@uri.request_uri, header) }
   end
 
   protected
 
   def self.initialize_connection(url = '')
     @uri = URI(url)
-    @uri.path = "/" if @uri.path.blank?
-    @http = Net::HTTP.new(@uri.host, @uri.port)
+    @http = Net::HTTP.start(@uri.host, @uri.port)
   end
 
   def self.call
