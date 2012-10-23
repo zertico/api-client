@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.9.0
+
+* Added Requested Url to NotFound Exception message
+
 ## v1.8.2
 
 * Fixed Query String Bug (It was been sent empty)

@@ -1,5 +1,5 @@
 # High Level Namespace of the library ApiClient.
 module ApiClient
   # Version of the library.
-  VERSION = "1.8.2"
+  VERSION = "1.9.0"
 end
