@@ -108,7 +108,7 @@ module ApiClient
     protected
 
     def self.method_missing(method, *args)
-      @response = Parser.response(Dispatcher.send(method, *args))
+      @response = Parser.response(Dispatcher.send(method, *args), *args[0])
       case true
         when @response.instance_of?(Array) then return @response.map { |a| new(a.merge(:response => @response)) }
         when @response.key?(remote_object) then return new(@response[remote_object].merge(:response => @response))
