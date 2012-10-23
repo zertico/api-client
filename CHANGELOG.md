@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.9.1
+
+* Fix for Net::Http on NotFound Exception
+
 ## v1.9.0
 
 * Added Requested Url to NotFound Exception message
