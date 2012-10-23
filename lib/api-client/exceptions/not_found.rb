@@ -4,7 +4,7 @@ class ApiClient::Exceptions::NotFound < ApiClient::Exceptions::Generic
   # Initialize a new exception.
   #
   # @return [NotFound] a new exception.
-  def self.initialize
-    super("The required url could not be found!")
+  def self.initialize(url)
+    super("The requested url (#{url}) could not be found!")
   end
 end

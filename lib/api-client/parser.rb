@@ -5,9 +5,9 @@ module ApiClient::Parser
   # Parse the JSON response.
   #
   # @param [HTTP] response HTTP object for the request.
-  # @return [Array] the code and the body parsed.
+  # @return [Hash] the body parsed.
   def self.response(response)
-    raise_exception(response.code)
+    raise_exception(response)
     begin
       object = ::JSON.parse(response.body)
     rescue ::JSON::ParserError, TypeError
@@ -18,11 +18,11 @@ module ApiClient::Parser
 
   protected
 
-  def self.raise_exception(code)
-    case code.to_i
+  def self.raise_exception(response)
+    case response.code.to_i
       when 401 then raise ApiClient::Exceptions::Unauthorized
       when 403 then raise ApiClient::Exceptions::Forbidden
-      when 404 then raise ApiClient::Exceptions::NotFound
+      when 404 then raise ApiClient::Exceptions::NotFound.new(response.request.url)
       when 500 then raise ApiClient::Exceptions::InternalServerError
       when 502 then raise ApiClient::Exceptions::BadGateway
       when 503 then raise ApiClient::Exceptions::ServiceUnavailable

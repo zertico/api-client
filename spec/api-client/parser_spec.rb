@@ -54,7 +54,7 @@ describe ApiClient::Parser do
         end
 
         it "should return a NotFound exception" do
-          lambda { ApiClient::Parser.response(@response) }.should raise_error(ApiClient::Exceptions::NotFound)
+          lambda { ApiClient::Parser.response(@response) }.should raise_error(ApiClient::Exceptions::NotFound, "http://api.example.com/user/5")
         end
       end
 
