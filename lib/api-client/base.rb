@@ -91,9 +91,7 @@ module ApiClient
     #
     # @return [Hash] instance variables and its values.
     def attributes
-      attributes = {}
-      self.class.instance_variable_get("@attributes").map { |attribute| attributes[attribute.to_sym] = self.send("#{attribute}") }
-      attributes
+      self.class.instance_variable_get("@attributes").inject({}) { |hash, attribute| hash.merge(attribute.to_sym => self.send("#{attribute}")) }
     end
 
     alias_method :to_hash, :attributes
