@@ -23,6 +23,6 @@ module ApiClient
   end
 
   configure do |config|
-    config.path = nil
+    config.path = ''
   end
 end

@@ -21,6 +21,24 @@ describe ApiClient::Base do
     end
   end
 
+  describe "#path" do
+    describe "when not configured" do
+      it "should raise an error" do
+        lambda { User.path }.should raise_error(ApiClient::Exceptions::NotConfigured)
+      end
+    end
+
+    describe "when properly configured" do
+      before :each do
+        User.path = "users"
+      end
+
+      it "should return the path value" do
+        User.path.should == "users"
+      end
+    end
+  end
+
   describe "#path=" do
     describe "with a string without '/'" do
       before :each do

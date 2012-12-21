@@ -18,11 +18,6 @@ module ApiClient
     # @return [Hash] the errors object.
     attr_reader :errors
 
-    class << self
-      # @return [String] the api path for this object.
-      attr_reader :path
-    end
-
     # Initialize an object based on a hash of attributes.
     #
     # @param [Hash] attributes object attributes.
@@ -39,6 +34,14 @@ module ApiClient
     # @return [False] always return false.
     def persisted?
       false
+    end
+
+    # Return the path of the object on the api url.
+    #
+    # @return [String] the api path for this object.
+    def self.path
+      raise Exceptions::NotConfigured unless @path
+      @path
     end
 
     # Set the path of the object on the api url.
