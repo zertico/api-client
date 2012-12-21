@@ -1,5 +1,5 @@
 module ApiClient
   class Configuration
-    attr_accessor :url_path
+    attr_accessor :path
   end
 end
