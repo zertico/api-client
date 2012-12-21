@@ -21,6 +21,28 @@ describe ApiClient::Base do
     end
   end
 
+  describe "#path=" do
+    describe "with a string without '/'" do
+      before :each do
+        User.path = "users"
+      end
+
+      it "should set it as passed" do
+        User.path.should == "users"
+      end
+    end
+
+    describe "with a string with '/'" do
+      before :each do
+        User.path = "/users"
+      end
+
+      it "should set it without the '/'" do
+        User.path.should == "users"
+      end
+    end
+  end
+
   describe "#remote_object" do
     context "on a class without remote object specification" do
       it "should return the class name" do

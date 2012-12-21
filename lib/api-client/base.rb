@@ -18,6 +18,11 @@ module ApiClient
     # @return [Hash] the errors object.
     attr_reader :errors
 
+    class << self
+      # @return [String] the api path for this object.
+      attr_reader :path
+    end
+
     # Initialize an object based on a hash of attributes.
     #
     # @param [Hash] attributes object attributes.
@@ -34,6 +39,14 @@ module ApiClient
     # @return [False] always return false.
     def persisted?
       false
+    end
+
+    # Set the path of the object on the api url.
+    #
+    # @param [String] path string.
+    def self.path=(path)
+      path = path[1, path.size - 1] if path[0, 1] == "/"
+      @path = path
     end
 
     # Return the Remote Object Name.
