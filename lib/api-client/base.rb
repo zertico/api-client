@@ -40,7 +40,7 @@ module ApiClient
     #
     # @return [String] the api path for this object.
     def self.path
-      raise Exceptions::NotConfigured unless @path
+      return self.to_s.gsub("::", "/").downcase.pluralize unless @path
       @path
     end
 

@@ -23,18 +23,18 @@ describe ApiClient::Base do
 
   describe "#path" do
     describe "when not configured" do
-      it "should raise an error" do
-        lambda { User.path }.should raise_error(ApiClient::Exceptions::NotConfigured)
+      it "should return a name based on the class name" do
+        User.path.should == "users"
       end
     end
 
     describe "when properly configured" do
       before :each do
-        User.path = "users"
+        User.path = "admins"
       end
 
       it "should return the path value" do
-        User.path.should == "users"
+        User.path.should == "admins"
       end
     end
   end
