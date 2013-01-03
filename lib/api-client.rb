@@ -8,6 +8,7 @@ module ApiClient
   autoload :Base, 'api-client/base'
   autoload :Dispatcher, 'api-client/dispatcher'
   autoload :Parser, 'api-client/parser'
+  autoload :Builder, 'api-client/builder'
 
   # Configures global settings
   #   ApiClient.configure do |config|
