@@ -5,9 +5,9 @@ module ApiClient::Dispatcher
 
   def self.method_missing(method, *args)
     if defined?(::Typhoeus)
-        Typhoeus.send(method, *args)
+      Typhoeus.send(method, *args)
     else
-        NetHttp.send(method, *args)
+      NetHttp.send(method, *args)
     end
   end
 end

@@ -31,7 +31,7 @@ describe ApiClient::Parser do
           @response = ApiClient::Dispatcher.get('http://api.example.com/user/5')
         end
 
-        it "should return a Unauthorized exception" do
+        it "should raise a Unauthorized exception" do
           lambda { ApiClient::Parser.response(@response, 'http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::Unauthorized)
         end
       end
@@ -42,7 +42,7 @@ describe ApiClient::Parser do
           @response = ApiClient::Dispatcher.get('http://api.example.com/user/5')
         end
 
-        it "should return a Forbidden exception" do
+        it "should raise a Forbidden exception" do
           lambda { ApiClient::Parser.response(@response, 'http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::Forbidden)
         end
       end
@@ -53,7 +53,7 @@ describe ApiClient::Parser do
           @response = ApiClient::Dispatcher.get('http://api.example.com/user/5')
         end
 
-        it "should return a NotFound exception" do
+        it "should raise a NotFound exception" do
           lambda { ApiClient::Parser.response(@response, 'http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::NotFound, "http://api.example.com/user/5")
         end
       end
@@ -64,7 +64,7 @@ describe ApiClient::Parser do
           @response = ApiClient::Dispatcher.get('http://api.example.com/user/5')
         end
 
-        it "should return a InternalServerError exception" do
+        it "should raise a InternalServerError exception" do
           lambda { ApiClient::Parser.response(@response, 'http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::InternalServerError)
         end
       end
@@ -75,7 +75,7 @@ describe ApiClient::Parser do
           @response = ApiClient::Dispatcher.get('http://api.example.com/user/5')
         end
 
-        it "should return a BadGateway exception" do
+        it "should raise a BadGateway exception" do
           lambda { ApiClient::Parser.response(@response, 'http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::BadGateway)
         end
       end
@@ -86,7 +86,7 @@ describe ApiClient::Parser do
           @response = ApiClient::Dispatcher.get('http://api.example.com/user/5')
         end
 
-        it "should return a ServiceUnavailable exception" do
+        it "should raise a ServiceUnavailable exception" do
           lambda { ApiClient::Parser.response(@response, 'http://api.example.com/user/5') }.should raise_error(ApiClient::Exceptions::ServiceUnavailable)
         end
       end
