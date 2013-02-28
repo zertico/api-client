@@ -1,6 +1,9 @@
 require "rspec"
-require 'webmock/rspec'
+require "webmock/rspec"
 require "json"
+require "coveralls"
+
+Coveralls.wear!
 
 require File.dirname(__FILE__) + "/../lib/api-client"
 
