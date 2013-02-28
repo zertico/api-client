@@ -1,6 +1,6 @@
 # ApiClient
 
-[![Build Status](https://secure.travis-ci.org/zertico/api-client.png?branch=master)](http://travis-ci.org/zertico/api-client) [![Dependency Status](https://gemnasium.com/zertico/api-client.png)](https://gemnasium.com/zertico/api-client)  [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/zertico/api-client)
+[![Build Status](https://secure.travis-ci.org/zertico/api-client.png?branch=master)](http://travis-ci.org/zertico/api-client) [![Dependency Status](https://gemnasium.com/zertico/api-client.png)](https://gemnasium.com/zertico/api-client) [![Coverage Status](https://coveralls.io/repos/zertico/api-client/badge.png?branch=master)](https://coveralls.io/r/zertico/api-client)  [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/zertico/api-client)
 
 ApiClient handle all the logic necessary to call Some API, catch the response and initialize an object with it for you.
 It is possible to use Typhoeus or the native Ruby Library Net::Http.
