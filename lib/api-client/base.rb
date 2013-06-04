@@ -25,7 +25,7 @@ module ApiClient
     # @param [Hash] attributes object attributes.
     # @return [Base] the object initialized.
     def initialize(attributes = {})
-      @errors = Errors.new(self)
+      @errors = ApiClient::Errors.new(self)
       attributes.each do |name, value|
         send("#{name.to_s}=", value)
       end
@@ -114,6 +114,15 @@ module ApiClient
 
     alias_method :to_hash, :attributes
 
+    # Initialize a collection of objects. The collection will be an ApiClient::Collection object.
+    # The objects in the collection will be all instances of this (ApiClient::Base) class.
+    #
+    # @param [String] url to get the collection.
+    # @return [Collection] a collection of objects.
+    def self.collection(url)
+      ApiClient::Collection.new(self, url).collection
+    end
+
     # Set the hash of errors, making keys symbolic.
     #
     # @param [Hash] errors of the object.
@@ -124,7 +133,7 @@ module ApiClient
     protected
 
     def self.method_missing(method, *args)
-      @response = Parser.response(Dispatcher.send(method, *args), *args[0])
+      @response = ApiClient::Parser.response(ApiClient::Dispatcher.send(method, *args), *args[0])
       build(self, @response)
     end
   end

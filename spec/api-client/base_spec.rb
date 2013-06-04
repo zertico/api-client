@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe ApiClient::Base do
+  let(:user) { User.new }
+  let(:collection) { Object.new }
+
   describe "#initialize" do
     context "with a hash {:a => 'a', :b => 'b'}" do
       before :each do
@@ -110,6 +113,17 @@ describe ApiClient::Base do
   describe "#attributes on the object" do
     it "should return a hash with the attributes and currently values" do
       User.new.attributes.should == {:a => nil, :b => nil}
+    end
+  end
+
+  describe "#collection" do
+    before :each do
+      ApiClient::Collection.stub(:new).with(User, "http://api.example.com").and_return(collection)
+      collection.stub(:collection => [ user, user ])
+    end
+
+    it "should return a collection of objects" do
+      User.collection("http://api.example.com").should == [ user, user ]
     end
   end
 

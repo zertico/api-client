@@ -6,6 +6,7 @@ module ApiClient
   autoload :Errors, 'api-client/errors'
   autoload :Configuration, 'api-client/configuration'
   autoload :Base, 'api-client/base'
+  autoload :Collection, 'api-client/collection'
   autoload :Dispatcher, 'api-client/dispatcher'
   autoload :Parser, 'api-client/parser'
   autoload :Builder, 'api-client/builder'
@@ -15,7 +16,7 @@ module ApiClient
   #     config.url_path = "api.example.com"
   #   end
   def self.configure(&block)
-    yield @config ||= Configuration.new
+    yield @config ||= ApiClient::Configuration.new
   end
 
   # Global settings for ApiClient
