@@ -69,6 +69,12 @@ Then, on your action, just put into it:
 @user = User.get("http://api.example.com/user/3")
 ```
 
+To a request that returns a collection of the object, use:
+
+```ruby
+@user = User.collection("http://api.example.com/users")
+```
+
 ## Advanced Usage
 
 ApiClient can read api responses with root nodes based on the name of the virtual class.
