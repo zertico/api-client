@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.10.0
+
+* Add Support for api responses with collections
+
 ## v1.9.1
 
 * Fix for Net::Http on NotFound Exception
