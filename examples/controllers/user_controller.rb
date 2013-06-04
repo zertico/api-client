@@ -2,7 +2,7 @@ class UserController < ApplicationController
   # It will works with respond_with.
   # Your action should looks like any other one: A model with a method call. =D
   def index
-    @users = User.collection("api.example.com/users")
+    @users = User.collection("#{ApiClient.config.path}users")
     respond_with(@users)
   end
 
@@ -12,27 +12,27 @@ class UserController < ApplicationController
   end
 
   def create
-    @user = User.post("api.example.com/users", :user => params[:user])
+    @user = User.post("#{ApiClient.config.path}users", :user => params[:user])
     respond_with(@user)
   end
 
   def edit
-    @user = User.get("api.example.com/users/#{params[:id]}")
+    @user = User.get("#{ApiClient.config.path}users/#{params[:id]}")
     respond_with(@user)
   end
 
   def update
-    @user = User.patch("api.example.com/users", { :id => params[:id], :user => params[:user]})
+    @user = User.patch("#{ApiClient.config.path}users", { :id => params[:id], :user => params[:user]})
     respond_with(@user)
   end
 
   def show
-    @user = User.get("api.example.com/users/#{params[:id]}")
+    @user = User.get("#{ApiClient.config.path}users/#{params[:id]}")
     respond_with(@user)
   end
 
   def delete
-    @user = User.delete("api.example.com/users/#{params[:id]}")
+    @user = User.delete("#{ApiClient.config.path}users/#{params[:id]}")
     respond_with(@user)
   end
 end
