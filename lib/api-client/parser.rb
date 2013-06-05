@@ -5,6 +5,7 @@ module ApiClient::Parser
   # Parse the JSON response.
   #
   # @param [HTTP] response HTTP object for the request.
+  # @param [String] url The url of the requisition.
   # @return [Hash] the body parsed.
   def self.response(response, url)
     raise_exception(response, url)

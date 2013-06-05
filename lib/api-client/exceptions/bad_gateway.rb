@@ -5,6 +5,6 @@ class ApiClient::Exceptions::BadGateway < ApiClient::Exceptions::Generic
   #
   # @return [BadGateway] a new exception.
   def self.initialize
-    super("Bad Gateway!")
+    super('Bad Gateway!')
   end
 end

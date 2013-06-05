@@ -1,4 +1,4 @@
-require "active_model"
+require 'active_model'
 
 module ApiClient
   # ApiClient::Base provides a way to make easy api requests as well as making possible to use it inside rails.
@@ -43,7 +43,7 @@ module ApiClient
     #
     # @return [String] the api path for this object.
     def self.path
-      return self.to_s.gsub("::", "/").downcase.pluralize unless @path
+      return self.to_s.gsub('::', '/').downcase.pluralize unless @path
       @path
     end
 
@@ -51,7 +51,7 @@ module ApiClient
     #
     # @param [String] path string.
     def self.path=(path)
-      path = path[1, path.size - 1] if path[0, 1] == "/"
+      path = path[1, path.size - 1] if path[0, 1] == '/'
       @path = path
     end
 
@@ -99,18 +99,18 @@ module ApiClient
       super
     end
 
-    # Return an array with all instance variables setted through attr_acessor.
+    # Return an array with all instance variables setted through attr_accessor.
     #
     # @return [Array] instance variables.
     def self.attributes
       @attributes
     end
 
-    # Return an array with all instance variables setted through attr_acessor and its currently values.
+    # Return an array with all instance variables setted through attr_accessor and its currently values.
     #
     # @return [Hash] instance variables and its values.
     def attributes
-      self.class.instance_variable_get("@attributes").inject({}) { |hash, attribute| hash.merge(attribute.to_sym => self.send("#{attribute}")) }
+      self.class.instance_variable_get('@attributes').inject({}) { |hash, attribute| hash.merge(attribute.to_sym => self.send("#{attribute}")) }
     end
 
     alias_method :to_hash, :attributes
@@ -126,7 +126,7 @@ module ApiClient
 
     # Set the hash of errors, making keys symbolic.
     #
-    # @param [Hash] errors of the object.
+    # @param [Hash] errs errors of the object.
     def errors=(errs = {})
       errors.add_errors(Hash[errs.map{|(key,value)| [key.to_sym,value]}])
     end

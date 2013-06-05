@@ -1,11 +1,11 @@
-require "rspec"
-require "webmock/rspec"
-require "json"
-require "coveralls"
+require 'rspec'
+require 'webmock/rspec'
+require 'json'
+require 'coveralls'
 
 Coveralls.wear!
 
-require File.dirname(__FILE__) + "/../lib/api-client"
+require "#{File.dirname(__FILE__)}/../lib/api-client"
 
 class User < ApiClient::Base
   attr_accessor :a, :b
@@ -15,19 +15,19 @@ class User < ApiClient::Base
 end
 
 class Admin < ApiClient::Base
-  self.remote_object = "user"
+  self.remote_object = 'user'
 
   attr_accessor :a, :b
 end
 
 class Post < ApiClient::Base
-  self.association = { :writer => "User" }
+  self.association = { :writer => 'User' }
 
   attr_accessor :a
 end
 
 class Group < ApiClient::Base
-  self.associations = { :members => "User", :owner => "Admin" }
+  self.associations = { :members => 'User', :owner => '"Admin" '}
 end
 
 ApiClient.configure do |config|

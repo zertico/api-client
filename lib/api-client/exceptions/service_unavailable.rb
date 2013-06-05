@@ -5,6 +5,6 @@ class ApiClient::Exceptions::ServiceUnavailable < ApiClient::Exceptions::Generic
   #
   # @return [ServiceUnavailable] a new exception.
   def self.initialize
-    super("Service Unavailable!")
+    super('Service Unavailable!')
   end
 end

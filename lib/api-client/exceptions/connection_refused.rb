@@ -4,6 +4,6 @@ class ApiClient::Exceptions::ConnectionRefused < ApiClient::Exceptions::Generic
   #
   # @return [ConnectionRefused] a new exception.
   def self.initialize
-    super("Connection Refused!")
+    super('Connection Refused!')
   end
 end

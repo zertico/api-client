@@ -5,6 +5,6 @@ class ApiClient::Exceptions::Forbidden < ApiClient::Exceptions::Generic
   #
   # @return [Forbidden] a new exception.
   def self.initialize
-    super("Forbidden!")
+    super('Forbidden!')
   end
 end

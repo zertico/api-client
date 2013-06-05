@@ -3,7 +3,7 @@ module ApiClient
   module InstanceMethods
     # Update an object based on a hash of attributes.
     #
-    # @param [Hash] attributes hash of attributes.
+    # @param [Hash] params hash of attributes.
     # @return [Base] the updated object.
     def update(params)
       if params.key?(self.class.remote_object)

@@ -6,8 +6,8 @@ class ApiClient::Collection
 
   # Initialize a collection of given objects
   #
-  # @param [Class] The class to instantiate the objects.
-  # @param [String] The url to get the data.
+  # @param [Class] klass The class to instantiate the objects.
+  # @param [String] resource_path The url to get the data.
   # @return [Collection] the collection of objects.
   def initialize(klass, resource_path)
     url = "#{ApiClient.config.path}#{resource_path}"

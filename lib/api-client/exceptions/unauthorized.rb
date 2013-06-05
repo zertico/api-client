@@ -5,6 +5,6 @@ class ApiClient::Exceptions::Unauthorized < ApiClient::Exceptions::Generic
   #
   # @return [Unauthorized] a new exception.
   def self.initialize
-    super("Authentication Required!")
+    super('Authentication Required!')
   end
 end

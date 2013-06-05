@@ -1,4 +1,4 @@
-require "api-client/version"
+require 'api-client/version'
 
 # High Level Namespace of the library ApiClient.
 module ApiClient

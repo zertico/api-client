@@ -3,7 +3,7 @@ module ApiClient
   module ClassMethods
     # Initialize an object based on a hash of attributes.
     #
-    # @param [Hash] attributes hash of attributes.
+    # @param [Hash] params hash of attributes.
     # @return [Base] the object initialized.
     def build(params)
       if params.key?(remote_object)

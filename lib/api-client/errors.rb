@@ -1,9 +1,10 @@
-require "active_model"
+require 'active_model'
 
 # ApiClient::Errors provide extra functionality to ActiveModel::Errors.
 class ApiClient::Errors < ActiveModel::Errors
-  # Add serveral errors from a hash to the object.
+  # Add several errors from a hash to the object.
   #
+  # @param [Hash] errors The hash with errors to add.
   # @return [ApiClient::Errors] The Error object.
   def add_errors(errors = {})
     errors.each_pair do |key, value|
@@ -21,6 +22,7 @@ class ApiClient::Errors < ActiveModel::Errors
   #   person = Person.create(address: '123 First St.')
   #   person.errors.unique_messages
   #   # => { :name => "is too short (minimum is 5 characters) and can't be blank", :address => nil, :email => "can't be blank" }
+  # @return [Hash] A hash with all the errors joined by attribute.
   def unique_messages
     errors = {}
     map { |attribute, messages| errors[attribute] = unique_message(attribute) }
@@ -37,6 +39,8 @@ class ApiClient::Errors < ActiveModel::Errors
   #   person = Person.create(address: '123 First St.')
   #   person.errors.unique_message(:name) # => "is too short (minimum is 5 characters) and can't be blank"
   #   person.errors.unique_message(:address) # => nil
+  # @param [String] attribute The attribute to check for joined error messages.
+  # @return [String] A string with all errors from the given attribute joined.
   def unique_message(attribute)
     return '' if messages[attribute].blank?
     [messages[attribute]].flatten.to_sentence

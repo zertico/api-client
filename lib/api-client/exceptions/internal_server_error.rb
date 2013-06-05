@@ -5,6 +5,6 @@ class ApiClient::Exceptions::InternalServerError < ApiClient::Exceptions::Generi
   #
   # @return [InternalServerError] a new exception.
   def self.initialize
-    super("Internal Server Errorr!")
+    super('Internal Server Error!')
   end
 end

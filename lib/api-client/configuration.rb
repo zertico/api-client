@@ -11,9 +11,9 @@ module ApiClient
 
     # Set the api url.
     #
-    # @param [String] api url.
+    # @param [String] path api url.
     def path=(path)
-      path = "#{path}/" unless path[path.size - 1, 1] == "/"
+      path = "#{path}/" unless path[path.size - 1, 1] == '/'
       @path = path
     end
   end

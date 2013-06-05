@@ -1,5 +1,5 @@
-require "net/http"
-require "api-client/net/http" unless Net::HTTP.new("").respond_to?(:patch)
+require 'net/http'
+require 'api-client/net/http' unless Net::HTTP.new('').respond_to?(:patch)
 
 # ApiClient::Dispatcher provides methods to make requests using the native ruby library 'net/http'
 module ApiClient::Dispatcher::NetHttp

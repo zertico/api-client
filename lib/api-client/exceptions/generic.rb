@@ -6,6 +6,6 @@ class ApiClient::Exceptions::Generic < StandardError
   #
   # @return [Generic] a new exception.
   def self.initialize
-    super("An Error Occurred!")
+    super('An Error Occurred!')
   end
 end

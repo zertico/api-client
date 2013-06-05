@@ -1,6 +1,6 @@
 class Admin < ApiClient::Base
-  self.remote_object = "user"
-  self.association = { :groups => "Group" }
+  self.remote_object = 'user'
+  self.association = { :groups => 'Group' }
 
   # Any of this fields can be called to manage rails form.
   attr_accessor :id, :email, :password, :password_confirmation

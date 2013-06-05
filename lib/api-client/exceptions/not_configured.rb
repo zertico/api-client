@@ -4,6 +4,6 @@ class ApiClient::Exceptions::NotConfigured < StandardError
   #
   # @return [NotConfigured] a new exception.
   def self.initialize
-    super("The api path is not properly configured!")
+    super('The api path is not properly configured!')
   end
 end
