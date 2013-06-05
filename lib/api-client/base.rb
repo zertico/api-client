@@ -72,7 +72,7 @@ module ApiClient
     # Set methods to initialize associated objects.
     #
     # @param [Hash] association classes.
-    def self.associations(associations = {})
+    def self.associations=(associations = {})
       associations.each do |association, class_name|
         class_eval <<-EVAL
           def #{association.to_s}=(attributes = {})
@@ -87,7 +87,7 @@ module ApiClient
     end
 
     class << self
-      alias_method :association, :associations
+      alias_method :association=, :associations=
     end
 
     # Overwrite #attr_acessor method to save instance_variable names.

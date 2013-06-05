@@ -21,13 +21,13 @@ class Admin < ApiClient::Base
 end
 
 class Post < ApiClient::Base
-  self.association({ :writer => "User" })
+  self.association = { :writer => "User" }
 
   attr_accessor :a
 end
 
 class Group < ApiClient::Base
-  self.associations({ :members => "User", :owner => "Admin" })
+  self.associations = { :members => "User", :owner => "Admin" }
 end
 
 ApiClient.configure do |config|
