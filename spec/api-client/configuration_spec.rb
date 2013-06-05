@@ -3,6 +3,12 @@ require 'spec_helper'
 describe ApiClient::Configuration do
   describe "#path" do
     describe "when not configured" do
+      before :each do
+        ApiClient.configure do |config|
+          config.path = ""
+        end
+      end
+
       it "should raise an error" do
         lambda { ApiClient.config.path }.should raise_error(ApiClient::Exceptions::NotConfigured)
       end

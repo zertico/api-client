@@ -7,9 +7,10 @@ module ApiClient
   autoload :Configuration, 'api-client/configuration'
   autoload :Base, 'api-client/base'
   autoload :Collection, 'api-client/collection'
+  autoload :ClassMethods, 'api-client/class_methods'
+  autoload :InstanceMethods, 'api-client/instance_methods'
   autoload :Dispatcher, 'api-client/dispatcher'
   autoload :Parser, 'api-client/parser'
-  autoload :Builder, 'api-client/builder'
 
   # Configures global settings
   #   ApiClient.configure do |config|

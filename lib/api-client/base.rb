@@ -12,7 +12,8 @@ module ApiClient
     include ActiveModel::Conversion
     extend ActiveModel::Naming
 
-    extend ApiClient::Builder
+    extend ApiClient::ClassMethods
+    include ApiClient::InstanceMethods
 
     # @return [Hash] the request response.
     attr_accessor :response
@@ -94,7 +95,7 @@ module ApiClient
     # @param [Array] instance variables.
     def self.attr_accessor(*vars)
       @attributes ||= []
-      @attributes.concat vars
+      @attributes.concat(vars)
       super
     end
 
@@ -128,13 +129,6 @@ module ApiClient
     # @param [Hash] errors of the object.
     def errors=(errs = {})
       errors.add_errors(Hash[errs.map{|(key,value)| [key.to_sym,value]}])
-    end
-
-    protected
-
-    def self.method_missing(method, *args)
-      @response = ApiClient::Parser.response(ApiClient::Dispatcher.send(method, *args), *args[0])
-      build(self, @response)
     end
   end
 end

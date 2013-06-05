@@ -29,3 +29,8 @@ end
 class Group < ApiClient::Base
   self.associations({ :members => "User", :owner => "Admin" })
 end
+
+
+ApiClient.configure do |config|
+  config.path = 'http://api.example.com'
+end

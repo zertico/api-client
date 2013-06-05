@@ -138,27 +138,32 @@ describe ApiClient::Base do
   end
 
   describe "requests" do
-    context "with an object as response" do
+    context "on the class" do
       before :each do
-        stub_request(:any, "http://api.example.com").to_return(:body => {"a" => "b"}.to_json)
+        stub_request(:any, "http://api.example.com/users").to_return(:body => {"a" => "b"}.to_json)
       end
 
       it "should return a new instance" do
-        User.get("http://api.example.com").should be_an_instance_of(User)
+        User.get.should be_an_instance_of(User)
       end
 
       it "should set the response on the instance" do
-        User.get("http://api.example.com").response.should == {"a" => "b"}
+        User.get.response.should == {"a" => "b"}
       end
     end
 
-    context "with an array as response" do
+    context "on an object" do
       before :each do
-        stub_request(:any, "http://api.example.com").to_return(:body => [{"a" => "b"}].to_json)
+        stub_request(:any, "http://api.example.com/users").to_return(:body => {"a" => "b"}.to_json)
+        @user = User.new
       end
 
-      it "should return an array of instances" do
-        User.get("http://api.example.com").should be_an_instance_of(Array)
+      it "should return a new instance" do
+        @user.get.should be_an_instance_of(User)
+      end
+
+      it "should set the response on the instance" do
+        @user.get.response.should == {"a" => "b"}
       end
     end
   end
