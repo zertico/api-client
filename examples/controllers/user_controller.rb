@@ -27,7 +27,7 @@ class UserController < ApplicationController
 
   # It will hit http://api.example.com/users/1 with a patch request
   def update
-    @user = User.patch("", { :id => params[:id], :user => params[:user] })
+    @user = User.patch(params[:id], { :user => params[:user] })
     respond_with(@user)
   end
 
