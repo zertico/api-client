@@ -66,13 +66,15 @@ class User < ApiClient::Base
 Then, on your action, just put into it:
 
 ```ruby
-@user = User.get("http://api.example.com/user/3")
+@user = User.get(3)
 ```
+
+where 3 is the id of the user.
 
 To a request that returns a collection of the object, use:
 
 ```ruby
-@user = User.collection("http://api.example.com/users")
+@user = User.collection
 ```
 
 ## Advanced Usage
