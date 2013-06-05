@@ -1,20 +1,26 @@
 # CHANGELOG
 
+## v2.0.0.rc1
+
+* Add Support for global url.
+* Add Support for instance requests.
+* Changed behavior of request methods to only accepts the resource id if needed..
+
 ## v1.10.0
 
-* Add Support for api responses with collections
+* Add Support for api responses with collections.
 
 ## v1.9.1
 
-* Fix for Net::Http on NotFound Exception
+* Fix for Net::Http on NotFound Exception.
 
 ## v1.9.0
 
-* Added Requested Url to NotFound Exception message
+* Added Requested Url to NotFound Exception message.
 
 ## v1.8.2
 
-* Fixed Query String Bug (It was been sent empty)
+* Fixed Query String Bug (It was been sent empty).
 
 ## v1.8.1
 
