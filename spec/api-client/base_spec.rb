@@ -118,12 +118,12 @@ describe ApiClient::Base do
 
   describe "#collection" do
     before :each do
-      ApiClient::Collection.stub(:new).with(User, "http://api.example.com").and_return(collection)
+      ApiClient::Collection.stub(:new).with(User, "users").and_return(collection)
       collection.stub(:collection => [ user, user ])
     end
 
     it "should return a collection of objects" do
-      User.collection("http://api.example.com").should == [ user, user ]
+      User.collection.should == [ user, user ]
     end
   end
 

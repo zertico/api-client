@@ -4,9 +4,9 @@ describe ApiClient::Collection do
   let(:user) { User.new }
 
   before :each do
-    stub_request(:get, "http://api.example.com").to_return(:body => [ {"a" => "b"}, {"a" => "b2"} ].to_json)
+    stub_request(:get, "http://api.example.com/users").to_return(:body => [ {"a" => "b"}, {"a" => "b2"} ].to_json)
     User.stub(:new => user)
-    @collection = ApiClient::Collection.new(User, "http://api.example.com")
+    @collection = ApiClient::Collection.new(User, "users")
   end
 
   it "should include enumerable module" do

@@ -120,8 +120,8 @@ module ApiClient
     #
     # @param [String] url to get the collection.
     # @return [Collection] a collection of objects.
-    def self.collection(url)
-      ApiClient::Collection.new(self, url).collection
+    def self.collection
+      ApiClient::Collection.new(self, self.path).collection
     end
 
     # Set the hash of errors, making keys symbolic.

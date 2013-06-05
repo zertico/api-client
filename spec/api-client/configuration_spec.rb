@@ -17,7 +17,7 @@ describe ApiClient::Configuration do
     describe "when properly configured" do
       before :each do
         ApiClient.configure do |config|
-          config.path = "api.example.com"
+          config.path = "http://api.example.com"
         end
       end
 
@@ -30,21 +30,21 @@ describe ApiClient::Configuration do
   describe "#path=" do
     describe "with a string without '/'" do
       before :each do
-        ApiClient.config.path = "api.example.com"
+        ApiClient.config.path = "http://api.example.com"
       end
 
       it "should set it with a '/'" do
-        ApiClient.config.path.should == "api.example.com/"
+        ApiClient.config.path.should == "http://api.example.com/"
       end
     end
 
     describe "with a string with '/'" do
       before :each do
-        ApiClient.config.path = "api.example.com/"
+        ApiClient.config.path = "http://api.example.com/"
       end
 
       it "should set it as passed" do
-        ApiClient.config.path.should == "api.example.com/"
+        ApiClient.config.path.should == "http://api.example.com/"
       end
     end
   end
