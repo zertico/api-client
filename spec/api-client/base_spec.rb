@@ -22,6 +22,16 @@ describe ApiClient::Base do
         @user.errors.should be_an_instance_of(ApiClient::Errors)
       end
     end
+
+    context 'with a root node' do
+      before :each do
+        @user = User.new({ :user => {:a => 'a', :b => 'b'} })
+      end
+
+      it 'should initialize attributes' do
+        @user.attributes.should == { :a => 'a', :b => 'b' }
+      end
+    end
   end
 
   describe '.path' do

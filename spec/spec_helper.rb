@@ -27,7 +27,7 @@ class Post < ApiClient::Base
 end
 
 class Group < ApiClient::Base
-  self.associations = { :members => 'User', :owner => '"Admin" '}
+  self.associations = { :members => 'User', :owner => 'Admin' }
 end
 
 ApiClient.configure do |config|
