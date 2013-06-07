@@ -15,3 +15,5 @@ pkg
 rdoc
 spec/reports
 tmp
+.*~
+*~
