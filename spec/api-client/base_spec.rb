@@ -23,6 +23,12 @@ describe ApiClient::Base do
       end
     end
 
+    context "with strings {'a' => 'a', \"b\" => 'b' }" do
+      subject(:user) { User.new({'a' => 'a', "b" => "b"}) }
+      its(:a) { should == 'a' }
+      its(:b) { should == 'b' }
+    end
+
     context 'with a root node' do
       before :each do
         @user = User.new({ :user => {:a => 'a', :b => 'b'} })

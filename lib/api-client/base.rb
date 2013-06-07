@@ -28,6 +28,9 @@ module ApiClient
     def initialize(attributes = {})
       @errors = ApiClient::Errors.new(self)
       attributes = attributes[self.class.remote_object.to_sym] if attributes.key?(self.class.remote_object.to_sym)
+      attributes = attributes[self.class.remote_object.to_s] if attributes.key?(self.class.remote_object.to_s)
+
+
       attributes.each do |name, value|
         send("#{name.to_s}=", value)
       end
