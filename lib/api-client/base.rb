@@ -27,11 +27,7 @@ module ApiClient
     # @return [Base] the object initialized.
     def initialize(attributes = {})
       @errors = ApiClient::Errors.new(self)
-      attributes = attributes[self.class.remote_object.to_sym] if attributes.key?(self.class.remote_object.to_sym)
-      attributes = attributes[self.class.remote_object.to_s] if attributes.key?(self.class.remote_object.to_s)
-
-
-      attributes.each do |name, value|
+      remove_root(attributes).each do |name, value|
         send("#{name.to_s}=", value)
       end
     end
@@ -80,7 +76,12 @@ module ApiClient
       associations.each do |association, class_name|
         class_eval <<-EVAL
           def #{association.to_s}=(attributes = {})
-            return @#{association.to_s} = attributes.map { |attr| #{class_name.constantize}.new(attr) } if attributes.instance_of?(Array)
+            if attributes.instance_of?(Array)
+              return @#{association.to_s} = attributes.map { |attr|
+                attr = remove_root(attr)
+                #{class_name.constantize}.new(attr)
+              }
+            end
             @#{association.to_s} = #{class_name.constantize}.new(attributes)
           end
           def #{association.to_s}
@@ -133,6 +134,14 @@ module ApiClient
     # @param [Hash] errs errors of the object.
     def errors=(errs = {})
       errors.add_errors(Hash[errs.map{|(key,value)| [key.to_sym,value]}])
+    end
+
+    protected
+
+    def remove_root(attributes = {})
+      attributes = attributes[self.class.remote_object.to_sym] if attributes.key?(self.class.remote_object.to_sym)
+      attributes = attributes[self.class.remote_object.to_s] if attributes.key?(self.class.remote_object.to_s)
+      attributes
     end
   end
 end

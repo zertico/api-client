@@ -23,15 +23,19 @@ describe ApiClient::Base do
       end
     end
 
-    context "with strings {'a' => 'a', \"b\" => 'b' }" do
-      subject(:user) { User.new({'a' => 'a', "b" => "b"}) }
-      its(:a) { should == 'a' }
-      its(:b) { should == 'b' }
+    context "with a hash with string keys {'a' => 'a', 'b' => 'b' }" do
+      before :each do
+        @user = User.new({ 'user' => { 'a' => 'a', "b" => "b" } })
+      end
+
+      it 'should initialize attributes' do
+        @user.attributes.should == { :a => 'a', :b => 'b' }
+      end
     end
 
     context 'with a root node' do
       before :each do
-        @user = User.new({ :user => {:a => 'a', :b => 'b'} })
+        @user = User.new({ :user => { :a => 'a', :b => 'b' } })
       end
 
       it 'should initialize attributes' do
@@ -106,12 +110,16 @@ describe ApiClient::Base do
     end
   end
 
-  describe '.associations' do
+  describe '.associations=' do
     before :each do
-      @group = Group.new(:members => [{:a => 'a'}], :owner => {:b => 'b'})
+      @group = Group.new(:members => [ :user => {:a => 'a'}], :owner => {:b => 'b'})
     end
 
-    it 'should instantiate all members' do
+    it 'should instantiate a collection of members' do
+      @group.members.should be_an_instance_of(Array)
+    end
+
+    it 'should instantiate the member' do
       @group.members.first.should be_an_instance_of(User)
     end
 
