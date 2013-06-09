@@ -3,12 +3,13 @@ module ApiClient::Dispatcher
   autoload :Typhoeus, 'api-client/dispatcher/typhoeus'
   autoload :NetHttp, 'api-client/dispatcher/net-http'
 
-  def self.method_missing(method, *args)
+  def self.method_missing(method_name, *args)
     if defined?(::Typhoeus)
-      Typhoeus.send(method, *args)
+      return Typhoeus.send(method_name, *args) if Typhoeus.respond_to?(method_name)
     else
-      NetHttp.send(method, *args)
+      return NetHttp.send(method_name, *args) if NetHttp.respond_to?(method_name)
     end
+    super
   end
 
   # Overwrite respond_to? default behavior
@@ -16,8 +17,10 @@ module ApiClient::Dispatcher
   # @param [Symbol] method_name the name of the method.
   # @param [Boolean] include_private if it does work to private methods as well.
   # @return [Boolean] if it responds to the method or not.
-  def respond_to_missing?(method_name, include_private = false)
-    return true if Typhoeus.respond_to?(method_name)
+  def self.respond_to_missing?(method_name, include_private = false)
+    if defined?(::Typhoeus)
+      return true if Typhoeus.respond_to?(method_name)
+    end
     return true if NetHttp.respond_to?(method_name)
     super
   end

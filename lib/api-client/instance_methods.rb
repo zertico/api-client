@@ -27,6 +27,7 @@ module ApiClient
     # @param [Array] args an array of params.
     # @return [Base] the object updated.
     def method_missing(method_name, id = nil, *args)
+      return super unless ApiClient::Dispatcher.respond_to?(method_name)
       url = "#{ApiClient.config.path}#{self.class.path}"
       "#{url}/#{id}" unless id.nil?
       response = ApiClient::Dispatcher.send(method_name.to_sym, url, *args)
