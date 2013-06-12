@@ -44,63 +44,63 @@ describe ApiClient::Base do
     end
   end
 
-  describe '.path' do
+  describe '.resource_path' do
     describe 'when not configured' do
       it 'should return a name based on the class name' do
-        User.path.should == 'users'
+        User.resource_path.should == 'users'
       end
     end
 
     describe 'when properly configured' do
       before :each do
-        User.path = 'admins'
+        User.resource_path = 'admins'
       end
 
-      it 'should return the path value' do
-        User.path.should == 'admins'
+      it 'should return the resource_path value' do
+        User.resource_path.should == 'admins'
       end
     end
   end
 
-  describe '.path=' do
+  describe '.resource_path=' do
     describe "with a string without '/'" do
       before :each do
-        User.path = 'users'
+        User.resource_path = 'users'
       end
 
       it 'should set it as passed' do
-        User.path.should == 'users'
+        User.resource_path.should == 'users'
       end
     end
 
     describe "with a string with '/'" do
       before :each do
-        User.path = '/users'
+        User.resource_path = '/users'
       end
 
       it "should set it without the '/'" do
-        User.path.should == 'users'
+        User.resource_path.should == 'users'
       end
     end
   end
 
-  describe '.remote_object' do
+  describe '.root_node' do
     context 'on a class without remote object specification' do
       it 'should return the class name' do
-        User.remote_object.should == 'user'
+        User.root_node.should == 'user'
       end
     end
 
     context 'on a class with remote object specification' do
       it 'should return the class name' do
-        Admin.remote_object.should == 'user'
+        Admin.root_node.should == 'user'
       end
     end
   end
 
-  describe '.remote_object=' do
+  describe '.root_node=' do
     it 'should set the remote object name' do
-      Admin.remote_object.should == 'user'
+      Admin.root_node.should == 'user'
     end
   end
 

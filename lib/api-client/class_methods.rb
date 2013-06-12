@@ -6,8 +6,8 @@ module ApiClient
     # @param [Hash] params hash of attributes.
     # @return [Base] the object initialized.
     def build(params)
-      if params.key?(remote_object)
-        new(params[remote_object].merge(:response => params))
+      if params.key?(root_node)
+        new(params[root_node].merge(:response => params))
       else
         new(params.merge(:response => params))
       end
@@ -21,7 +21,7 @@ module ApiClient
     # @return [Base] the object initialized.
     def method_missing(method_name, id = nil, *args)
       return super unless ApiClient::Dispatcher.respond_to?(method_name)
-      url = "#{ApiClient.config.path}#{self.path}"
+      url = "#{ApiClient.config.path}#{self.resource_path}"
       "#{url}/#{id}" unless id.nil?
       response = ApiClient::Dispatcher.send(method_name.to_sym, url, *args)
       params = ApiClient::Parser.response(response, url)

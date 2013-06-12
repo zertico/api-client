@@ -39,34 +39,34 @@ module ApiClient
       false
     end
 
-    # Return the path of the object on the api url.
+    # Return the resource path of the object on the api url.
     #
-    # @return [String] the api path for this object.
-    def self.path
-      return self.to_s.gsub('::', '/').downcase.pluralize unless @path
-      @path
+    # @return [String] the resource path on the api for this object.
+    def self.resource_path
+      return self.to_s.gsub('::', '/').downcase.pluralize unless @resource_path
+      @resource_path
     end
 
-    # Set the path of the object on the api url.
+    # Set the resource path of the object on the api.
     #
-    # @param [String] path string.
-    def self.path=(path)
-      path = path[1, path.size - 1] if path[0, 1] == '/'
-      @path = path
+    # @param [String] resource path string.
+    def self.resource_path=(resource_path)
+      resource_path = resource_path[1, resource_path.size - 1] if resource_path[0, 1] == '/'
+      @resource_path = resource_path
     end
 
-    # Return the Remote Object Name.
+    # Return the Root node name for this Class.
     #
-    # @return [String] a string with the remote object class name.
-    def self.remote_object
-      @remote_object.blank? ? self.to_s.split('::').last.downcase : @remote_object
+    # @return [String] a string with the root node name for this class.
+    def self.root_node
+      @root_node.blank? ? self.to_s.split('::').last.downcase : @root_node
     end
 
-    # Set a custom remote object name instead of the virtual class name.
+    # Set a custom root node name instead of the Class name.
     #
-    # @param [String] remote_object name.
-    def self.remote_object=(remote_object)
-      @remote_object = remote_object
+    # @param [String] root_node root node name.
+    def self.root_node=(root_node)
+      @root_node = root_node
     end
 
     # Set methods to initialize associated objects.
@@ -121,7 +121,7 @@ module ApiClient
     # @param [String] url to get the collection.
     # @return [Collection] a collection of objects.
     def self.collection
-      ApiClient::Collection.new(self, self.path).collection
+      ApiClient::Collection.new(self, self.resource_path).collection
     end
 
     # Set the hash of errors, making keys symbolic.
@@ -134,8 +134,8 @@ module ApiClient
     protected
 
     def remove_root(attributes = {})
-      attributes = attributes[self.class.remote_object.to_sym] if attributes.key?(self.class.remote_object.to_sym)
-      attributes = attributes[self.class.remote_object.to_s] if attributes.key?(self.class.remote_object.to_s)
+      attributes = attributes[self.class.root_node.to_sym] if attributes.key?(self.class.root_node.to_sym)
+      attributes = attributes[self.class.root_node.to_s] if attributes.key?(self.class.root_node.to_s)
       attributes
     end
   end

@@ -15,7 +15,7 @@ class User < ApiClient::Base
 end
 
 class Admin < ApiClient::Base
-  self.remote_object = 'user'
+  self.root_node = 'user'
 
   attr_accessor :a, :b
 end

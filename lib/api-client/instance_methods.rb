@@ -6,11 +6,11 @@ module ApiClient
     # @param [Hash] params hash of attributes.
     # @return [Base] the updated object.
     def update(params)
-      if params.key?(self.class.remote_object)
-        params[self.class.remote_object].each do |key, value|
+      if params.key?(self.class.root_node)
+        params[self.class.root_node].each do |key, value|
           instance_variable_set(key.to_sym, value)
         end
-        instance_variable_set(response.to_sym, params[self.class.remote_object])
+        instance_variable_set(response.to_sym, params[self.class.root_node])
       else
         params.each do |key, value|
           instance_variable_set("@#{key}", value)
@@ -28,7 +28,7 @@ module ApiClient
     # @return [Base] the object updated.
     def method_missing(method_name, id = nil, *args)
       return super unless ApiClient::Dispatcher.respond_to?(method_name)
-      url = "#{ApiClient.config.path}#{self.class.path}"
+      url = "#{ApiClient.config.path}#{self.class.resource_path}"
       "#{url}/#{id}" unless id.nil?
       response = ApiClient::Dispatcher.send(method_name.to_sym, url, *args)
       params = ApiClient::Parser.response(response, url)
