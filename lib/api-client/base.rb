@@ -15,6 +15,9 @@ module ApiClient
     extend ApiClient::ClassMethods
     include ApiClient::InstanceMethods
 
+    # @return [Integer] the id of the object.
+    attr_accessor :id
+
     # @return [Hash] the request response.
     attr_accessor :response
 
@@ -129,14 +132,6 @@ module ApiClient
     # @param [Hash] errs errors of the object.
     def errors=(errs = {})
       errors.add_errors(Hash[errs.map{|(key,value)| [key.to_sym,value]}])
-    end
-
-    protected
-
-    def remove_root(attributes = {})
-      attributes = attributes[self.class.root_node.to_sym] if attributes.key?(self.class.root_node.to_sym)
-      attributes = attributes[self.class.root_node.to_s] if attributes.key?(self.class.root_node.to_s)
-      attributes
     end
   end
 end

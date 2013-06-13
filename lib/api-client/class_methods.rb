@@ -3,39 +3,80 @@ module ApiClient
   module ClassMethods
     # Initialize an object based on a hash of attributes.
     #
-    # @param [Hash] params hash of attributes.
+    # @param [Hash] attributes hash of attributes.
     # @return [Base] the object initialized.
-    def build(params)
-      if params.key?(root_node)
-        new(params[root_node].merge(:response => params))
-      else
-        new(params.merge(:response => params))
-      end
+    def build(attributes)
+      hash = remove_root(attributes)
+      hash = hash.merge({ 'response' => attributes })
+      new(hash)
     end
 
-    # Make the api call and pass the parsed response to build to create a new object.
+    # Make a get requisition and initialize an object with the response.
     #
-    # @param [Symbol] method_name the name of the method.
-    # @param [Integer] id the id of the object.
-    # @param [Array] args an array of params.
+    # @param [Integer] id id of the object.
+    # @param [Hash] header hash with the header options.
     # @return [Base] the object initialized.
-    def method_missing(method_name, id = nil, *args)
-      return super unless ApiClient::Dispatcher.respond_to?(method_name)
-      url = "#{ApiClient.config.path}#{self.resource_path}"
-      "#{url}/#{id}" unless id.nil?
-      response = ApiClient::Dispatcher.send(method_name.to_sym, url, *args)
+    def get(id, header = {})
+      url = "#{ApiClient.config.path}#{self.resource_path}/#{id}"
+      response = ApiClient::Dispatcher.get(url, header)
       params = ApiClient::Parser.response(response, url)
       build(params)
     end
 
-    # Overwrite respond_to? default behavior
+    # Make a post requisition and initialize an object with the response.
     #
-    # @param [Symbol] method_name the name of the method.
-    # @param [Boolean] include_private if it does work to private methods as well.
-    # @return [Boolean] if it responds to the method or not.
-    def respond_to_missing?(method_name, include_private = false)
-      return true if ApiClient::Dispatcher.respond_to?(method_name)
-      super
+    # @param [Hash] attributes hash with the attributes to send.
+    # @param [Hash] header hash with the header options.
+    # @return [Base] the object initialized.
+    def post(attributes, header = {})
+      url = "#{ApiClient.config.path}#{self.resource_path}/"
+      response = ApiClient::Dispatcher.post(url, attributes, header)
+      params = ApiClient::Parser.response(response, url)
+      build(params)
+    end
+
+    # Make a put requisition and initialize an object with the response.
+    #
+    # @param [Integer] id id of the object.
+    # @param [Hash] attributes hash with the attributes to send.
+    # @param [Hash] header hash with the header options.
+    # @return [Base] the object initialized.
+    def put(id, attributes, header = {})
+      url = "#{ApiClient.config.path}#{self.resource_path}/#{id}"
+      response = ApiClient::Dispatcher.put(url, attributes, header)
+      params = ApiClient::Parser.response(response, url)
+      build(params)
+    end
+
+    # Make a patch requisition and initialize an object with the response.
+    #
+    # @param [Integer] id id of the object.
+    # @param [Hash] attributes hash with the attributes to send.
+    # @param [Hash] header hash with the header options.
+    # @return [Base] the object initialized.
+    def patch(id, attributes, header = {})
+      url = "#{ApiClient.config.path}#{self.resource_path}/#{id}"
+      response = ApiClient::Dispatcher.patch(url, attributes, header)
+      params = ApiClient::Parser.response(response, url)
+      build(params)
+    end
+
+    # Make a delete requisition and initialize an object with the response.
+    #
+    # @param [Integer] id id of the object.
+    # @param [Hash] header hash with the header options.
+    # @return [Base] the object initialized.
+    def delete(id, header = {})
+      url = "#{ApiClient.config.path}#{self.resource_path}/#{id}"
+      response = ApiClient::Dispatcher.delete(url, header)
+      params = ApiClient::Parser.response(response, url)
+      build(params)
+    end
+
+    def remove_root(attributes = {})
+      attributes = attributes[self.root_node.to_sym] if attributes.key?(self.root_node.to_sym)
+      attributes = attributes[self.root_node.to_s] if attributes.key?(self.root_node.to_s)
+      attributes
     end
   end
 end

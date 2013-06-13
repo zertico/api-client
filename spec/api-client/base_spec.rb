@@ -160,35 +160,4 @@ describe ApiClient::Base do
       @user.errors.messages.should == { :a => %w(message), :b => %w(message) }
     end
   end
-
-  describe 'requests' do
-    context 'on the class' do
-      before :each do
-        stub_request(:any, 'http://api.example.com/users').to_return(:body => {'a' => 'b'}.to_json)
-      end
-
-      it 'should return a new instance' do
-        User.get.should be_an_instance_of(User)
-      end
-
-      it 'should set the response on the instance' do
-        User.get.response.should == { 'a' => 'b' }
-      end
-    end
-
-    context 'on an object' do
-      before :each do
-        stub_request(:any, 'http://api.example.com/users').to_return(:body => {'a' => 'b'}.to_json)
-        @user = User.new
-      end
-
-      it 'should return a new instance' do
-        @user.get.should be_an_instance_of(User)
-      end
-
-      it 'should set the response on the instance' do
-        @user.get.response.should == {'a' => 'b'}
-      end
-    end
-  end
 end
