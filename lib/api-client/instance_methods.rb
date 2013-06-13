@@ -22,7 +22,7 @@ module ApiClient
     end
 
     def post(header = {})
-      url = "#{ApiClient.config.path}#{self.class.resource_path}/"
+      url = "#{ApiClient.config.path}#{self.class.resource_path}"
       response = ApiClient::Dispatcher.post(url, self.attributes, header)
       attributes = ApiClient::Parser.response(response, url)
       update_attributes(attributes)

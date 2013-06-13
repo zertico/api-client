@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ApiClient::ClassMethods do
   before :each do
-    stub_request(:any, 'http://api.example.com/users/').to_return(:body => {'a' => 'b'}.to_json)
+    stub_request(:any, 'http://api.example.com/users').to_return(:body => {'a' => 'b'}.to_json)
     stub_request(:any, 'http://api.example.com/users/1').to_return(:body => {'a' => 'b'}.to_json)
   end
 

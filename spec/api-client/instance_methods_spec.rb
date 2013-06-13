@@ -4,7 +4,7 @@ describe ApiClient::InstanceMethods do
   let(:user) { User.new(:id => 1) }
   
   before :each do
-    stub_request(:any, 'http://api.example.com/users/').to_return(:body => {'a' => 'b'}.to_json)
+    stub_request(:any, 'http://api.example.com/users').to_return(:body => {'a' => 'b'}.to_json)
     stub_request(:any, 'http://api.example.com/users/1').to_return(:body => {'a' => 'b'}.to_json)
   end
 
