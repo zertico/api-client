@@ -16,5 +16,20 @@ module ApiClient
       path = "#{path}/" unless path[path.size - 1, 1] == '/'
       @path = path
     end
+
+    # Return the default header for requisitions.
+    #
+    # @return [Hash] the default header.
+    def header
+      return { 'Content-Type' => 'application/json' } unless @header
+      @header
+    end
+
+    # Set the default header for requisitions.
+    #
+    # @param [Hash] header the default header for requitions.
+    def header=(header = {})
+      @header = { 'Content-Type' => 'application/json' }.merge(header)
+    end
   end
 end

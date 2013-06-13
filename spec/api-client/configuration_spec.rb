@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ApiClient::Configuration do
   describe '#path' do
-    describe 'when not configured' do
+    context 'when not configured' do
       before :each do
         ApiClient.configure do |config|
           config.path = ''
@@ -14,7 +14,7 @@ describe ApiClient::Configuration do
       end
     end
 
-    describe 'when properly configured' do
+    context 'when properly configured' do
       before :each do
         ApiClient.configure do |config|
           config.path = 'http://api.example.com'
@@ -28,7 +28,7 @@ describe ApiClient::Configuration do
   end
 
   describe '#path=' do
-    describe "with a string without '/'" do
+    context "with a string without '/'" do
       before :each do
         ApiClient.config.path = 'http://api.example.com'
       end
@@ -38,7 +38,7 @@ describe ApiClient::Configuration do
       end
     end
 
-    describe "with a string with '/'" do
+    context "with a string with '/'" do
       before :each do
         ApiClient.config.path = 'http://api.example.com/'
       end
@@ -46,6 +46,36 @@ describe ApiClient::Configuration do
       it "should set it as passed" do
         ApiClient.config.path.should == 'http://api.example.com/'
       end
+    end
+  end
+
+  describe '#header' do
+    context 'when not configured' do
+      it 'should return a hash with configs for content_type only' do
+        ApiClient.config.header.should == { 'Content-Type' => 'application/json' }
+      end
+    end
+
+    context 'when configured' do
+      before :each do
+        ApiClient.config.instance_variable_set('@header', { 'key' => 'value' })
+      end
+
+      it 'should return a hash with the configured header' do
+        ApiClient.config.header.should == { 'key' => 'value' }
+      end
+    end
+  end
+
+  describe '#header=' do
+    before :each do
+      ApiClient.configure do |config|
+        config.header = { 'Content-Type' => 'application/xml' }
+      end
+    end
+
+    it 'should merge content_type json with the given hash' do
+      ApiClient.config.header.should == { 'Content-Type' => 'application/xml' }
     end
   end
 end
