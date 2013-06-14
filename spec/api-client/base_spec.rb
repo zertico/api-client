@@ -140,6 +140,12 @@ describe ApiClient::Base do
     end
   end
 
+  describe '#to_hash' do
+    it 'should return a hash with root node and the attributes and its currently values' do
+      User.new.to_hash.should == { :user => { :a => nil, :b => nil } }
+    end
+  end
+
   describe '.collection' do
     before :each do
       ApiClient::Collection.stub(:new).with(User, 'users').and_return(collection)

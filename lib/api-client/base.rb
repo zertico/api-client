@@ -109,14 +109,19 @@ module ApiClient
       @attributes
     end
 
-    # Return an array with all instance variables setted through attr_accessor and its currently values.
+    # Return a hash with all instance variables setted through attr_accessor and its currently values.
     #
     # @return [Hash] instance variables and its values.
     def attributes
       self.class.instance_variable_get('@attributes').inject({}) { |hash, attribute| hash.merge(attribute.to_sym => self.send("#{attribute}")) }
     end
 
-    alias_method :to_hash, :attributes
+    # Return a hash with a root node and all instance variables setted through attr_accessor and its currently values.
+    #
+    # @return [Hash] instance variables and its values.
+    def to_hash
+      { self.class.root_node.to_sym => attributes }
+    end
 
     # Initialize a collection of objects. The collection will be an ApiClient::Collection object.
     # The objects in the collection will be all instances of this (ApiClient::Base) class.

@@ -23,21 +23,21 @@ module ApiClient
 
     def post(header = {})
       url = "#{ApiClient.config.path}#{self.class.resource_path}"
-      response = ApiClient::Dispatcher.post(url, self.attributes, header)
+      response = ApiClient::Dispatcher.post(url, self.to_hash, header)
       attributes = ApiClient::Parser.response(response, url)
       update_attributes(attributes)
     end
 
     def put(header = {})
       url = "#{ApiClient.config.path}#{self.class.resource_path}/#{id}"
-      response = ApiClient::Dispatcher.put(url, self.attributes, header)
+      response = ApiClient::Dispatcher.put(url, self.to_hash, header)
       attributes = ApiClient::Parser.response(response, url)
       update_attributes(attributes)
     end
 
     def patch(header = {})
       url = "#{ApiClient.config.path}#{self.class.resource_path}/#{id}"
-      response = ApiClient::Dispatcher.post(url, self.attributes, header)
+      response = ApiClient::Dispatcher.post(url, self.to_hash, header)
       attributes = ApiClient::Parser.response(response, url)
       update_attributes(attributes)
     end
