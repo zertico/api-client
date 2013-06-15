@@ -84,7 +84,15 @@ In Some cases, that is not the required behavior. To Redefine it, use remote_obj
 
 ```ruby
 class Admin < ApiClient::Base
-    self.remote_object = "user"
+    self.root_node = 'user'
+end
+```
+
+To specify a resource path different from the expected, you can overwrite the behavior by setting resouce_path:
+
+```ruby
+class Admin < ApiClient::Base
+    self.resource_path = 'users?type=admin'
 end
 ```
 
@@ -97,6 +105,9 @@ end
 ```
 
 This code will create a setter and a getter for houses and cars and initialize the respective class.
+
+Since version 2.0.0, it is possible to make api calls from the object. The syntax is pretty much the same.
+It will make the call and update the fields with the response. Look at the examples folder to see more code examples
 
 ## TODO
    * Add support for parallel requests
