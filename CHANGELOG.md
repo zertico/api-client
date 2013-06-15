@@ -1,10 +1,30 @@
 # CHANGELOG
 
+## v2.0.2
+
+* Changed to_hash method behavior to return a root node.
+* Fix instance requisitions by send a root node.
+
+## v2.0.1
+
+* Removed trailing slash from post requisitions.
+
+## v2.0.0
+
+* Fix typhoeus requisitions by changing params method to body.
+* Add Support to configure header globally.
+* Improved readability by changing methods names.
+
+## v2.0.0.rc2
+
+* Fix initialization with root nodes for nested objects.
+* Add Support for object initialization with strings as keys.
+
 ## v2.0.0.rc1
 
 * Add Support for global url.
 * Add Support for instance requests.
-* Changed behavior of request methods to only accepts the resource id if needed..
+* Changed behavior of request methods to only accepts the resource id if needed.
 
 ## v1.10.0
 
