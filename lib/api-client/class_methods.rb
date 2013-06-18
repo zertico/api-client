@@ -73,6 +73,10 @@ module ApiClient
       build(params)
     end
 
+    # Removes the root node attribute if found.
+    #
+    # @param [Hash] attributes the hash with attributes.
+    # @return [Hash] the hash with attributes without the root node.
     def remove_root(attributes = {})
       attributes = attributes[self.root_node.to_sym] if attributes.key?(self.root_node.to_sym)
       attributes = attributes[self.root_node.to_s] if attributes.key?(self.root_node.to_s)
