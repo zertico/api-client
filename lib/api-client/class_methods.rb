@@ -41,8 +41,8 @@ module ApiClient
     # @param [Hash] attributes hash with the attributes to send.
     # @param [Hash] header hash with the header options.
     # @return [Base] the object initialized.
-    def put(id, attributes, header = {})
-      url = "#{ApiClient.config.path}#{self.resource_path}/#{id}"
+    def put(attributes, header = {})
+      url = "#{ApiClient.config.path}#{self.resource_path}"
       response = ApiClient::Dispatcher.put(url, attributes, header)
       params = ApiClient::Parser.response(response, url)
       build(params)
@@ -54,8 +54,8 @@ module ApiClient
     # @param [Hash] attributes hash with the attributes to send.
     # @param [Hash] header hash with the header options.
     # @return [Base] the object initialized.
-    def patch(id, attributes, header = {})
-      url = "#{ApiClient.config.path}#{self.resource_path}/#{id}"
+    def patch(attributes, header = {})
+      url = "#{ApiClient.config.path}#{self.resource_path}"
       response = ApiClient::Dispatcher.patch(url, attributes, header)
       params = ApiClient::Parser.response(response, url)
       build(params)

@@ -29,14 +29,14 @@ module ApiClient
     end
 
     def put(header = {})
-      url = "#{ApiClient.config.path}#{self.class.resource_path}/#{id}"
+      url = "#{ApiClient.config.path}#{self.class.resource_path}"
       response = ApiClient::Dispatcher.put(url, self.to_hash, header)
       attributes = ApiClient::Parser.response(response, url)
       update_attributes(attributes)
     end
 
     def patch(header = {})
-      url = "#{ApiClient.config.path}#{self.class.resource_path}/#{id}"
+      url = "#{ApiClient.config.path}#{self.class.resource_path}"
       response = ApiClient::Dispatcher.post(url, self.to_hash, header)
       attributes = ApiClient::Parser.response(response, url)
       update_attributes(attributes)
