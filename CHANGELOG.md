@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.0.3
+
+* Fix put and patch requisitions.
+
 ## v2.0.2
 
 * Changed to_hash method behavior to return a root node.
