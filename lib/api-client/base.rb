@@ -62,7 +62,7 @@ module ApiClient
     #
     # @return [String] a string with the root node name for this class.
     def self.root_node
-      @root_node.blank? ? self.to_s.split('::').last.downcase : @root_node
+      @root_node.blank? ? self.to_s.split('::').last.underscore : @root_node
     end
 
     # Set a custom root node name instead of the Class name.

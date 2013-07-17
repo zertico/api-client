@@ -30,6 +30,9 @@ class Group < ApiClient::Base
   self.associations = { :members => 'User', :owner => 'Admin' }
 end
 
+class InvoiceItem < ApiClient::Base
+end
+
 ApiClient.configure do |config|
   config.path = 'http://api.example.com'
 end

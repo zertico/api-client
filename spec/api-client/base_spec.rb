@@ -96,6 +96,12 @@ describe ApiClient::Base do
         Admin.root_node.should == 'user'
       end
     end
+
+    context 'on a class with a compost name' do
+      it 'should return the class name' do
+        InvoiceItem.root_node.should == 'invoice_item'
+      end
+    end
   end
 
   describe '.root_node=' do
