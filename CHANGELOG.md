@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.1.0
+
+* Add support for classes with compost names.
+
 ## v2.0.3
 
 * Fix put and patch requisitions.
