@@ -2,4 +2,6 @@ source :rubygems
 
 gem 'typhoeus'
 
+gem 'activesupport', '>= 3.0', '< 4'
+
 gemspec :path => '../'
