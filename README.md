@@ -41,6 +41,17 @@ Or install it yourself as:
 
 ## Basic Usage
 
+Create an initializer:
+
+```ruby
+ApiClient.configure do |config|
+   # Api path
+   config.path = 'http://api.example.com'
+   # Default header
+   config.header = { :token => '123329845729384759237592348712876817234'}
+end
+```
+
 Add this to your ApplicationController:
 
 ```ruby
@@ -109,12 +120,15 @@ This code will create a setter and a getter for houses and cars and initialize t
 Since version 2.0.0, it is possible to make api calls from the object. The syntax is pretty much the same.
 It will make the call and update the fields with the response. Look at the examples folder to see more code examples
 
+## More Examples
+[Project](https://github.com/zertico/api-client/tree/master/examples)
+
 ## TODO
-   * Add support for parallel requests
-   * Add more Response Handlers
+* Add support for parallel requests
+* Add more Response Handlers
 
 ## Mantainers
-  [@plribeiro3000](https://github.com/plribeiro3000)
+[@plribeiro3000](https://github.com/plribeiro3000)
 
 
 ## Contributing
