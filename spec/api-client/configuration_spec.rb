@@ -78,4 +78,23 @@ describe ApiClient::Configuration do
       ApiClient.config.header.should == { 'Content-Type' => 'application/xml' }
     end
   end
+
+  describe '#basic_auth=' do
+    before :each do
+      ApiClient.configure do |config|
+        config.basic_auth('user', 'pass')
+      end
+    end
+
+    after :each do
+      ApiClient.configure do |config|
+        config.header = {}
+      end
+    end
+
+    it 'should merge basic_auth in header params' do
+      ApiClient.config.header.should == { 'Content-Type' => 'application/xml',
+                                          'Authorization' => 'Basic dXNlcjpwYXNz' }
+    end
+  end
 end

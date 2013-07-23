@@ -1,6 +1,8 @@
 module ApiClient
   # ApiClient::Configuration provides a way to configure ApiClient globally.
   class Configuration
+    attr_reader :header
+
     # Return the api url.
     #
     # @return [String] the api url.
@@ -17,19 +19,18 @@ module ApiClient
       @path = path
     end
 
-    # Return the default header for requisitions.
+    # Set the default params of header.
     #
-    # @return [Hash] the default header.
-    def header
-      return { 'Content-Type' => 'application/json' } unless @header
-      @header
-    end
-
-    # Set the default header for requisitions.
-    #
-    # @param [Hash] header the default header for requitions.
+    # @param [Hash] header the default header for requisitions.
     def header=(header = {})
       @header = { 'Content-Type' => 'application/json' }.merge(header)
+    end
+
+    # Set a basic authentication for all requisitions.
+    #
+    # @param [Hash] header the default header for requisitions.
+    def basic_auth(account, password)
+      @header.merge!({ 'Authorization' => "Basic #{["#{account}:#{password}"].pack('m').delete("\r\n")}" })
     end
   end
 end

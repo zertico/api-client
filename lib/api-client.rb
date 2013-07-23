@@ -25,8 +25,9 @@ module ApiClient
     @config
   end
 
+  # Default Settings
   configure do |config|
     config.path = ''
-    config.header = { 'Content-Type' => 'application/json' }
+    config.header = {}
   end
 end
