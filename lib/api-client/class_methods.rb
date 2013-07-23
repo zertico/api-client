@@ -23,6 +23,8 @@ module ApiClient
       build(params)
     end
 
+    alias_method :find, :get
+
     # Make a post requisition and initialize an object with the response.
     #
     # @param [Hash] attributes hash with the attributes to send.
@@ -34,6 +36,8 @@ module ApiClient
       params = ApiClient::Parser.response(response, url)
       build(params)
     end
+
+    alias_method :create, :post
 
     # Make a put requisition and initialize an object with the response.
     #
@@ -47,6 +51,8 @@ module ApiClient
       params = ApiClient::Parser.response(response, url)
       build(params)
     end
+
+    alias_method :update_attributes, :put
 
     # Make a patch requisition and initialize an object with the response.
     #
@@ -72,6 +78,8 @@ module ApiClient
       params = ApiClient::Parser.response(response, url)
       build(params)
     end
+
+    alias_method :destroy, :delete
 
     # Removes the root node attribute if found.
     #

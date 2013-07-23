@@ -5,7 +5,7 @@ module ApiClient
     #
     # @param [Hash] attributes hash of attributes.
     # @return [Base] the update_attributes object.
-    def update_attributes(attributes)
+    def update(attributes)
       hash = remove_root(attributes)
       hash = hash.merge({ 'response' => attributes })
       hash.each do |key, value|
@@ -22,8 +22,10 @@ module ApiClient
       url = "#{ApiClient.config.path}#{self.class.resource_path}/#{id}"
       response = ApiClient::Dispatcher.get(url, header)
       attributes = ApiClient::Parser.response(response, url)
-      update_attributes(attributes)
+      update(attributes)
     end
+
+    alias_method :reload, :get
 
     # Make a post requisition and update the object with the response.
     #
@@ -33,8 +35,10 @@ module ApiClient
       url = "#{ApiClient.config.path}#{self.class.resource_path}"
       response = ApiClient::Dispatcher.post(url, self.to_hash, header)
       attributes = ApiClient::Parser.response(response, url)
-      update_attributes(attributes)
+      update(attributes)
     end
+
+    alias_method :create, :post
 
     # Make a put requisition and update the object with the response.
     #
@@ -44,8 +48,10 @@ module ApiClient
       url = "#{ApiClient.config.path}#{self.class.resource_path}"
       response = ApiClient::Dispatcher.put(url, self.to_hash, header)
       attributes = ApiClient::Parser.response(response, url)
-      update_attributes(attributes)
+      update(attributes)
     end
+
+    alias_method :update_attributes, :put
 
     # Make a patch requisition and update the object with the response.
     #
@@ -55,7 +61,7 @@ module ApiClient
       url = "#{ApiClient.config.path}#{self.class.resource_path}"
       response = ApiClient::Dispatcher.patch(url, self.to_hash, header)
       attributes = ApiClient::Parser.response(response, url)
-      update_attributes(attributes)
+      update(attributes)
     end
 
     # Make a delete requisition and update the object with the response.
@@ -66,8 +72,10 @@ module ApiClient
       url = "#{ApiClient.config.path}#{self.class.resource_path}/#{id}"
       response = ApiClient::Dispatcher.delete(url, header)
       attributes = ApiClient::Parser.response(response, url)
-      update_attributes(attributes)
+      update(attributes)
     end
+
+    alias_method :destroy, :delete
 
     # Removes the root node attribute if found.
     #

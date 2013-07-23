@@ -8,7 +8,7 @@ describe ApiClient::ClassMethods do
 
   context '.build' do
     context 'with a root node' do
-      it 'should return a new object' do
+      it 'should return an user' do
         User.build('user' => { 'a' => 'b'}).should be_an_instance_of(User)
       end
 
@@ -18,7 +18,7 @@ describe ApiClient::ClassMethods do
     end
 
     context 'without a root node' do
-      it 'should return a new object' do
+      it 'should return an user' do
         User.build('a' => 'b').should be_an_instance_of(User)
       end
 
@@ -29,32 +29,56 @@ describe ApiClient::ClassMethods do
   end
 
   context '.get' do
-    it 'should return a new object' do
+    it 'should return an user' do
       User.get(1).should be_an_instance_of(User)
     end
   end
 
+  context '.find' do
+    it 'should return an user' do
+      User.find(1).should be_an_instance_of(User)
+    end
+  end
+
   context '.post' do
-    it 'should return a new object' do
+    it 'should return an user' do
       User.post({}).should be_an_instance_of(User)
     end
   end
 
+  context '.create' do
+    it 'should return an user' do
+      User.create({}).should be_an_instance_of(User)
+    end
+  end
+
   context '.put' do
-    it 'should return a new object' do
+    it 'should return an user' do
       User.put(1, {}).should be_an_instance_of(User)
     end
   end
 
+  context '.update_attributes' do
+    it 'should return an user' do
+      User.update_attributes(1, {}).should be_an_instance_of(User)
+    end
+  end
+
   context '.patch' do
-    it 'should return a new object' do
+    it 'should return an user' do
       User.patch(1, {}).should be_an_instance_of(User)
     end
   end
 
   context '.delete' do
-    it 'should return a new object' do
+    it 'should return an user' do
       User.delete(1).should be_an_instance_of(User)
+    end
+  end
+
+  context '.destroy' do
+    it 'should return an user' do
+      User.destroy(1).should be_an_instance_of(User)
     end
   end
 end

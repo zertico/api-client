@@ -132,6 +132,10 @@ module ApiClient
       ApiClient::Collection.new(self, self.resource_path).collection
     end
 
+    class << self
+      alias_method :all, :collection
+    end
+
     # Set the hash of errors, making keys symbolic.
     #
     # @param [Hash] errs errors of the object.
