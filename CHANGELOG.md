@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v2.2.0
+
+* Add support global basic authentication.
+* Add support for gem Zertico
+
 ## v2.1.0
 
 * Add support for classes with compost names.
