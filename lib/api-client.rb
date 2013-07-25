@@ -14,7 +14,7 @@ module ApiClient
 
   # Configures global settings
   #   ApiClient.configure do |config|
-  #     config.url_path = "api.example.com"
+  #     config.path = "api.example.com"
   #   end
   def self.configure(&block)
     yield @config ||= ApiClient::Configuration.new
@@ -29,5 +29,6 @@ module ApiClient
   configure do |config|
     config.path = ''
     config.header = {}
+    config.mock = false
   end
 end

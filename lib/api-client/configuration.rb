@@ -1,6 +1,7 @@
 module ApiClient
   # ApiClient::Configuration provides a way to configure ApiClient globally.
   class Configuration
+    attr_accessor :mock
     attr_reader :header
 
     # Return the api url.

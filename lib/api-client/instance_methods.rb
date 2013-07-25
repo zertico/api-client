@@ -19,6 +19,7 @@ module ApiClient
     # @param [Hash] header hash with the header options.
     # @return [Base] the object updated.
     def get(header = {})
+      return update({}) if ApiClient.config.mock
       url = "#{ApiClient.config.path}#{self.class.resource_path}/#{id}"
       response = ApiClient::Dispatcher.get(url, header)
       attributes = ApiClient::Parser.response(response, url)
@@ -32,6 +33,7 @@ module ApiClient
     # @param [Hash] header hash with the header options.
     # @return [Base] the object updated.
     def post(header = {})
+      return update({}) if ApiClient.config.mock
       url = "#{ApiClient.config.path}#{self.class.resource_path}"
       response = ApiClient::Dispatcher.post(url, self.to_hash, header)
       attributes = ApiClient::Parser.response(response, url)
@@ -45,6 +47,7 @@ module ApiClient
     # @param [Hash] header hash with the header options.
     # @return [Base] the object updated.
     def put(header = {})
+      return update({}) if ApiClient.config.mock
       url = "#{ApiClient.config.path}#{self.class.resource_path}"
       response = ApiClient::Dispatcher.put(url, self.to_hash, header)
       attributes = ApiClient::Parser.response(response, url)
@@ -58,6 +61,7 @@ module ApiClient
     # @param [Hash] header hash with the header options.
     # @return [Base] the object updated.
     def patch(header = {})
+      return update({}) if ApiClient.config.mock
       url = "#{ApiClient.config.path}#{self.class.resource_path}"
       response = ApiClient::Dispatcher.patch(url, self.to_hash, header)
       attributes = ApiClient::Parser.response(response, url)
@@ -69,6 +73,7 @@ module ApiClient
     # @param [Hash] header hash with the header options.
     # @return [Base] the object updated.
     def delete(header = {})
+      return update({}) if ApiClient.config.mock
       url = "#{ApiClient.config.path}#{self.class.resource_path}/#{id}"
       response = ApiClient::Dispatcher.delete(url, header)
       attributes = ApiClient::Parser.response(response, url)
