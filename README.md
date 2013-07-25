@@ -122,6 +122,18 @@ This code will create a setter and a getter for houses and cars and initialize t
 Since version 2.0.0, it is possible to make api calls from the object. The syntax is pretty much the same.
 It will make the call and update the fields with the response. Look at the examples folder to see more code examples
 
+## Testing
+
+Set mock config variable as true inside yout spec_helper or test_helper:
+
+```ruby
+ApiClient.configure do |config|
+   config.mock = true
+end
+```
+
+With this setting no requisitions will be made. All calls will just return a new object with the attributes received.
+
 ## More Examples
 [Project](https://github.com/zertico/api-client/tree/master/examples)
 
