@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.3.0
+
+* Add support to global mock of requisitions for testing purposes.
+
 ## v2.2.0
 
 * Add support global basic authentication.
