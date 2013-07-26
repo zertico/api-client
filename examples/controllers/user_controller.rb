@@ -15,7 +15,7 @@ class UserController < ApplicationController
 
   # It will hit http://api.example.com/users with a post request
   def create
-    @user = User.post(:user => params[:user])
+    @user = User.post({ :user => params[:user] })
     respond_with(@user)
   end
 
@@ -25,9 +25,9 @@ class UserController < ApplicationController
     respond_with(@user)
   end
 
-  # It will hit http://api.example.com/users/1 with a patch request
+  # It will hit http://api.example.com/users with a patch request
   def update
-    @user = User.patch(params[:id], { :user => params[:user] })
+    @user = User.patch({ :user => params[:user] })
     respond_with(@user)
   end
 
