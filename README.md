@@ -45,12 +45,16 @@ Create an initializer:
 
 ```ruby
 ApiClient.configure do |config|
-   # Api path
+   # You can define an api entry point
    config.path = 'http://api.example.com'
+   # or several ones
+   config.paths = { :default => 'http://api.example.com', :auth => 'http://auth.example.com' }
    # Default header
    config.header = { 'param1' => '123329845729384759237592348712876817234'}
    # Basic Auth
    config.basic_auth('user', 'pass')
+   # If inside Rails
+   config.mock = Rails.env.test?
 end
 ```
 
@@ -80,6 +84,8 @@ Then, on your action, just put into it:
 
 ```ruby
 @user = User.get(3)
+#or
+@user = User.find(3)
 ```
 
 where 3 is the id of the user.
@@ -88,6 +94,8 @@ To a request that returns a collection of the object, use:
 
 ```ruby
 @user = User.collection
+#or
+@user = User.all
 ```
 
 ## Advanced Usage
@@ -114,6 +122,15 @@ It can handle associations. It will automatically instantiate an association for
 ```ruby
 class Person < ApiClient::Base
     self.associations = { :houses => "House", :cars => "Car" }
+end
+```
+
+In case you need to work with one api entry point, it will define you path as the default.
+If you need multiple entry points, you must define a name to each one, so you can refer to them on the model as:
+
+```ruby
+class User < ApiClient::Base
+    self.path = :auth
 end
 ```
 
