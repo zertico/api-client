@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v2.4.0
+
+* Add support to multiple api entry points.
+* Added license to gemspec.
+
 ## v2.3.0
 
 * Add support to global mock of requisitions for testing purposes.
