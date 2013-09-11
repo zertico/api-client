@@ -18,7 +18,7 @@ module ApiClient
     # @return [Base] the object initialized.
     def get(id, header = {})
       return build(:id => id) if ApiClient.config.mock
-      url = "#{ApiClient.config.path}#{self.resource_path}/#{id}"
+      url = "#{ApiClient.config.path[path]}#{self.resource_path}/#{id}"
       response = ApiClient::Dispatcher.get(url, header)
       params = ApiClient::Parser.response(response, url)
       build(params)
@@ -33,7 +33,7 @@ module ApiClient
     # @return [Base] the object initialized.
     def post(attributes, header = {})
       return build(attributes) if ApiClient.config.mock
-      url = "#{ApiClient.config.path}#{self.resource_path}"
+      url = "#{ApiClient.config.path[path]}#{self.resource_path}"
       response = ApiClient::Dispatcher.post(url, attributes, header)
       params = ApiClient::Parser.response(response, url)
       build(params)
@@ -43,13 +43,12 @@ module ApiClient
 
     # Make a put requisition and initialize an object with the response.
     #
-    # @param [Integer] id id of the object.
     # @param [Hash] attributes hash with the attributes to send.
     # @param [Hash] header hash with the header options.
     # @return [Base] the object initialized.
     def put(attributes, header = {})
       return build(attributes) if ApiClient.config.mock
-      url = "#{ApiClient.config.path}#{self.resource_path}"
+      url = "#{ApiClient.config.path[path]}#{self.resource_path}"
       response = ApiClient::Dispatcher.put(url, attributes, header)
       params = ApiClient::Parser.response(response, url)
       build(params)
@@ -59,13 +58,12 @@ module ApiClient
 
     # Make a patch requisition and initialize an object with the response.
     #
-    # @param [Integer] id id of the object.
     # @param [Hash] attributes hash with the attributes to send.
     # @param [Hash] header hash with the header options.
     # @return [Base] the object initialized.
     def patch(attributes, header = {})
       return build(attributes) if ApiClient.config.mock
-      url = "#{ApiClient.config.path}#{self.resource_path}"
+      url = "#{ApiClient.config.path[path]}#{self.resource_path}"
       response = ApiClient::Dispatcher.patch(url, attributes, header)
       params = ApiClient::Parser.response(response, url)
       build(params)
@@ -78,7 +76,7 @@ module ApiClient
     # @return [Base] the object initialized.
     def delete(id, header = {})
       return build(:id => id) if ApiClient.config.mock
-      url = "#{ApiClient.config.path}#{self.resource_path}/#{id}"
+      url = "#{ApiClient.config.path[path]}#{self.resource_path}/#{id}"
       response = ApiClient::Dispatcher.delete(url, header)
       params = ApiClient::Parser.response(response, url)
       build(params)

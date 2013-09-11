@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ApiClient::Configuration do
   describe '#path' do
-    context 'when not configured' do
+    context 'when badly configured' do
       before :each do
         ApiClient.configure do |config|
           config.path = ''
@@ -10,7 +10,7 @@ describe ApiClient::Configuration do
       end
 
       it 'should raise an error' do
-        lambda { ApiClient.config.path }.should raise_error(ApiClient::Exceptions::NotConfigured)
+        expect { ApiClient.config.path }.to raise_error(ApiClient::Exceptions::BadlyConfigured)
       end
     end
 
@@ -34,7 +34,7 @@ describe ApiClient::Configuration do
       end
 
       it "should set it with a '/'" do
-        ApiClient.config.path.should == 'http://api.example.com/'
+        ApiClient.config.path.should == { :default => 'http://api.example.com/' }
       end
     end
 
@@ -44,8 +44,18 @@ describe ApiClient::Configuration do
       end
 
       it "should set it as passed" do
-        ApiClient.config.path.should == 'http://api.example.com/'
+        ApiClient.config.path.should == { :default => 'http://api.example.com/' }
       end
+    end
+  end
+
+  describe '#paths=' do
+    before :each do
+      ApiClient.config.paths = { :auth => 'http://auth.example.com', :default => 'http://panel.example.com' }
+    end
+
+    it 'should set several paths in a hash' do
+      ApiClient.config.path.should == { :auth => 'http://auth.example.com/', :default => 'http://panel.example.com/' }
     end
   end
 

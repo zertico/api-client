@@ -5,6 +5,9 @@ describe ApiClient::InstanceMethods do
 
   context 'with mock equal false' do
     before :each do
+      ApiClient.configure do |config|
+        config.path = 'http://api.example.com'
+      end
       stub_request(:any, 'http://api.example.com/users').to_return(:body => {'a' => 'b'}.to_json)
       stub_request(:any, 'http://api.example.com/users/1').to_return(:body => {'a' => 'b'}.to_json)
     end

@@ -116,6 +116,32 @@ describe ApiClient::Base do
     end
   end
 
+  describe '.path' do
+    it 'should return :default' do
+      User.path.should == :default
+    end
+  end
+
+  describe '.path=' do
+    before :each do
+      User.path = 'auth'
+    end
+
+    after :each do
+      User.path = 'default'
+    end
+
+    it 'should set the name of the api to use' do
+      User.path.should == :auth
+    end
+  end
+
+  describe '#path' do
+    it 'should return :default' do
+      User.new.path.should == :default
+    end
+  end
+
   describe '.associations=' do
     before :each do
       @group = Group.new(:members => [ :user => {:a => 'a'}], :owner => {:b => 'b'})
@@ -154,7 +180,7 @@ describe ApiClient::Base do
 
   describe '.collection' do
     before :each do
-      ApiClient::Collection.stub(:new).with(User, 'users').and_return(collection)
+      ApiClient::Collection.stub(:new).with(User, :default, 'users').and_return(collection)
       collection.stub(:collection => [ user, user ])
     end
 

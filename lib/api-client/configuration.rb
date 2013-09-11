@@ -8,16 +8,32 @@ module ApiClient
     #
     # @return [String] the api url.
     def path
-      raise Exceptions::NotConfigured unless @path.size > 1
-      @path
+      @paths.each do |name, path|
+        raise Exceptions::BadlyConfigured.new(name) unless path.size > 1
+      end
+      @paths
     end
 
     # Set the api url.
     #
     # @param [String] path api url.
     def path=(path)
-      path = "#{path}/" unless path[path.size - 1, 1] == '/'
-      @path = path
+      path = "#{path}/" unless path[-1] == '/'
+      @paths = { :default => path }
+    end
+
+    # Set several api urls.
+    #
+    # @param [Hash] hash with paths to api urls.
+    def paths=(paths = {})
+      @paths = {}
+      paths.each do |name, path|
+        if path[-1] == '/'
+          @paths[name] = path
+        else
+          @paths[name] = "#{path}/"
+        end
+      end
     end
 
     # Set the default params of header.

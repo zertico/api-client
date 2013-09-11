@@ -42,6 +42,28 @@ module ApiClient
       false
     end
 
+
+    # Return the api name to be used by this model.
+    #
+    # @return [False] return the default api name.
+    def self.path
+      @path || :default
+    end
+
+    # Return the api name to be used by this model.
+    #
+    # @return [False] return the default api name.
+    def self.path=(path)
+      @path = path.to_sym
+    end
+
+    # Return the api name to be used by this model.
+    #
+    # @return [False] return the default api name.
+    def path
+      self.class.path
+    end
+
     # Return the resource path of the object on the api url.
     #
     # @return [String] the resource path on the api for this object.
@@ -129,7 +151,7 @@ module ApiClient
     # @param [String] url to get the collection.
     # @return [Collection] a collection of objects.
     def self.collection
-      ApiClient::Collection.new(self, self.resource_path).collection
+      ApiClient::Collection.new(self, self.path, self.resource_path).collection
     end
 
     class << self
