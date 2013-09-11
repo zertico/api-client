@@ -13,6 +13,8 @@ Gem::Specification.new do |gem|
   gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   gem.require_paths = %w(lib)
 
+  gem.license = 'MIT'
+
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'webmock'
   gem.add_development_dependency 'rspec'
