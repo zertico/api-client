@@ -9,8 +9,7 @@ module ApiClient::Dispatcher::NetHttp
   # @param [Hash] header attributes of the request.
   # @return [HTTP] the response object.
   def self.get(url, header = {})
-    initialize_connection(url)
-    call { @http.get(@uri.request_uri, ApiClient.config.header.merge(header)) }
+    dispatch(:get, url, { :header => header })
   end
 
   # Make a post request and returns it.
@@ -20,8 +19,7 @@ module ApiClient::Dispatcher::NetHttp
   # @param [Hash] header attributes of the request.
   # @return [HTTP] the response object.
   def self.post(url, args, header = {})
-    initialize_connection(url)
-    call { @http.post(@uri.request_uri, args.to_json, ApiClient.config.header.merge(header)) }
+    dispatch(:post, url, { :args => args, :header => header })
   end
 
   # Make a put request and returns it.
@@ -31,8 +29,7 @@ module ApiClient::Dispatcher::NetHttp
   # @param [Hash] header attributes of the request.
   # @return [HTTP] the response object.
   def self.put(url, args, header = {})
-    initialize_connection(url)
-    call { @http.put(@uri.request_uri, args.to_json, ApiClient.config.header.merge(header)) }
+    dispatch(:put, url, { :args => args, :header => header })
   end
 
   # Make a patch request and returns it.
@@ -42,8 +39,7 @@ module ApiClient::Dispatcher::NetHttp
   # @param [Hash] header attributes of the request.
   # @return [HTTP] the response object.
   def self.patch(url, args, header = {})
-    initialize_connection(url)
-    call { @http.patch(@uri.request_uri, args.to_json, ApiClient.config.header.merge(header)) }
+    dispatch(:patch, url, { :args => args, :header => header })
   end
 
   # Make a delete request and returns it.
@@ -52,20 +48,22 @@ module ApiClient::Dispatcher::NetHttp
   # @param [Hash] header attributes of the request.
   # @return [HTTP] the response object.
   def self.delete(url, header = {})
-    initialize_connection(url)
-    call { @http.delete(@uri.request_uri, header) }
+    dispatch(:delete, url, { :header => header })
   end
 
   protected
 
-  def self.initialize_connection(url = '')
-    @uri = URI(url)
-    @http = Net::HTTP.start(@uri.host, @uri.port)
-  end
-
-  def self.call
+  def self.dispatch(method, url, options = {})
+    args = options[:args].to_json if options[:args]
+    header = ApiClient.config.header.merge(options[:header])
+    uri = URI(url)
+    http = Net::HTTP.start(uri.host, uri.port)
     begin
-      yield
+      if args
+        http.send(method, uri.request_uri, args, header)
+      else
+        http.send(method, uri.request_uri, header)
+      end
     rescue Errno::ECONNREFUSED
       raise ApiClient::Exceptions::ConnectionRefused
     end
