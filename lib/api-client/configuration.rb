@@ -18,7 +18,7 @@ module ApiClient
     #
     # @param [String] path api url.
     def path=(path)
-      path = "#{path}/" unless path[-1] == '/'
+      path = "#{path}/" unless path[path.size - 1, 1] == '/'
       @paths = { :default => path }
     end
 
@@ -28,7 +28,7 @@ module ApiClient
     def paths=(paths = {})
       @paths = {}
       paths.each do |name, path|
-        if path[-1] == '/'
+        if path[path.size - 1, 1] == '/'
           @paths[name] = path
         else
           @paths[name] = "#{path}/"
