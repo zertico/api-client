@@ -7,3 +7,4 @@ rvm:
 gemfile:
   - gemfiles/Gemfile.net_http
   - gemfiles/Gemfile.typhoeus
+install: bundle install --without development
