@@ -27,7 +27,7 @@ describe ApiClient::Dispatcher do
     it 'should return the request' do
       ApiClient::Dispatcher.patch('http://api.example.com/user/5', {}, {}).body.should == ('asd')
     end
-  end if ApiClient::Dispatcher.respond_to?(:patch)
+  end
 
   describe '.delete' do
     it 'should return the request' do

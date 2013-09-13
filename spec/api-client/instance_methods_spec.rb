@@ -12,28 +12,6 @@ describe ApiClient::InstanceMethods do
       stub_request(:any, 'http://api.example.com/users/1').to_return(:body => {'a' => 'b'}.to_json)
     end
 
-    context '.update' do
-      context 'with a root node' do
-        it 'should update the object' do
-          user.update('user' => { 'a' => 'b'}).should be_an_instance_of(User)
-        end
-
-        it 'should set the response' do
-          user.update('user' => { 'a' => 'b'}).response.should == { 'user' => { 'a' => 'b' } }
-        end
-      end
-
-      context 'without a root node' do
-        it 'should update the object' do
-          user.update('a' => 'b').should be_an_instance_of(User)
-        end
-
-        it 'should set the response' do
-          user.update('a' => 'b').response.should == { 'a' => 'b' }
-        end
-      end
-    end
-
     context '.get' do
       it 'should return an user' do
         user.get.should be_an_instance_of(User)

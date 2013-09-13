@@ -1,12 +1,24 @@
-# ApiClient::Dispatcher::Typhoeus provides methods to make requests using typhoeus
-module ApiClient::Dispatcher::Typhoeus
+# ApiClient::Dispatcher provides methods to make requests using typhoeus
+class ApiClient::Dispatcher::Parallel
+  def initialize(requisition)
+    @requisition = requisition
+  end
+
+  def on_complete_update(variable)
+    @requisition.on_complete do |response|
+      attributes = ApiClient::Parser.response(response, response.effective_url)
+      variable.attributes = attributes
+    end
+    ApiClient.config.hydra.queue @requisition
+  end
+
   # Make a get request and returns it.
   #
   # @param [String] url of the api request.
   # @param [Hash] header attributes of the request.
   # @return [Typhoeus::Request] the response object.
   def self.get(url, header = {})
-    ::Typhoeus.get(url, :headers => ApiClient.config.header.merge(header))
+    new(::Typhoeus::Request.new(url, :headers => ApiClient.config.header.merge(header)))
   end
 
   # Make a post request and returns it.
@@ -16,7 +28,7 @@ module ApiClient::Dispatcher::Typhoeus
   # @param [Hash] header attributes of the request.
   # @return [Typhoeus::Request] the response object.
   def self.post(url, args, header = {})
-    ::Typhoeus.post(url, :body => args, :headers => ApiClient.config.header.merge(header))
+    new(::Typhoeus.Request.new(url, :method => :post, :body => args, :headers => ApiClient.config.header.merge(header)))
   end
 
   # Make a put request and returns it.
@@ -26,7 +38,7 @@ module ApiClient::Dispatcher::Typhoeus
   # @param [Hash] header attributes of the request.
   # @return [Typhoeus::Request] the response object.
   def self.put(url, args, header = {})
-    ::Typhoeus.put(url, :body => args, :headers => ApiClient.config.header.merge(header))
+    new(::Typhoeus.Request.new(url, :method => :put, :body => args, :headers => ApiClient.config.header.merge(header)))
   end
 
   # Make a patch request and returns it.
@@ -36,7 +48,7 @@ module ApiClient::Dispatcher::Typhoeus
   # @param [Hash] header attributes of the request.
   # @return [Typhoeus::Request] the response object.
   def self.patch(url, args, header = {})
-    ::Typhoeus.patch(url, :body => args, :headers => ApiClient.config.header.merge(header))
+    new(::Typhoeus.Request.new(url, :method => :patch, :body => args, :headers => ApiClient.config.header.merge(header)))
   end
 
   # Make a delete request and returns it.
@@ -45,6 +57,6 @@ module ApiClient::Dispatcher::Typhoeus
   # @param [Hash] header attributes of the request.
   # @return [Typhoeus::Request] the response object.
   def self.delete(url, header = {})
-    ::Typhoeus.delete(url, :headers => ApiClient.config.header.merge(header))
+    new(::Typhoeus.Request.new(url, :method => :delete, :headers => ApiClient.config.header.merge(header)))
   end
 end

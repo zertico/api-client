@@ -74,7 +74,7 @@ module ApiClient
 
     # Set the resource path of the object on the api.
     #
-    # @param [String] resource path string.
+    # @param [String] resource_path path string.
     def self.resource_path=(resource_path)
       resource_path = resource_path[1, resource_path.size - 1] if resource_path[0, 1] == '/'
       @resource_path = resource_path
@@ -96,7 +96,7 @@ module ApiClient
 
     # Set methods to initialize associated objects.
     #
-    # @param [Hash] association classes.
+    # @param [Hash] associations classes.
     def self.associations=(associations = {})
       associations.each do |association, class_name|
         class_eval <<-EVAL
@@ -117,7 +117,7 @@ module ApiClient
 
     # Overwrite #attr_acessor method to save instance_variable names.
     #
-    # @param [Array] instance variables.
+    # @param [Array] vars instance variables.
     def self.attr_accessor(*vars)
       @attributes ||= []
       @attributes.concat(vars)
@@ -136,6 +136,15 @@ module ApiClient
     # @return [Hash] instance variables and its values.
     def attributes
       self.class.instance_variable_get('@attributes').inject({}) { |hash, attribute| hash.merge(attribute.to_sym => self.send("#{attribute}")) }
+    end
+
+    # Update instance values based on a hash
+    #
+    # @param attr New attributes
+    def attributes=(attr = {})
+      remove_root(attr).each do |key, value|
+        send("#{key}=", value)
+      end
     end
 
     # Return a hash with a root node and all instance variables setted through attr_accessor and its currently values.
