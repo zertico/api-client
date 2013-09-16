@@ -24,23 +24,23 @@ describe ApiClient do
       end
 
       it 'initialize user1' do
-        @user1.attributes.should == {}
+        @user1.attributes.should == { :a => '1', :b => nil }
       end
 
       it 'initialize user2' do
-        @user2.attributes.should == {}
+        @user2.attributes.should == { :a => '2', :b => nil }
       end
 
       it 'initialize user3' do
-        @user3.attributes.should == {}
+        @user3.attributes.should == { :a => '3', :b => nil }
       end
 
       it 'initialize user4' do
-        @user4.attributes.should == {}
+        @user4.attributes.should == { :a => '4', :b => nil }
       end
 
       it 'initialize user5' do
-        @user5.attributes.should == {}
+        @user5.attributes.should == { :a => '5', :b => nil }
       end
     else
       it 'should raise an exception' do

@@ -10,7 +10,7 @@ module ApiClient::Dispatcher
   # @param [Array] args array of params to be passed ahead.
   def self.method_missing(method_name, *args)
     case true
-      when ApiClient.config.hydra && defined?(::Typhoeus)
+      when ApiClient.config.hydra != false && defined?(::Typhoeus) != nil
         return Parallel.send(method_name, *args) if Parallel.respond_to?(method_name)
       when defined?(::Typhoeus)
         return Typhoeus.send(method_name, *args) if Typhoeus.respond_to?(method_name)
