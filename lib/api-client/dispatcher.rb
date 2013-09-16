@@ -4,6 +4,10 @@ module ApiClient::Dispatcher
   autoload :NetHttp, 'api-client/dispatcher/net-http'
   autoload :Parallel, 'api-client/dispatcher/parallel'
 
+  # It passes the call to a more specific class to handle the dispatch logic based on the environment.
+  #
+  # @param [Symbol] method_name the name of the method.
+  # @param [Array] args array of params to be passed ahead.
   def self.method_missing(method_name, *args)
     case true
       when ApiClient.config.hydra && defined?(::Typhoeus)

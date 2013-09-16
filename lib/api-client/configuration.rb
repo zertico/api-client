@@ -24,7 +24,7 @@ module ApiClient
 
     # Set several api urls.
     #
-    # @param [Hash] hash with paths to api urls.
+    # @param [Hash] paths hash with paths to api urls.
     def paths=(paths = {})
       @paths = {}
       paths.each do |name, path|
@@ -45,7 +45,8 @@ module ApiClient
 
     # Set a basic authentication for all requisitions.
     #
-    # @param [Hash] header the default header for requisitions.
+    # @param [String] account the user for requisitions.
+    # @param [String] password the password for requisitions.
     def basic_auth(account, password)
       @header.merge!({ 'Authorization' => "Basic #{["#{account}:#{password}"].pack('m').delete("\r\n")}" })
     end

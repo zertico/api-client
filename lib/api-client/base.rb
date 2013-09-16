@@ -42,7 +42,6 @@ module ApiClient
       false
     end
 
-
     # Return the api name to be used by this model.
     #
     # @return [False] return the default api name.
