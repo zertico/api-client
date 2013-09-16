@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ApiClient do
   describe '.parallel' do
-    if defined?(::Typhoues)
+    if defined?(::Typhoeus)
       before :each do
         stub_request(:any, 'http://api.example.com/users/1').to_return(:body => {'a' => '1'}.to_json)
         stub_request(:any, 'http://api.example.com/users/2').to_return(:body => {'a' => '2'}.to_json)
