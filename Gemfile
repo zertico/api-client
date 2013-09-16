@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in api-client.gemspec
 gemspec
 
-group :documentation do
+group :developer do
   gem 'redcarpet'
+  gem 'pry'
+  gem 'pry-debugger'
 end
