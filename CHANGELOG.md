@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.5.0
+
+* Add support for parallel requests. Yay! =)
+
 ## v2.4.0
 
 * Add support to multiple api entry points.
