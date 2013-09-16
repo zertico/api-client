@@ -3,19 +3,49 @@ require 'spec_helper'
 describe ApiClient::Collection do
   let(:user) { User.new }
 
-  before :each do
-    stub_request(:get, 'http://api.example.com/users').to_return(:body => [ { 'a' => 'b' }, { 'a' => 'b2' } ].to_json)
-    User.stub(:new => user)
-    @collection = ApiClient::Collection.new(User, :default, 'users')
-  end
-
-  it 'should include enumerable module' do
-    @collection.should respond_to(:first)
-  end
-
   describe '.initialize' do
-    it 'Should initialize a collection of Objects' do
-      @collection.collection.should == [user, user]
+    it 'should save the class in an instance_variable' do
+      ApiClient::Collection.new([], User).instance_variable_get('@klass').should == User
+    end
+
+    context 'with a collection of attributes' do
+      before :each do
+        attributes = [ { :user => { :a => 'a' } }, { :user => { :b => 'b' } } ]
+        @collection = ApiClient::Collection.new(attributes, User)
+      end
+
+      it 'should initialize a collection of objects' do
+        @collection.size.should == 2
+      end
+    end
+
+    context 'with a single object attribute' do
+      before :each do
+        attributes = { :user => { :a => 'a' } }
+        @collection = ApiClient::Collection.new(attributes, User)
+      end
+
+      it 'should initialize a single object' do
+        @collection.size.should == 1
+      end
+    end
+  end
+
+  describe '#update' do
+    before :each do
+      attributes = [ { :user => { :a => 'a' } }, { :user => { :b => 'b' } } ]
+      @collection = ApiClient::Collection.new(attributes, User)
+    end
+    context 'with a collection of attributes' do
+      it 'Should update the collection with new objects based on the attributes' do
+        @collection.update([ { :user => { :a => 'a' } }, { :user => { :b => 'b' } } ]).size.should == 2
+      end
+    end
+
+    context 'with a single object attribute' do
+      it 'should update the collection with the new object based on the attributes' do
+        @collection.update({ :user => { :a => 'a' } }).size.should == 1
+      end
     end
   end
 end

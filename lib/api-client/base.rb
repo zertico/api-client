@@ -42,7 +42,6 @@ module ApiClient
       false
     end
 
-
     # Return the api name to be used by this model.
     #
     # @return [False] return the default api name.
@@ -74,7 +73,7 @@ module ApiClient
 
     # Set the resource path of the object on the api.
     #
-    # @param [String] resource path string.
+    # @param [String] resource_path path string.
     def self.resource_path=(resource_path)
       resource_path = resource_path[1, resource_path.size - 1] if resource_path[0, 1] == '/'
       @resource_path = resource_path
@@ -96,7 +95,7 @@ module ApiClient
 
     # Set methods to initialize associated objects.
     #
-    # @param [Hash] association classes.
+    # @param [Hash] associations classes.
     def self.associations=(associations = {})
       associations.each do |association, class_name|
         class_eval <<-EVAL
@@ -117,7 +116,7 @@ module ApiClient
 
     # Overwrite #attr_acessor method to save instance_variable names.
     #
-    # @param [Array] instance variables.
+    # @param [Array] vars instance variables.
     def self.attr_accessor(*vars)
       @attributes ||= []
       @attributes.concat(vars)
@@ -138,6 +137,15 @@ module ApiClient
       self.class.instance_variable_get('@attributes').inject({}) { |hash, attribute| hash.merge(attribute.to_sym => self.send("#{attribute}")) }
     end
 
+    # Update instance values based on a hash
+    #
+    # @param attr New attributes
+    def attributes=(attr = {})
+      remove_root(attr).each do |key, value|
+        send("#{key}=", value)
+      end
+    end
+
     # Return a hash with a root node and all instance variables setted through attr_accessor and its currently values.
     #
     # @return [Hash] instance variables and its values.
@@ -148,10 +156,11 @@ module ApiClient
     # Initialize a collection of objects. The collection will be an ApiClient::Collection object.
     # The objects in the collection will be all instances of this (ApiClient::Base) class.
     #
-    # @param [String] url to get the collection.
     # @return [Collection] a collection of objects.
     def self.collection
-      ApiClient::Collection.new(self, self.path, self.resource_path).collection
+      url = "#{ApiClient.config.path[path]}#{resource_path}"
+      attributes = ApiClient::Parser.response(ApiClient::Dispatcher.get(url), url)
+      ApiClient::Collection.new(attributes, self)
     end
 
     class << self
