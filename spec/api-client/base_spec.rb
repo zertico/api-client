@@ -162,13 +162,24 @@ describe ApiClient::Base do
 
   describe '.attributes' do
     it 'should return an array of attributes' do
-      User.attributes.should == [:a, :b]
+      User.attributes.should == [ :a, :b ]
     end
   end
 
   describe '#attributes' do
     it 'should return a hash with the attributes and currently values' do
       User.new.attributes.should == { :a => nil, :b => nil }
+    end
+  end
+
+  describe '#attributes=' do
+    before :each do
+      @user = User.new
+      @user.attributes=({ :a => 'a', :b => 'b' })
+    end
+
+    it 'should update the attributes' do
+      @user.attributes.should == { :a => 'a', :b => 'b' }
     end
   end
 
@@ -180,12 +191,11 @@ describe ApiClient::Base do
 
   describe '.collection' do
     before :each do
-      ApiClient::Collection.stub(:new).with(User, :default, 'users').and_return(collection)
-      collection.stub(:collection => [ user, user ])
+      stub_request(:any, 'http://api.example.com/users').to_return(:body => '[]')
     end
 
     it 'should return a collection of objects' do
-      User.collection.should == [ user, user ]
+      User.collection.should be_an_instance_of(ApiClient::Collection)
     end
   end
 

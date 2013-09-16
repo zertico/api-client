@@ -151,11 +151,27 @@ end
 
 With this setting no requisitions will be made. All calls will just return a new object with the attributes received.
 
+## Parallel
+
+When making parallel requests, the requests are made in threads, so to get the response it is necessary to specify
+an initialized object to update when the requisition is complete.
+
+```ruby
+@users = ApiClient::Collection.new({}, User)
+@cars = ApiClient::Collection.new({}, Car)
+@house = House.new
+
+ApiClient.parallel do
+    User.all.on_complete_update(@users)
+    Car.all.on_complete_update(@cars)
+    House.find(1).on_complete_update(@house)
+end
+```
+
 ## More Examples
 [Project](https://github.com/zertico/api-client/tree/master/examples)
 
 ## TODO
-* Add support for parallel requests
 * Add more Response Handlers
 
 ## Mantainers

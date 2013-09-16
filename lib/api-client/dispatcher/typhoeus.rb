@@ -1,6 +1,4 @@
-require 'typhoeus'
-
-# ApiClient::Dispatcher provides methods to make requests using typhoeus
+# ApiClient::Dispatcher::Typhoeus provides methods to make requests using typhoeus
 module ApiClient::Dispatcher::Typhoeus
   # Make a get request and returns it.
   #

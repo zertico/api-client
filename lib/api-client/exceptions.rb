@@ -7,6 +7,7 @@ module ApiClient::Exceptions
   autoload :Generic, 'api-client/exceptions/generic'
   autoload :InternalServerError, 'api-client/exceptions/internal_server_error'
   autoload :NotFound, 'api-client/exceptions/not_found'
+  autoload :NotPossible, 'api-client/exceptions/not_possible'
   autoload :ServiceUnavailable, 'api-client/exceptions/service_unavailable'
   autoload :Unauthorized, 'api-client/exceptions/unauthorized'
 end
