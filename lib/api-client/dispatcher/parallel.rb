@@ -7,7 +7,11 @@ class ApiClient::Dispatcher::Parallel
   def on_complete_update(variable)
     @requisition.on_complete do |response|
       attributes = ApiClient::Parser.response(response, response.effective_url)
-      variable.attributes = attributes
+      if variable.instance_of?(ApiClient::Colletion)
+        variable.update(attributes)
+      else
+        variable.attributes = attributes
+      end
     end
     ApiClient.config.hydra.queue @requisition
   end

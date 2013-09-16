@@ -157,10 +157,11 @@ module ApiClient
     # Initialize a collection of objects. The collection will be an ApiClient::Collection object.
     # The objects in the collection will be all instances of this (ApiClient::Base) class.
     #
-    # @param [String] url to get the collection.
     # @return [Collection] a collection of objects.
     def self.collection
-      ApiClient::Collection.new(self, self.path, self.resource_path).collection
+      url = "#{ApiClient.config.path[path]}#{resource_path}"
+      attributes = ApiClient::Parser.response(ApiClient::Dispatcher.get(url), url)
+      ApiClient::Collection.new(attributes, self)
     end
 
     class << self
