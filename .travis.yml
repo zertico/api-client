@@ -1,10 +1,23 @@
-rvm:
-  - 1.8.7
-  - 1.9.2
-  - 1.9.3
-  - jruby
-  - ree
-gemfile:
-  - gemfiles/Gemfile.net_http
-  - gemfiles/Gemfile.typhoeus
+matrix:
+  include:
+    - rvm: 1.8.7
+      gemfile: gemfiles/Gemfile.net_http_mime-types
+    - rvm: 1.8.7
+      gemfile: gemfiles/Gemfile.typhoeus_mime-types
+    - rvm: 1.9.2
+      gemfile: gemfiles/Gemfile.net_http
+    - rvm: 1.9.2
+      gemfile: gemfiles/Gemfile.typhoeus
+    - rvm: 1.9.3
+      gemfile: gemfiles/Gemfile.net_http
+    - rvm: 1.9.3
+      gemfile: gemfiles/Gemfile.typhoeus
+    - rvm: jruby
+      gemfile: gemfiles/Gemfile.net_http
+    - rvm: jruby
+      gemfile: gemfiles/Gemfile.typhoeus
+    - rvm: ree
+      gemfile: gemfiles/Gemfile.net_http_mime-types
+    - rvm: ree
+      gemfile: gemfiles/Gemfile.typhoeus_mime-types
 install: bundle install --without developer
