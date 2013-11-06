@@ -199,7 +199,6 @@ end
 ## Mantainers
 [@plribeiro3000](https://github.com/plribeiro3000)
 
-
 ## Contributing
 
 1. Fork it
