@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.6.0
+
+* Add support for pagination attributes.
+
 ## v2.5.0
 
 * Add support for parallel requests. Yay! =)
