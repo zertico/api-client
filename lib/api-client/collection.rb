@@ -7,19 +7,7 @@ class ApiClient::Collection < Array
   # @return [Collection] the collection of objects.
   def initialize(attributes, klass)
     @klass = klass
-    @response = attributes
-    if attributes.instance_of?(Array)
-      attributes.each do |attr|
-        self << @klass.new(attr)
-      end
-    elsif attributes[klass.name.pluralize.downcase].instance_of?(Array)
-      attributes = pagination_attributes(attributes)
-      attributes[klass.name.pluralize.downcase].each do |attr|
-        self << @klass.new(attr)
-      end
-    else
-      self << @klass.new(attributes)
-    end
+    update(attributes)
   end
 
   # Update the collection of objects based on the new attributes.
@@ -28,11 +16,13 @@ class ApiClient::Collection < Array
   # @return [Collection] the collection of objects.
   def update(attributes)
     self.clear
+    @response = attributes
     if attributes.instance_of?(Array)
       attributes.each do |attr|
         self << @klass.new(attr)
       end
     elsif attributes[@klass.name.pluralize.downcase].instance_of?(Array)
+      attributes = pagination_attributes(attributes)
       attributes[@klass.name.pluralize.downcase].each do |attr|
         self << @klass.new(attr)
       end
