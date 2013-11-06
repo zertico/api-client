@@ -8,6 +8,17 @@ describe ApiClient::Collection do
       ApiClient::Collection.new([], User).instance_variable_get('@klass').should == User
     end
 
+    context 'with a hash of attributes' do
+      before :each do
+        attributes =  { 'users' => [ { :user => { :a => 'a' } }, { :user => { :b => 'b' } } ] }
+        @collection = ApiClient::Collection.new(attributes, User)
+      end
+
+      it 'should initialize a collection of objects' do
+        @collection.size.should == 2
+      end
+    end
+
     context 'with a collection of attributes' do
       before :each do
         attributes = [ { :user => { :a => 'a' } }, { :user => { :b => 'b' } } ]
@@ -36,6 +47,13 @@ describe ApiClient::Collection do
       attributes = [ { :user => { :a => 'a' } }, { :user => { :b => 'b' } } ]
       @collection = ApiClient::Collection.new(attributes, User)
     end
+
+    context 'with a hash of attributes' do
+      it 'Should update the collection with new objects based on the attributes' do
+        @collection.update({ 'users' => [ { :user => { :a => 'a' } }, { :user => { :b => 'b' } } ] }).size.should == 2
+      end
+    end
+
     context 'with a collection of attributes' do
       it 'Should update the collection with new objects based on the attributes' do
         @collection.update([ { :user => { :a => 'a' } }, { :user => { :b => 'b' } } ]).size.should == 2
