@@ -39,7 +39,7 @@ Or install it yourself as:
 
     $ gem install api-client
 
-If you will use Typhoeus (https://github.com/typhoeus/typhoeus), you must have gem version above 0.5.0.
+If you will use Typhoeus (https://github.com/typhoeus/typhoeus), you must have Typhoeus version above 0.5.0.
 
 ## Basic Usage
 
@@ -153,7 +153,7 @@ You just need to pass a hash as:
     next: null,
     last: { href: "/api/clients?page=1" }
   },
-  users: [ { user: { name: "example1" } }, { user: { name: "example2 } } ]
+  users: [ { user: { name: "example1" } }, { user: { name: "example2" } } ]
 }
 ```
 
