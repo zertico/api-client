@@ -39,6 +39,8 @@ Or install it yourself as:
 
     $ gem install api-client
 
+If you will use Typhoeus (https://github.com/typhoeus/typhoeus), you must have Typhoeus version above 0.5.0.
+
 ## Basic Usage
 
 Create an initializer:
@@ -135,6 +137,26 @@ end
 ```
 
 This code will create a setter and a getter for houses and cars and initialize the respective class.
+
+When you are working with collections you can use api pagination according Hal Specification (http://stateless.co/hal_specification.html) .
+You just need to pass a hash as:
+
+```ruby
+{
+  total: 10,
+  total_pages: 1,
+  offset: 10,
+  _links: {
+    first: { href: "/api/clients" },
+    previous: null,
+    self: { href: "/api/clients" },
+    next: null,
+    last: { href: "/api/clients?page=1" }
+  },
+  users: [ { user: { name: "example1" } }, { user: { name: "example2" } } ]
+}
+```
+
 
 Since version 2.0.0, it is possible to make api calls from the object. The syntax is pretty much the same.
 It will make the call and update the fields with the response. Look at the examples folder to see more code examples
