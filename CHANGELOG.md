@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.7.0
+
+* Fixed update routes to add resource id.
+
 ## v2.6.0
 
 * Add support for pagination attributes.
