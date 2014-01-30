@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.0.0
+
+* Automatically sending attributes with root_node when calling methods on class.
+
 ## v2.7.0
 
 * Fixed update routes to add resource id.

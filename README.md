@@ -190,6 +190,22 @@ ApiClient.parallel do
 end
 ```
 
+## Migrating from 2.*.* to 3.0.0
+
+Since version 3.0.0 is not necessarily set the root_node on the attributes when calling methods on the class.
+
+Before:
+
+```ruby
+@user = User.create({ :user => attributes })
+```
+
+After:
+
+```ruby
+@user = User.create(attributes )
+```
+
 ## More Examples
 [Project](https://github.com/zertico/api-client/tree/master/examples)
 
