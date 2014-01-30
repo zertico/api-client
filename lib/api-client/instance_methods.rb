@@ -33,7 +33,7 @@ module ApiClient
     # @return [Base] the object updated.
     def put(header = {})
       return self if ApiClient.config.mock
-      url = "#{ApiClient.config.path[path]}#{self.class.resource_path}"
+      url = "#{ApiClient.config.path[path]}#{self.class.resource_path}/#{id}"
       response = ApiClient::Dispatcher.put(url, self.to_hash, header)
       update(response, url)
     end
@@ -46,7 +46,7 @@ module ApiClient
     # @return [Base] the object updated.
     def patch(header = {})
       return self if ApiClient.config.mock
-      url = "#{ApiClient.config.path[path]}#{self.class.resource_path}"
+      url = "#{ApiClient.config.path[path]}#{self.class.resource_path}/#{id}"
       response = ApiClient::Dispatcher.patch(url, self.to_hash, header)
       update(response, url)
     end

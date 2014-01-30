@@ -27,7 +27,7 @@ class BookController < ApplicationController
 
   # It will hit http://api.example.com/books with a put request
   def update
-    @book = Book.update_attributes({ :book => params[:book] })
+    @book = Book.update_attributes(params[:id], { :book => params[:book] })
     respond_with(@book)
   end
 

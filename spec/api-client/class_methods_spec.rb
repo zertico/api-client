@@ -33,19 +33,19 @@ describe ApiClient::ClassMethods do
 
     context '.put' do
       it 'should return an user' do
-        User.put({}).should be_an_instance_of(User)
+        User.put(1, {}).should be_an_instance_of(User)
       end
     end
 
     context '.update_attributes' do
       it 'should return an user' do
-        User.update_attributes({}).should be_an_instance_of(User)
+        User.update_attributes(1, {}).should be_an_instance_of(User)
       end
     end
 
     context '.patch' do
       it 'should return an user' do
-        User.patch({}).should be_an_instance_of(User)
+        User.patch(1, {}).should be_an_instance_of(User)
       end
     end
 
@@ -101,19 +101,19 @@ describe ApiClient::ClassMethods do
 
     context '.put' do
       it 'should return an user' do
-        User.put({}).should be_an_instance_of(User)
+        User.put(1, {}).should be_an_instance_of(User)
       end
     end
 
     context '.update_attributes' do
       it 'should return an user' do
-        User.update_attributes({}).should be_an_instance_of(User)
+        User.update_attributes(1, {}).should be_an_instance_of(User)
       end
     end
 
     context '.patch' do
       it 'should return an user' do
-        User.patch({}).should be_an_instance_of(User)
+        User.patch(1, {}).should be_an_instance_of(User)
       end
     end
 
