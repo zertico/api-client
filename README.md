@@ -190,7 +190,7 @@ ApiClient.parallel do
 end
 ```
 
-## Migrating from 2.*.* to 3.0.0
+## Migrating from 2.\*.\* to 3.0.0
 
 Since version 3.0.0 is not necessarily set the root_node on the attributes when calling methods on the class.
 
