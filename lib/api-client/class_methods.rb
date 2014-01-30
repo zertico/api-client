@@ -23,7 +23,7 @@ module ApiClient
     def post(attributes, header = {})
       return new(attributes) if ApiClient.config.mock
       url = "#{ApiClient.config.path[path]}#{self.resource_path}"
-      response = ApiClient::Dispatcher.post(url, attributes, header)
+      response = ApiClient::Dispatcher.post(url, { self.root_node.to_sym => attributes }, header)
       build(response, url)
     end
 
@@ -37,7 +37,7 @@ module ApiClient
     def put(id, attributes, header = {})
       return new(attributes) if ApiClient.config.mock
       url = "#{ApiClient.config.path[path]}#{self.resource_path}/#{id}"
-      response = ApiClient::Dispatcher.put(url, attributes, header)
+      response = ApiClient::Dispatcher.put(url, { self.root_node.to_sym => attributes }, header)
       build(response, url)
     end
 
@@ -51,7 +51,7 @@ module ApiClient
     def patch(id, attributes, header = {})
       return new(attributes) if ApiClient.config.mock
       url = "#{ApiClient.config.path[path]}#{self.resource_path}/#{id}"
-      response = ApiClient::Dispatcher.patch(url, attributes, header)
+      response = ApiClient::Dispatcher.patch(url, { self.root_node.to_sym => attributes }, header)
       build(response, url)
     end
 
