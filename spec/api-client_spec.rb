@@ -55,7 +55,7 @@ describe ApiClient do
     end
 
     it 'should return the default header' do
-      ApiClient.config.header.should == { 'Content-Type' => 'application/json' }
+      ApiClient.config.header.should == { 'Content-Type' => 'application/json', 'Accept' => 'application/json' }
     end
 
     it 'should have mock equal false' do

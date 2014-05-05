@@ -62,17 +62,19 @@ describe ApiClient::Configuration do
   describe '#header' do
     context 'when not configured' do
       it 'should return a hash with configs for content_type only' do
-        ApiClient.config.header.should == { 'Content-Type' => 'application/json' }
+        ApiClient.config.header.should == { 'Content-Type' => 'application/json', 'Accept' => 'application/json' }
       end
     end
 
     context 'when configured' do
       before :each do
-        ApiClient.config.instance_variable_set('@header', { 'key' => 'value' })
+        ApiClient.configure do |config|
+          config.header = { 'key' => 'value' }
+        end
       end
 
-      it 'should return a hash with the configured header' do
-        ApiClient.config.header.should == { 'key' => 'value' }
+      it 'should return the configs merged' do
+        ApiClient.config.header.should == { 'Content-Type' => 'application/json', 'Accept' => 'application/json', 'key' => 'value' }
       end
     end
   end
@@ -80,12 +82,12 @@ describe ApiClient::Configuration do
   describe '#header=' do
     before :each do
       ApiClient.configure do |config|
-        config.header = { 'Content-Type' => 'application/xml' }
+        config.header = { 'Content-Type' => 'application/xml', 'Accept' => 'application/xml' }
       end
     end
 
     it 'should merge content_type json with the given hash' do
-      ApiClient.config.header.should == { 'Content-Type' => 'application/xml' }
+      ApiClient.config.header.should == { 'Content-Type' => 'application/xml', 'Accept' => 'application/xml' }
     end
   end
 
@@ -104,6 +106,7 @@ describe ApiClient::Configuration do
 
     it 'should merge basic_auth in header params' do
       ApiClient.config.header.should == { 'Content-Type' => 'application/xml',
+                                          'Accept' => 'application/xml',
                                           'Authorization' => 'Basic dXNlcjpwYXNz' }
     end
   end

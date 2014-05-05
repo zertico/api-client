@@ -40,7 +40,7 @@ module ApiClient
     #
     # @param [Hash] header the default header for requisitions.
     def header=(header = {})
-      @header = { 'Content-Type' => 'application/json' }.merge(header)
+      @header = { 'Content-Type' => 'application/json', 'Accept' => 'application/json' }.merge(header)
     end
 
     # Set a basic authentication for all requisitions.
