@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.1.0
+
+* Setting Default Accept header as json
+
 ## v3.0.0
 
 * Automatically sending attributes with root_node when calling methods on class.
