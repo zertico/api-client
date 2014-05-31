@@ -2,7 +2,7 @@
 class ApiClient::Collection < Array
   # Initialize a object to handle collections. It save the class associated to make possible to use parallel later.
   #
-  # @param [Hash/Array] the hash or array of attributes.
+  # @param [Hash/Array] attributes the hash or array of attributes.
   # @param [Class] klass The class to instantiate the objects.
   # @return [Collection] the collection of objects.
   def initialize(attributes, klass)
@@ -13,7 +13,7 @@ class ApiClient::Collection < Array
   # Update the current collection with a new one. This method is used when initializing the collection for the first time
   # and when making a parallel request.
   #
-  # @param [Hash/Array] the hash or array of attributes.
+  # @param [Hash/Array] attributes the hash or array of attributes.
   # @return [Collection] the collection of objects.
   def update(attributes)
     self.clear
@@ -34,7 +34,7 @@ class ApiClient::Collection < Array
 
   # Initialize variables to work with api pagination *(hal+json)*. It saves all related hal data for later usage.
   #
-  # @param [Hash] the hash of attributes.
+  # @param [Hash] attributes the hash of attributes.
   # @return [Hash] the hash of attributes without pagination attributes.
   def pagination_attributes(attributes)
     @total = attributes.delete("total")
