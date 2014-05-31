@@ -53,6 +53,12 @@ module ApiClient::Dispatcher::NetHttp
 
   protected
 
+  # Handles the common behavior between all the requisitions types.
+  #
+  # @param [Symbol] method the request type.
+  # @param [String] url the path to make the requisition.
+  # @param [Hash] options extra options like the attributes of a post requisition and custom header params.
+  # @return [HTTP] the response object.
   def self.dispatch(method, url, options = {})
     args = options[:args].to_json if options[:args]
     header = ApiClient.config.header.merge(options[:header])

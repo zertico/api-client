@@ -1,6 +1,6 @@
 # ApiClient::Collection handle a collection of objects
 class ApiClient::Collection < Array
-  # Initialize a collection of objects based on attributes.
+  # Initialize a object to handle collections. It save the class associated to make possible to use parallel later.
   #
   # @param [Hash/Array] the hash or array of attributes.
   # @param [Class] klass The class to instantiate the objects.
@@ -10,7 +10,8 @@ class ApiClient::Collection < Array
     update(attributes)
   end
 
-  # Update the collection of objects based on the new attributes.
+  # Update the current collection with a new one. This method is used when initializing the collection for the first time
+  # and when making a parallel request.
   #
   # @param [Hash/Array] the hash or array of attributes.
   # @return [Collection] the collection of objects.
@@ -31,7 +32,7 @@ class ApiClient::Collection < Array
     end
   end
 
-  # Initialize some variables based on attributes.
+  # Initialize variables to work with api pagination *(hal+json)*. It saves all related hal data for later usage.
   #
   # @param [Hash] the hash of attributes.
   # @return [Hash] the hash of attributes without pagination attributes.

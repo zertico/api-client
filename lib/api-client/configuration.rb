@@ -1,7 +1,19 @@
 module ApiClient
   # ApiClient::Configuration provides a way to configure ApiClient globally.
   class Configuration
-    attr_accessor :mock, :hydra
+    # Handle a boolean to define when mock the requisitions.
+    #
+    # @return [Boolean] boolean used to set mock requisitions.
+    attr_accessor :mock
+
+    # Handle a the hydra object used by typhoeus to make parallel requisitions.
+    #
+    # @return [Typhoeus] object that handle parallel requests.
+    attr_accessor :hydra
+
+    # The default header for all requisitions
+    #
+    # @return [Hash] all the default header params used by ApiClient.
     attr_reader :header
 
     # Return the api url.

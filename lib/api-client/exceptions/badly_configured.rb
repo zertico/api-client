@@ -1,4 +1,4 @@
-# Exception for requests where the full path is not properly configured.
+# Exception raised when one of the configured apis endpoints path is nil. This exception make sure the apis are properly configured.
 class ApiClient::Exceptions::BadlyConfigured < StandardError
   # Initialize a new exception.
   #

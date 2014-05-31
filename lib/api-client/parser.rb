@@ -19,6 +19,16 @@ module ApiClient::Parser
 
   protected
 
+  # Check if the response was successful, otherwise raise a proper exception.
+  #
+  # @param [HTTP] response HTTP object for the request.
+  # @param [String] url The url of the requisition.
+  # @raise [ApiClient::Exceptions::Unauthorized] if the response code status is 401
+  # @raise [ApiClient::Exceptions::Forbidden] if the response code status is 403
+  # @raise [ApiClient::Exceptions::NotFound] if the response code status is 404
+  # @raise [ApiClient::Exceptions::InternalServerError] if the response code status is 500
+  # @raise [ApiClient::Exceptions::BadGateway] if the response code status is 502
+  # @raise [ApiClient::Exceptions::ServiceUnavailable] if the response code status is 503
   def self.raise_exception(response, url)
     case response.code.to_i
       when 401 then raise ApiClient::Exceptions::Unauthorized
