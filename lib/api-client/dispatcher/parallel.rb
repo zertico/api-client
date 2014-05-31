@@ -23,14 +23,18 @@ class ApiClient::Dispatcher::Parallel
   end
 
   %w(get delete).each do |method|
-    define_method(method) do |url, header = {}|
-      new(::Typhoeus::Request.new(url, :method => method.to_sym, :headers => ApiClient.config.header.merge(header)))
-    end
+    class_eval <<-EVAL
+        def #{method}(url, header = {})
+          new(::Typhoeus::Request.new(url, :method => '#{method}', :headers => ApiClient.config.header.merge(header)))
+        end
+    EVAL
   end
 
   %w(post put patch).each do |method|
-    define_method(method) do |url, args, header = {}|
-      new(::Typhoeus.Request.new(url, :method => method.to_sym, :body => args, :headers => ApiClient.config.header.merge(header)))
-    end
+    class_eval <<-EVAL
+        def #{method}(url, args, header = {})
+          new(::Typhoeus::Request.new(url, :method => '#{method}', :body => args, :headers => ApiClient.config.header.merge(header)))
+        end
+    EVAL
   end
 end

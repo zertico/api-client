@@ -2,24 +2,28 @@ module ApiClient
   # This module handles the logic to make an api call and initialize an object with the response.
   module ClassMethods
     %w(get delete).each do |method|
-      define_method(method) do |id, header = {}|
-        return new(:id => id) if ApiClient.config.mock
-        url = "#{ApiClient.config.path[path]}#{self.resource_path}/#{id}"
-        response = ApiClient::Dispatcher.send(method, url, header)
-        build(response, url)
-      end
+      class_eval <<-EVAL
+        def #{method}(id, header = {})
+          return new(:id => id) if ApiClient.config.mock
+          url = "\#{ApiClient.config.path[path]}\#{self.resource_path}/\#{id}"
+          response = ApiClient::Dispatcher.send('#{method}', url, header)
+          build(response, url)
+        end
+      EVAL
     end
 
     alias_method :find, :get
     alias_method :destroy, :delete
 
     %w(put patch).each do |method|
-      define_method(method) do |id, attributes, header = {}|
-        return new(attributes) if ApiClient.config.mock
-        url = "#{ApiClient.config.path[path]}#{self.resource_path}/#{id}"
-        response = ApiClient::Dispatcher.send(method, url, { self.root_node.to_sym => attributes }, header)
-        build(response, url)
-      end
+      class_eval <<-EVAL
+        def #{method}(id, attributes, header = {})
+          return new(attributes) if ApiClient.config.mock
+          url = "\#{ApiClient.config.path[path]}\#{self.resource_path}/\#{id}"
+          response = ApiClient::Dispatcher.send('#{method}', url, { self.root_node.to_sym => attributes }, header)
+          build(response, url)
+        end
+      EVAL
     end
 
     alias_method :update_attributes, :put

@@ -2,24 +2,28 @@ module ApiClient
   # This module handles the logic to make an api call and update_attributes the current object with the response.
   module InstanceMethods
     %w(get delete).each do |method|
-      define_method(method) do |header = {}|
-        return self if ApiClient.config.mock
-        url = "#{ApiClient.config.path[path]}#{self.class.resource_path}/#{id}"
-        response = ApiClient::Dispatcher.send(method, url, header)
-        update(response, url)
-      end
+      class_eval <<-EVAL
+        def #{method}(header = {})
+          return self if ApiClient.config.mock
+          url = "\#{ApiClient.config.path[path]}\#{self.class.resource_path}/\#{id}"
+          response = ApiClient::Dispatcher.send('#{method}', url, header)
+          update(response, url)
+        end
+      EVAL
     end
 
     alias_method :reload, :get
     alias_method :destroy, :delete
 
     %w(put patch).each do |method|
-      define_method(method) do |header = {}|
-        return self if ApiClient.config.mock
-        url = "#{ApiClient.config.path[path]}#{self.class.resource_path}/#{id}"
-        response = ApiClient::Dispatcher.send(method, url, self.to_hash, header)
-        update(response, url)
-      end
+      class_eval <<-EVAL
+        def #{method}(header = {})
+          return self if ApiClient.config.mock
+          url = "\#{ApiClient.config.path[path]}\#{self.class.resource_path}/\#{id}"
+          response = ApiClient::Dispatcher.send('#{method}', url, self.to_hash, header)
+          update(response, url)
+        end
+      EVAL
     end
 
     alias_method :update_attributes, :put
