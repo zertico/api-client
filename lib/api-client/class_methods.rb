@@ -1,19 +1,28 @@
 module ApiClient
   # This module handles the logic to make an api call and initialize an object with the response.
   module ClassMethods
-    # Make a get requisition and initialize an object with the response.
-    #
-    # @param [Integer] id id of the object.
-    # @param [Hash] header hash with the header options.
-    # @return [Base] the object initialized.
-    def get(id, header = {})
-      return new(:id => id) if ApiClient.config.mock
-      url = "#{ApiClient.config.path[path]}#{self.resource_path}/#{id}"
-      response = ApiClient::Dispatcher.get(url, header)
-      build(response, url)
+    %w(get delete).each do |method|
+      define_method(method) do |id, header = {}|
+        return new(:id => id) if ApiClient.config.mock
+        url = "#{ApiClient.config.path[path]}#{self.resource_path}/#{id}"
+        response = ApiClient::Dispatcher.send(method, url, header)
+        build(response, url)
+      end
     end
 
     alias_method :find, :get
+    alias_method :destroy, :delete
+
+    %w(put patch).each do |method|
+      define_method(method) do |id, attributes, header = {}|
+        return new(attributes) if ApiClient.config.mock
+        url = "#{ApiClient.config.path[path]}#{self.resource_path}/#{id}"
+        response = ApiClient::Dispatcher.send(method, url, { self.root_node.to_sym => attributes }, header)
+        build(response, url)
+      end
+    end
+
+    alias_method :update_attributes, :put
 
     # Make a post requisition and initialize an object with the response.
     #
@@ -28,46 +37,6 @@ module ApiClient
     end
 
     alias_method :create, :post
-
-    # Make a put requisition and initialize an object with the response.
-    #
-    # @param [Hash] attributes hash with the attributes to send.
-    # @param [Hash] header hash with the header options.
-    # @return [Base] the object initialized.
-    def put(id, attributes, header = {})
-      return new(attributes) if ApiClient.config.mock
-      url = "#{ApiClient.config.path[path]}#{self.resource_path}/#{id}"
-      response = ApiClient::Dispatcher.put(url, { self.root_node.to_sym => attributes }, header)
-      build(response, url)
-    end
-
-    alias_method :update_attributes, :put
-
-    # Make a patch requisition and initialize an object with the response.
-    #
-    # @param [Hash] attributes hash with the attributes to send.
-    # @param [Hash] header hash with the header options.
-    # @return [Base] the object initialized.
-    def patch(id, attributes, header = {})
-      return new(attributes) if ApiClient.config.mock
-      url = "#{ApiClient.config.path[path]}#{self.resource_path}/#{id}"
-      response = ApiClient::Dispatcher.patch(url, { self.root_node.to_sym => attributes }, header)
-      build(response, url)
-    end
-
-    # Make a delete requisition and initialize an object with the response.
-    #
-    # @param [Integer] id id of the object.
-    # @param [Hash] header hash with the header options.
-    # @return [Base] the object initialized.
-    def delete(id, header = {})
-      return new(:id => id) if ApiClient.config.mock
-      url = "#{ApiClient.config.path[path]}#{self.resource_path}/#{id}"
-      response = ApiClient::Dispatcher.delete(url, header)
-      build(response, url)
-    end
-
-    alias_method :destroy, :delete
 
     # Removes the root node attribute if found.
     #

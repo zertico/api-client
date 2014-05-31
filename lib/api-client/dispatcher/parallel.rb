@@ -22,51 +22,15 @@ class ApiClient::Dispatcher::Parallel
     ApiClient.config.hydra.queue @requisition
   end
 
-  # Make a get request and returns it.
-  #
-  # @param [String] url of the api request.
-  # @param [Hash] header attributes of the request.
-  # @return [Typhoeus::Request] the response object.
-  def self.get(url, header = {})
-    new(::Typhoeus::Request.new(url, :headers => ApiClient.config.header.merge(header)))
+  %w(get delete).each do |method|
+    define_method(method) do |url, header = {}|
+      new(::Typhoeus::Request.new(url, :method => method.to_sym, :headers => ApiClient.config.header.merge(header)))
+    end
   end
 
-  # Make a post request and returns it.
-  #
-  # @param [String] url of the api request.
-  # @param [Hash] args attributes of object.
-  # @param [Hash] header attributes of the request.
-  # @return [Typhoeus::Request] the response object.
-  def self.post(url, args, header = {})
-    new(::Typhoeus.Request.new(url, :method => :post, :body => args, :headers => ApiClient.config.header.merge(header)))
-  end
-
-  # Make a put request and returns it.
-  #
-  # @param [String] url of the api request.
-  # @param [Hash] args attributes of object.
-  # @param [Hash] header attributes of the request.
-  # @return [Typhoeus::Request] the response object.
-  def self.put(url, args, header = {})
-    new(::Typhoeus.Request.new(url, :method => :put, :body => args, :headers => ApiClient.config.header.merge(header)))
-  end
-
-  # Make a patch request and returns it.
-  #
-  # @param [String] url of the api request.
-  # @param [Hash] args attributes of object.
-  # @param [Hash] header attributes of the request.
-  # @return [Typhoeus::Request] the response object.
-  def self.patch(url, args, header = {})
-    new(::Typhoeus.Request.new(url, :method => :patch, :body => args, :headers => ApiClient.config.header.merge(header)))
-  end
-
-  # Make a delete request and returns it.
-  #
-  # @param [String] url of the api request.
-  # @param [Hash] header attributes of the request.
-  # @return [Typhoeus::Request] the response object.
-  def self.delete(url, header = {})
-    new(::Typhoeus.Request.new(url, :method => :delete, :headers => ApiClient.config.header.merge(header)))
+  %w(post put patch).each do |method|
+    define_method(method) do |url, args, header = {}|
+      new(::Typhoeus.Request.new(url, :method => method.to_sym, :body => args, :headers => ApiClient.config.header.merge(header)))
+    end
   end
 end
