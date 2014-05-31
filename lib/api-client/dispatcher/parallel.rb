@@ -24,7 +24,7 @@ class ApiClient::Dispatcher::Parallel
 
   %w(get delete).each do |method|
     class_eval <<-EVAL
-        def #{method}(url, header = {})
+        def self.#{method}(url, header = {})
           new(::Typhoeus::Request.new(url, :method => '#{method}', :headers => ApiClient.config.header.merge(header)))
         end
     EVAL
@@ -32,7 +32,7 @@ class ApiClient::Dispatcher::Parallel
 
   %w(post put patch).each do |method|
     class_eval <<-EVAL
-        def #{method}(url, args, header = {})
+        def self.#{method}(url, args, header = {})
           new(::Typhoeus::Request.new(url, :method => '#{method}', :body => args, :headers => ApiClient.config.header.merge(header)))
         end
     EVAL
