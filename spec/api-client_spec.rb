@@ -59,11 +59,11 @@ describe ApiClient do
     end
 
     it 'should have mock equal false' do
-      ApiClient.config.mock.should be_false
+      ApiClient.config.mock.should be == false
     end
 
     it 'should have hydra equal false' do
-      ApiClient.config.hydra.should be_false
+      ApiClient.config.hydra.should be == false
     end
   end
 end
