@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/zertico/api-client.png?label=ready&title=Ready)](https://waffle.io/zertico/api-client)
 # ApiClient
 
 [![Gem Version](https://badge.fury.io/rb/api-client.svg)](http://badge.fury.io/rb/api-client) [![Build Status](https://secure.travis-ci.org/zertico/api-client.svg?branch=master)](http://travis-ci.org/zertico/api-client) [![Dependency Status](https://gemnasium.com/zertico/api-client.svg)](https://gemnasium.com/zertico/api-client) [![Coverage Status](https://img.shields.io/coveralls/zertico/api-client.svg)](https://coveralls.io/r/zertico/api-client)  [![Code Climate](https://codeclimate.com/github/zertico/api-client.png)](https://codeclimate.com/github/zertico/api-client) [![Inline docs](http://inch-ci.org/github/zertico/api-client.svg)](http://inch-ci.org/github/zertico/api-client)
