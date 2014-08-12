@@ -21,3 +21,10 @@ matrix:
     - rvm: ree
       gemfile: gemfiles/Gemfile.typhoeus_mime-types
 install: bundle install --without developer
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/edaa9e7b8d7812636188
+    on_success: always  # options: [always|never|change] default: always
+    on_failure: always  # options: [always|never|change] default: always
+    on_start: true      # default: false
